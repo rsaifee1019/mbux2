@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Receipt from "@/components/Reciept";
 import Spinner from "@/components/Spinner";
-import { Cookies } from "js-cookie"
+import Cookies from "js-cookie"
 export default function Success() {
     const [data, setData] = useState(null)
     const [error, setError] = useState(null)

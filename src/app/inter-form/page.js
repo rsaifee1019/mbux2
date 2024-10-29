@@ -12,7 +12,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import SearchParamsWrapper from '@/components/UseSearchParamsWrapper';
 import { Suspense } from 'react';
-import { Cookies } from "js-cookie"
+import Cookies  from "js-cookie"
 const AdmissionForm = () => {
   const router = useRouter();
   const [subject, setSubject] = useState(null);

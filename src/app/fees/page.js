@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import Spinner from '@/components/Spinner';
 import Image from 'next/image';
 import Error from '@/components/Error';
-import { Cookies } from "js-cookie"
+import Cookies  from "js-cookie"
 const Fees = () => {
   const [fees, setFees] = useState([]);
   const [buttonLoading, setButtonLoading] = useState(false);
