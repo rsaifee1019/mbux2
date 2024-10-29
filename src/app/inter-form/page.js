@@ -12,7 +12,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import SearchParamsWrapper from '@/components/UseSearchParamsWrapper';
 import { Suspense } from 'react';
-
+import { Cookies } from "js-cookie"
 const AdmissionForm = () => {
   const router = useRouter();
   const [subject, setSubject] = useState(null);
@@ -171,7 +171,7 @@ const AdmissionForm = () => {
         body: JSON.stringify(formData),
       });
       const data = await response.json();
-      localStorage.setItem("tran_id", data.tran_id);
+      Cookies.set("tran_id", data.tran_id);
       if (response.ok) {
         // Redirect to the checkout page on successful submission
         router.push('/checkout');

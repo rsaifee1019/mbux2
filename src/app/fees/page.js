@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import Spinner from '@/components/Spinner';
 import Image from 'next/image';
 import Error from '@/components/Error';
-
+import { Cookies } from "js-cookie"
 const Fees = () => {
   const [fees, setFees] = useState([]);
   const [buttonLoading, setButtonLoading] = useState(false);
@@ -52,7 +52,7 @@ const fetchFees = async () => {
     }
 
     const data = await response.json()
-    localStorage.setItem('tran_id', data.tran_id)
+    Cookies.set('tran_id', data.tran_id)
     
     const response2 = await fetch(`/api/studentpay`, {
       method: 'POST',
