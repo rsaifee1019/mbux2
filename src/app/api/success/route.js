@@ -30,7 +30,7 @@ export async function POST(req) {
 
     // Construct the absolute URL for the redirect
     const url = new URL(req.url);
-    const redirectUrl = `${url.protocol}//${url.host}/success`;
+    const redirectUrl = `${url.protocol}//${url.host}/success?tran_id=${tran_id}`;
 
     return NextResponse.redirect(redirectUrl, 302);
   } catch (error) {
