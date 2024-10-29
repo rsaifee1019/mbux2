@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Receipt from "@/components/Reciept";
 import Spinner from "@/components/Spinner";
-import Cookies from "js-cookie"
+
 
 export const dynamic = 'force-dynamic'
 export default function Success() {
@@ -15,7 +15,7 @@ export default function Success() {
         async function fetchData() {
           try {
             setLoading(true);
-            // Check if we are in the browser
+            const Cookies = (await import('js-cookie')).default
           
               const tran_id = Cookies.get("tran_id");
               if (!tran_id) {
