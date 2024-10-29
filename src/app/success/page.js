@@ -8,28 +8,34 @@ export default function Success() {
     const [data, setData] = useState(null)
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(true)
+
     useEffect(() => {
         async function fetchData() {
           try {
-            setLoading(true)
-            const tran_id = localStorage.getItem("tran_id");
-            if (!tran_id) {
-              setError('Transaction ID not found in localStorage');
-              return;
+            setLoading(true);
+            // Check if we are in the browser
+            if (typeof window !== "undefined") {
+              const tran_id = localStorage.getItem("tran_id");
+              if (!tran_id) {
+                setError('Transaction ID not found in localStorage');
+                return;
+              }
+              
+              const response = await fetch(`/api/info/${tran_id}`);
+              if (!response.ok) {
+                throw new Error('Failed to fetch payment details');
+              }
+              
+              const data = await response.json();
+              setData(data);
+            } else {
+              setError('Not in a browser environment');
             }
-            
-            const response = await fetch(`/api/info/${tran_id}`);
-            if (!response.ok) {
-              throw new Error('Failed to fetch payment details');
-            }
-            
-            const data = await response.json();
-            setData(data);
           } catch (err) {
             console.error('Error fetching payment:', err);
             setError(err.message);
           } finally {
-            setLoading(false)
+            setLoading(false);
           }
         }
     
@@ -39,11 +45,11 @@ export default function Success() {
     if (loading) return <Spinner />
     if (error) return <div>Error: {error}</div>
     return <Receipt 
-    studentName={data.student ? data.student.name : data.applicant.name}
-    studentId={data.student ? data.student.studentId : data.applicant.ssc_registration}
-    transactionId={data.payment.transactionId}
-    paymentType={data.payment.paymentType}
-    amount={data.payment.amount}
-    date={data.payment.paymentDate}
+      studentName={data.student ? data.student.name : data.applicant.name}
+      studentId={data.student ? data.student.studentId : data.applicant.ssc_registration}
+      transactionId={data.payment.transactionId}
+      paymentType={data.payment.paymentType}
+      amount={data.payment.amount}
+      date={data.payment.paymentDate}
     />
 }
