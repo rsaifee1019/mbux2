@@ -4,6 +4,8 @@ import { useState, useEffect } from "react"
 import Receipt from "@/components/Reciept";
 import Spinner from "@/components/Spinner";
 import Cookies from "js-cookie"
+
+export const dynamic = 'force-dynamic'
 export default function Success() {
     const [data, setData] = useState(null)
     const [error, setError] = useState(null)
@@ -14,7 +16,7 @@ export default function Success() {
           try {
             setLoading(true);
             // Check if we are in the browser
-            if (typeof window !== "undefined") {
+          
               const tran_id = Cookies.get("tran_id");
               if (!tran_id) {
                 setError('Transaction ID not found in localStorage');
@@ -28,9 +30,7 @@ export default function Success() {
               
               const data = await response.json();
               setData(data);
-            } else {
-              setError('Not in a browser environment');
-            }
+           
           } catch (err) {
             console.error('Error fetching payment:', err);
             setError(err.message);
