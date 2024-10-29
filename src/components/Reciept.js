@@ -1,6 +1,6 @@
-import React from 'react';
+"use client"
+import React, { useEffect, useState } from 'react';
 import { Download } from 'lucide-react';
-import html2pdf from 'html2pdf.js';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
@@ -12,7 +12,21 @@ const Receipt = ({
   amount = "5,000.00",
   date = "October 23, 2024"
 }) => {
+  const [html2pdf, setHtml2pdf] = useState(null);
+
+  useEffect(() => {
+    // Dynamically import html2pdf.js only in the browser
+    const loadHtml2pdf = async () => {
+      const { default: html2pdf } = await import('html2pdf.js');
+      setHtml2pdf(() => html2pdf);
+    };
+
+    loadHtml2pdf();
+  }, []);
+
   const handleDownloadPDF = () => {
+    if (!html2pdf) return; // Ensure html2pdf is loaded
+
     const receipt = document.getElementById('receipt');
     const opt = {
       margin: 0.5,
@@ -42,32 +56,27 @@ const Receipt = ({
           <div className="mt-6 space-y-4">
             <div className="flex justify-between py-2 border-b border-gray-100">
               <span className="text-gray-600">তারিখ:</span>
-              
               <span className="font-medium text-gray-800">
-              <span className="font-medium text-gray-800 mr-2">{new Date(date).toLocaleDateString()}</span>
-              {new Date(date).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</span>
+                <span className="font-medium text-gray-800 mr-2">{new Date(date).toLocaleDateString()}</span>
+                {new Date(date).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
+              </span>
             </div>
-
             <div className="flex justify-between py-2 border-b border-gray-100">
               <span className="text-gray-600">নাম:</span>
               <span className="font-medium text-gray-800">{studentName}</span>
             </div>
-
             <div className="flex justify-between py-2 border-b border-gray-100">
               <span className="text-gray-600">রোল নং:</span>
               <span className="font-medium text-gray-800">{studentId}</span>
             </div>
-
             <div className="flex justify-between py-2 border-b border-gray-100">
               <span className="text-gray-600">রিসিট নং:</span>
               <span className="font-medium text-gray-800">{transactionId}</span>
             </div>
-
             <div className="flex justify-between py-2 border-b border-gray-100">
               <span className="text-gray-600">জামানতের উদ্দেশ্য:</span>
               <span className="font-medium text-gray-800">{paymentType}</span>
             </div>
-
             {/* Amount */}
             <div className="mt-8 text-right">
               <span className="text-gray-600">জামানতের পরিমান</span>
@@ -79,7 +88,6 @@ const Receipt = ({
           <div className="mt-8 text-center text-gray-600 text-sm">
             <p> ধন্যবাদ। এটি একটি ইলেকট্রনিক রিসিট। </p>
             <p className='mt-1 text-lg text-text-red'> এই রিসিটসহ কলেজ অফিস এ আসতে অনুরোধ করা হলো </p>
-  
           </div>
         </div>
 
