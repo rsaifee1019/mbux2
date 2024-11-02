@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
 import Payment from '@/models/Payment';
 import Student from '@/models/Student';
+import connectionToDatabase from '@/lib/mongodb';
 export async function POST(req) {
+  await connectionToDatabase()
   try {
     // Parse the incoming form data
     const formData = await req.formData();
@@ -10,10 +12,13 @@ export async function POST(req) {
     const body = Object.fromEntries(formData.entries());
     console.log('Payment Gateway Response:', body);
     const {status, tran_id, store_amount, verify_sign} = body;
+    console.log(status, tran_id);
     if(status === 'VALID'){
-      const payment = await Payment.findOne({where: {transactionId: tran_id}})
+      const payment = await Payment.findOne({transactionId: tran_id})
+      console.log(payment);
       if(payment){
-        payment.update({status: 'completed'})
+        payment.status = 'completed';
+        await payment.save();
         await payment.save()
         if(payment.userType === 'student'){
           const student = await Student.findOne({where: {id: payment.studentId}})
@@ -40,6 +45,7 @@ export async function POST(req) {
 }
 
 export async function GET(req) {
+  await connectionToDatabase()
   try {
     const url = new URL(req.url);
     const redirectUrl = `${url.protocol}//${url.host}/success`;

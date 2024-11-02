@@ -69,7 +69,7 @@ const fetchFees = async () => {
       ...prev,
       [name]: value
     }));
-    console.log(fees)
+    console.log(formData)
   };
 
   if (loading) {
@@ -80,7 +80,7 @@ const fetchFees = async () => {
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full max-w-md mx-auto mt-6">
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-center">ফি পরিশোধ</CardTitle>
       </CardHeader>
@@ -171,9 +171,12 @@ const fetchFees = async () => {
               onChange={handleInputChange}
             >
               <option value="">বাছাই করুন</option>
-           {Array.from(new Set(fees.map(fee => fee.subtype))).map((subtype, index) => (
-            <option key={index} value={subtype}>{subtype}</option>
-           ))}
+              {Array.from(new Set(fees.map(fee => fee.subtype))).map((subtype, index) => {
+                console.log(`Subtype: ${subtype}`); // Log the subtype for debugging
+                return (
+                  <option key={index} value={subtype}>{subtype}</option>
+                );
+              })}
             </select>
           </div>
 
@@ -189,7 +192,7 @@ const fetchFees = async () => {
       <CardFooter>
      {buttonLoading ?   <Button 
     
-      
+      onClick={handleSubmit}
    
         className="w-full py-2 rounded-md"
      

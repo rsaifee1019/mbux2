@@ -1,14 +1,16 @@
 import { NextResponse } from 'next/server';
-import sequelize from "@/lib/sequelize";
-import Applicant from '../../../models/Applicant'; // Import your Applicant model
-import Payment from '../../../models/Payment';
-import PersonalDetails from '@/models/PersonalDetails';
+import connectionToDatabase from '@/lib/mongodb';
 import Student from '@/models/Student';
+import Payment from '@/models/Payment';
 import Fee from '@/models/Fee';
+import sequelize from '@/lib/sequelize';
+
+
+
 
 
 export async function POST(req) {
-
+  await connectionToDatabase();
   const paymentTypes = {
     interTuition: 300,
     mastersTuition: 100,
@@ -18,7 +20,7 @@ export async function POST(req) {
   try {
     const body = await req.json();
     
-     // transaction id
+    // transaction id
     const timestamp = Date.now();
     const random = Math.floor(Math.random() * 1000000);
     const tran_id = `TXN${timestamp}${random}`;          
@@ -26,22 +28,20 @@ export async function POST(req) {
     const {studentId, degree, year, paymentType, phone, name} = body
 
 
-    let student = await Student.findOne({where: {studentId}})
+    // create student
+    let student = await Student.findOne({studentId}) 
     if(!student){
-      student = await Student.create({studentId,  degree, year, paymentStatus: 'pending', phone, name})
-
+      student = await Student.create({studentId, degree, year, paymentStatus: 'pending', phone, name})
+  
     }
 
-    const fees = await Fee.findOne({where: {degree, subtype: paymentType}}) 
 
-    const payment = await Payment.create({amount: fees.amount, transactionId: tran_id, userType: 'student', studentId: student.id, paymentType: paymentType })
-console.log(fees, tran_id)
+    const fees = await Fee.findOne({degree, subtype: paymentType}) 
 
-return NextResponse.json({tran_id}, {status: 200})
-   
+    const payment = await Payment.create({amount: fees.amount, transactionId: tran_id, userType: 'student', studentId, paymentType: paymentType })
 
-    
-    // Extract data from the request body
+
+    return NextResponse.json({tran_id}, {status: 200})
   } catch (error) {
     console.error('Error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

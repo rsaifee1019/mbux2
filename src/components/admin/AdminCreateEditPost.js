@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useRouter } from 'next/navigation';
 
-const AdminCreateEditNotice = ({ noticeId }) => {
+const AdminCreateEditPost = ({ postId }) => {
   const router = useRouter();
   const [formData, setFormData] = useState({
     title: '',
@@ -19,11 +19,12 @@ const AdminCreateEditNotice = ({ noticeId }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    const fetchNotice = async () => {
-      if (noticeId) {
+    const fetchPost = async () => {
+      if (postId && postId !== 'new') {
+       
         try {
-          const response = await fetch(`/api/admin/notices/${noticeId}`);
-          if (!response.ok) throw new Error('Failed to fetch notice');
+          const response = await fetch(`/api/admin/posts/${postId}`);
+          if (!response.ok) throw new Error('Failed to fetch post');
           const data = await response.json();
           setFormData({
             title: data.title || '',
@@ -32,13 +33,13 @@ const AdminCreateEditNotice = ({ noticeId }) => {
           });
           setIsEditing(true);
         } catch (err) {
-          setError('Failed to fetch notice details');
+          setError('Failed to fetch post details');
         }
       }
     };
 
-    fetchNotice();
-  }, [noticeId]);
+    fetchPost();
+  }, [postId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,8 +56,8 @@ const AdminCreateEditNotice = ({ noticeId }) => {
 
     try {
       const url = isEditing 
-        ? `/api/admin/notices/${noticeId}`
-        : '/api/admin/notices';
+        ? `/api/admin/posts/${postId}`
+        : '/api/admin/posts';
       
       const response = await fetch(url, {
         method: isEditing ? 'PUT' : 'POST',
@@ -72,8 +73,8 @@ const AdminCreateEditNotice = ({ noticeId }) => {
       }
 
       // Redirect to notices list after successful submission
-      router.push('/admin/notices');
-      router.refresh(); // Refresh the page to update the notices list
+    
+      router.refresh(); // Refresh the page to update the posts list
       
     } catch (err) {
       setError(err.message);
@@ -85,7 +86,7 @@ const AdminCreateEditNotice = ({ noticeId }) => {
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle>{isEditing ? 'Edit Notice' : 'Create New Notice'}</CardTitle>
+        <CardTitle>{isEditing ? 'Edit Post' : 'Create New Post'}</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -105,7 +106,7 @@ const AdminCreateEditNotice = ({ noticeId }) => {
               value={formData.title}
               onChange={handleChange}
               required
-              placeholder="Enter notice title"
+              placeholder="Enter post title"
             />
           </div>
 
@@ -118,7 +119,7 @@ const AdminCreateEditNotice = ({ noticeId }) => {
               name="description"
               value={formData.description}
               onChange={handleChange}
-              placeholder="Enter notice description"
+              placeholder="Enter post description"
               rows={4}
             />
           </div>

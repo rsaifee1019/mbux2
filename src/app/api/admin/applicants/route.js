@@ -1,9 +1,11 @@
 import Applicant from '@/models/Applicant';
 import { NextResponse } from 'next/server';
+import connectionToDatabase from '@/lib/mongodb';
 
 export async function GET(req) {
+    await connectionToDatabase()
     try {
-      const applicants = await Applicant.findAll();
+      const applicants = await Applicant.find();
       return NextResponse.json(applicants, { status: 200 });
     } catch (error) {
       return NextResponse.json({ message: 'Failed to retrieve applicants', error: error.message }, { status: 500 });

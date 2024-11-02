@@ -1,5 +1,5 @@
 'use client'
-
+import { useSearchParams } from 'next/navigation'
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -8,16 +8,18 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
-import { useRouter, useSearchParams } from 'next/navigation'; 
+import { useRouter } from 'next/navigation'; 
 import Image from 'next/image';
 import SearchParamsWrapper from '@/components/UseSearchParamsWrapper';
 import { Suspense } from 'react';
 import Cookies  from "js-cookie"
 const AdmissionForm = () => {
   const router = useRouter();
-  const [subject, setSubject] = useState(null);
+  const searchParams = useSearchParams()
+  const subject = searchParams.get('subject');
   const [bSectionSubjects, setBSectionSubjects] = useState(false);
   const [fourthSubjectOptions, setFourthSubjectOptions] = useState(false);
+  
 
   useEffect(() => {
     if (subject === 'science') {
@@ -33,6 +35,8 @@ const AdmissionForm = () => {
         { id: 'biology', label: 'জীববিজ্ঞান (১৭৮,১৭৯)' },
         { id: 'higherMath', label: 'উচ্চতর গণিত (২৬৫,২৬৬)' },
       ]);
+
+      console.log(bSectionSubjects);
     } else if (subject === 'humanities') {
       setBSectionSubjects([
         { id: 'economics', label: 'অর্থনীতি (১০৯,১১০)' },
@@ -195,6 +199,7 @@ const AdmissionForm = () => {
     }));
   };
 
+  
   return (
     <Suspense fallback={<div>Loading...</div>}>
     <SearchParamsWrapper>

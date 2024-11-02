@@ -22,7 +22,7 @@ const AdminNoticeList = () => {
 
   return (
     <div>
-      <h2>Notices</h2>
+     
       <button onClick={() => router.push('/admin/notices/new')}>Add New Notice</button>
       <table>
         <thead>
@@ -40,7 +40,7 @@ const AdminNoticeList = () => {
               <td>{notice.description}</td>
               <td>{new Date(notice.dateUploaded).toLocaleDateString()}</td>
               <td>
-                <button onClick={() => router.push(`/admin/notices/${notice.id}`)}>Edit</button>
+                <button onClick={() => router.push(`/admin/notices/${notice._id}`)}>Edit</button>
                 <button onClick={() => handleDelete(notice.id)}>Delete</button>
               </td>
             </tr>

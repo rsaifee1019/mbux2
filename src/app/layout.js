@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
       >
     
           <Header />
-          <main className="h-screen">{children}</main>
+          <main className="min-h-screen">{children}</main>
        
           <Footer />
       

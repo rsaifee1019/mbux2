@@ -14,7 +14,7 @@ export default function Faculty() {
 
   // Fetch teachers data
   const fetchTeachers = async () => {
-    const response = await fetch('/api/teachers?page=1', {
+    const response = await fetch('/api/teachers?page=2', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -60,14 +60,16 @@ export default function Faculty() {
           <Card key={teacher.id}>
             <CardContent className="p-6 flex flex-col items-center">
               <Image
-                src={ "/placeholder.svg"} // Use the image from the API or a placeholder
+                src={teacher.imageUrl? teacher.imageUrl : "/placeholder.svg"} // Use the image from the API or a placeholder
                 alt={teacher.title || teacher.designation} // Use title or designation as alt text
                 width={150}
                 height={150}
                 className="rounded-full mb-4"
               />
               <h2 className="text-xl font-semibold mb-2 text-[#585252]">{teacher.title || "No Name"}</h2>
-              <p className="text-[#585252] mb-4">{teacher.designation || "No Designation"}</p>
+              <p className="text-[#585252] mb-2">{teacher.designation || "No Designation"}</p>
+              <p className="text-[#585252] mb-2">{teacher.educationBackground || "No Education Background"}</p>
+              <p className="text-[#585252] mb-4">{teacher.mobileNo || "No Mobile Number"}</p>
               <Button asChild className="bg-[#e81727] hover:bg-[#c71522] text-white">
                 <Link href={`/faculty/?id=${teacher.id}`}>View Profile</Link>
               </Button>

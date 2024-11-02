@@ -1,11 +1,12 @@
 // components/DashboardHome.js
 "use client"
 import { useState } from 'react';
-import AdminPaymentList from './AdminPaymentList';
-import AdminApplicantList from './AdminApplicantList';
-import AdminNoticeList from './AdminNoticeList';
-import AdminTeacherList from './AdminTeacherList';
-
+import AdminPaymentList from './admin/AdminPaymentList';
+import AdminApplicantList from './admin/AdminApplicantList';
+import AdminNoticeList from './admin/AdminNoticeList';
+import AdminTeacherList from './admin/AdminTeacherList';
+import AdminStudentList from './admin/AdminStudentList';
+import AdminFeeList from './admin/AdminFeeList';
 const DashboardHome = () => {
   const [activeSection, setActiveSection] = useState('applicants');
 
@@ -19,13 +20,17 @@ const DashboardHome = () => {
         return <AdminTeacherList />;
       case 'payments':
         return <AdminPaymentList />;
+      case 'students':
+        return <AdminStudentList />;
+      case 'fees':
+        return <AdminFeeList />;
       default:
         return <AdminApplicantList />;
     }
   };
 
   return (
-    <div style={styles.dashboardContainer}>
+    <div style={styles.dashboardContainer} className='overflow-y-scroll'>
       <aside style={styles.sidebar}>
         <h2>Admin Dashboard</h2>
         <ul style={styles.navList}>
@@ -40,6 +45,12 @@ const DashboardHome = () => {
           </li>
           <li style={styles.navItem}>
             <button onClick={() => setActiveSection('payments')}>Payments</button>
+          </li>
+          <li style={styles.navItem}>
+            <button onClick={() => setActiveSection('students')}>Students</button>
+          </li>
+          <li style={styles.navItem}>
+            <button onClick={() => setActiveSection('fees')}>Fees</button>
           </li>
         </ul>
       </aside>

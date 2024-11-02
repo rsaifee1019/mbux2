@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import FeeTable from "@/components/FeeTable"
+import Cookies from "js-cookie"
 
 export default function CheckoutPage() {
   const [payment, setPayment] = useState(null)
@@ -15,7 +16,7 @@ export default function CheckoutPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const tran_id = localStorage.getItem("tran_id");
+        const tran_id = Cookies.get("tran_id");
         if (!tran_id) {
           setError('Transaction ID not found in localStorage');
           return;

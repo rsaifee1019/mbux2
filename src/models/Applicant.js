@@ -1,36 +1,35 @@
-import { DataTypes } from 'sequelize';
-import sequelize from '../lib/sequelize.js';
-import Student from './Student.js';
-import PersonalDetails from './PersonalDetails.js';
+// models/Applicant.js
+import mongoose from 'mongoose';
 
-const Applicant = sequelize.define('Applicant', {
+const ApplicantSchema = new mongoose.Schema({
   ssc_registration: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    primaryKey: true
+    type: String,
+    required: true,
+    unique: true // Primary key in Sequelize becomes unique in Mongoose
   },
   name_English: {
-    type: DataTypes.STRING,
-    allowNull: true,
+    type: String,
+    required: false
   },
   application_date: {
-    type: DataTypes.DATE,
-    allowNull: false,
+    type: Date,
+    required: true
   },
   status: {
-    type: DataTypes.ENUM('unpaid','pending', 'accepted', 'rejected'),
-    defaultValue: 'unpaid',
+    type: String,
+    enum: ['unpaid', 'pending', 'accepted', 'rejected'],
+    default: 'unpaid'
   },
   phone: {
-    type: DataTypes.STRING,
-    allowNull: true,
+    type: String,
+    required: false
   },
-
+  personalDetailsId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'PersonalDetails', // Reference to the PersonalDetails model
+    required: false
+  }
 });
 
-// Define the foreign key relationship with PersonalDetails
-Applicant.belongsTo(PersonalDetails, {
-  foreignKey: 'personalDetailsId', // This will add the foreign key in Applicant table
-});
-
-export default Applicant;
+// Export the model
+export default mongoose.models.Applicant || mongoose.model('Applicant', ApplicantSchema);

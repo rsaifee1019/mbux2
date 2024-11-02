@@ -22,7 +22,7 @@ const AdminApplicantList = () => {
 
   return (
     <div>
-      <h2>Applicants</h2>
+   
       <button onClick={() => router.push('/admin/applicants/new')}>Add New Applicant</button>
       <table>
         <thead>
@@ -36,7 +36,7 @@ const AdminApplicantList = () => {
         <tbody>
           {applicants.map((applicant) => (
             <tr key={applicant.id}>
-              <td>{applicant.name}</td>
+              <td>{applicant.name_English}</td>
               <td>{applicant.email}</td>
               <td>{new Date(applicant.applicationDate).toLocaleDateString()}</td>
               <td>

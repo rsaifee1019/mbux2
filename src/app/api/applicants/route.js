@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server';
-import sequelize from "@/lib/sequelize";
-import Applicant from '../../../models/Applicant'; // Import your Applicant model
-import Payment from '../../../models/Payment';
+import mongoose from 'mongoose';
+import Applicant from '../../../models/Applicant';
 import PersonalDetails from '@/models/PersonalDetails';
-
+import Payment from '../../../models/Payment';
+import connectionToDatabase from '@/lib/mongodb';
 
 export async function POST(req) {
+  await connectionToDatabase()
   try {
     const body = await req.json(); // Parse the incoming JSON body
 
@@ -121,14 +122,14 @@ export async function POST(req) {
     });
 
     // Associate PersonalDetails with Applicant
-    await newApplicant.update({ personalDetailsId: newPersonalDetails.id });
+    await newApplicant.updateOne({ personalDetailsId: newPersonalDetails.id });
 
     // Create the new Payment entry
     const newPayment = await Payment.create({
       applicantId: ssc_registration,
       transactionId: tran_id,
-      status: 'unpaid', // Default status
-      amount: 3350,
+      status: 'pending', // Default status
+      amount: 3300,
       userType: "applicant"
     });
 

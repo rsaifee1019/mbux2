@@ -1,25 +1,24 @@
-import sequelize from '../lib/sequelize.js';
-import { DataTypes } from 'sequelize';
+import mongoose from 'mongoose';
 
-const Fee = sequelize.define('Fee', {
+const FeeSchema = new mongoose.Schema({
   type: {
-    type: DataTypes.STRING,   // Type of fee (e.g., 'registration', 'tuition', 'sports', etc.)
-    allowNull: false,
+    type: String,   // Type of fee (e.g., 'registration', 'tuition', 'sports', etc.)
+    required: true,
   },
   subtype: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    type: String,
+    required: true,
   },
- 
-  
   amount: {
-    type: DataTypes.FLOAT,    // Fee amount
-    allowNull: false,
+    type: Number,    // Fee amount
+    required: true,
   },
   degree: {
-    type: DataTypes.TEXT,     // Description of the fee (optional)
-    allowNull: false,
+    type: String,     // Description of the fee (optional)
+    required: true,
   },
 });
+
+const Fee = mongoose.models.Fee || mongoose.model('Fee', FeeSchema);
 
 export default Fee;

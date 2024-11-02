@@ -2,16 +2,24 @@
 import { NextResponse } from 'next/server';
 import { SSLCommerzPayment } from '../lib/sslcommerz';
 import Payment from '@/models/Payment';
+import connectionToDatabase from '@/lib/mongodb';
 
 export async function POST(req) {
+  await connectionToDatabase();
   const body = await req.json();
   const { tran_id } = body;
   
   // Log the transaction ID for debugging
-  console.log('Transaction ID:', tran_id);
+let store_id = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_TUITION
+let store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TUITION
+
 
   // Check if payment exists
-  const payment = await Payment.findOne({ where: { transactionId: tran_id } });
+  const payment = await Payment.findOne({ transactionId: tran_id });
+  if(payment.paymentType !== 'tuition'){
+    store_id = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_ADMISSION
+    store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_ADMISSION
+  }
   
   // Log the payment object for debugging
   console.log('Payment object:', payment);
@@ -21,6 +29,7 @@ export async function POST(req) {
     return NextResponse.json({ error: 'Reciept not found' }, { status: 404 });
   }
 
+
   // Ensure payment has the expected structure
   const amount = payment.amount;
   const name = payment.userType === 'student' && payment.student ? payment.student.name : payment.applicant ? payment.applicant.name : 'Unknown';
@@ -28,8 +37,8 @@ export async function POST(req) {
 
   try {
       const data = {
-        store_id: process.env.NEXT_PUBLIC_STORE_ID,
-      store_passwd: process.env.NEXT_PUBLIC_STORE_PASSWD,
+        store_id,
+      store_passwd,
       total_amount: amount,
       currency: 'BDT',
       tran_id,
@@ -52,8 +61,8 @@ export async function POST(req) {
     };
 
     const sslcz = new SSLCommerzPayment(
-      process.env.NEXT_PUBLIC_STORE_ID,
-      process.env.NEXT_PUBLIC_STORE_PASSWD,
+      store_id,
+      store_passwd,
       false
     );
 

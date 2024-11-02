@@ -1,56 +1,49 @@
-import sequelize from '../lib/sequelize.js';
-import { DataTypes } from 'sequelize';
-import PersonalDetails from './PersonalDetails.js';
+import mongoose from 'mongoose';
 
-
-const Student = sequelize.define('Student', {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  },
+const StudentSchema = new mongoose.Schema({
   name: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    type: String,
+    required: true,
   },
   email: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    unique: true,
-  },
-  phone: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  studentId: {
-    type: DataTypes.STRING,
+    type: String,
+    required: false,
     unique: false,
   },
- 
- degree: {
-  type: DataTypes.STRING,
-  allowNull: false,
- },
-
- year: {
-  type: DataTypes.TEXT,
-  allowNull: true,
- },
- paymentStatus: {
-  type: DataTypes.ENUM('pending', 'paid'),
-  defaultValue: 'pending',
- },
-
-
+  phone: {
+    type: String,
+    required: false,
+  },
+  studentId: {
+    type: String,
+    required: false,
+    unique: false,
+  },
+  degree: {
+    type: String,
+    required: true,
+  },
+  year: {
+    type: String,
+    required: false,
+  },
+  imageUrl: {
+    type: String,
+    required: false,
+  },
+  paymentStatus: {
+    type: String,
+    enum: ['pending', 'paid'],
+    default: 'pending',
+  },
+  personalDetailsId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'PersonalDetails',
+    required: false,
+  },
 });
 
-
-
-
-
-
-Student.belongsTo(PersonalDetails, {
-  foreignKey: 'personalDetailsId',
-});
+// Check if the model is already defined
+const Student = mongoose.models.Student || mongoose.model('Student', StudentSchema);
 
 export default Student;

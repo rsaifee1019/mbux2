@@ -1,48 +1,51 @@
-import sequelize from '../lib/sequelize.js';
-import { DataTypes } from 'sequelize';
+import mongoose from 'mongoose';
 
-const Payment = sequelize.define('Payment', {
+const PaymentSchema = new mongoose.Schema({
   amount: {
-    type: DataTypes.FLOAT,
-    allowNull: true,
+    type: Number,
+    required: false,
   },
   paymentDate: {
-    type: DataTypes.DATE,
-    allowNull: true,
-    defaultValue: DataTypes.NOW,
+    type: Date,
+    required: false,
+    default: Date.now,
   },
   paymentType: {
-    type: DataTypes.STRING,
-    allowNull: true,
+    type: String,
+    required: false,
   },
   status: {
-    type: DataTypes.ENUM('pending', 'completed', 'failed'),
-    allowNull: true,
+    type: String,
+    enum: ['pending', 'completed', 'failed'],
+    default: 'pending',
+    required: true,
   },
   userType: {
-    type: DataTypes.ENUM('applicant', 'student'),  // To distinguish between payment made by an applicant or student
-    allowNull: true,
+    type: String,
+    enum: ['applicant', 'student'],
+    required: false,
   },
   transactionId: {
-    type: DataTypes.STRING,  // Optional payment gateway reference
-    allowNull: true,
+    type: String,
+    required: false,
   },
-    applicantId: {
-    type: DataTypes.STRING, // Change to STRING to match ssc_registration type
-    allowNull: true,         // Nullable because some payments will be from students
-    references: {
-      model: 'Applicants',
-      key: 'ssc_registration',
-    }
+  applicantId: {
+    type: String,
+    required: false,
+    ref: 'Applicants',
   },
   studentId: {
-    type: DataTypes.INTEGER, // Foreign key for Student
-    allowNull: true,         // Nullable because some payments will be from applicants
-    references: {
-      model: 'Students',
-      key: 'id',
-    }
+    type: String,
+    required: false,
+    ref: 'Students',
+  },
+  paymentType: {
+    type: String,
+    required: false,
   },
 });
+
+// Check if the model is already defined
+const Payment = mongoose.models.Payment || mongoose.model('Payment', PaymentSchema);
 
 export default Payment;

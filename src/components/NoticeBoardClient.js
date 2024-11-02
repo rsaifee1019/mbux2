@@ -1,28 +1,40 @@
-"use client"
-import Link from 'next/link'
-import { Button } from "@/components/ui/button"
+"use client";
+import Link from 'next/link';
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Bell } from 'lucide-react';
 
-export default function NoticeBoardClient({notices}) {
-  console.log("notices", notices);
-    return <div>
-        
+export default function NoticeBoardClient({ notices }) {
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('bn-BD', options);
+  }
 
-        <div className=" p-6 ">
-        <h2 className="text-2xl font-semibold text-text-red mb-4">নোটিশ বোর্ড</h2>
-        <ul className="space-y-2">
-        {notices.map((notice) => (
-            <li className='text-text-black' key={notice.id}>
-              <Link href={`/notices/${notice.id}`}>{notice.title}</Link>
-              {/* Display the dateUploaded underneath the notice title */}
-              <div className="text-xs text-gray-500">{new Date(notice.dateUploaded).toLocaleDateString('bn-BD', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              })}</div>
+  return (
+    <Card className="w-full max-w-2xl mx-auto">
+      <CardHeader>
+        <CardTitle className="text-2xl font-bold flex items-center gap-2">
+          <Bell className="h-6 w-6" />
+          নোটিশ বোর্ড
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ul className="space-y-4">
+          {notices.length === 0 && <li>কোনো নোটিশ পাওয়া যায়নি</li>}
+          {notices.map((notice) => (
+            <li key={notice.id}>
+              <Link href={`/notices/${notice.id}`} className="block hover:bg-accent rounded-lg p-3 transition-colors">
+                <div className="flex justify-between items-start">
+                  <span className="font-medium">{notice.title}</span>
+                  <Badge variant="secondary" className="ml-2 shrink-0">
+                    {formatDate(notice.dateUploaded)}
+                  </Badge>
+                </div>
+              </Link>
             </li>
-        ))}
+          ))}
         </ul>
-        <Button className="mt-4" onClick={() => router.push('/notices')}>সব নোটিশ দেখুন</Button>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
+  );
 }

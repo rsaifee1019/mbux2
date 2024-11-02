@@ -11,7 +11,7 @@ export async function POST(req) {
   console.log('Transaction ID:', tran_id);
 
   // Check if payment exists
-  const payment = await Payment.findOne({ where: { transactionId: tran_id } });
+  const payment = await Payment.findOne({ transactionId: tran_id   });
   
   // Log the payment object for debugging
   console.log('Payment object:', payment);
@@ -28,8 +28,8 @@ export async function POST(req) {
 
   try {
       const data = {
-        store_id: 'test6717ab6bc2044',
-      store_passwd: 'test6717ab6bc2044@ssl',
+        store_id: process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_ADMISSION,
+      store_passwd: process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_ADMISSION,
       total_amount: amount,
       currency: 'BDT',
       tran_id,
@@ -52,8 +52,8 @@ export async function POST(req) {
     };
 
     const sslcz = new SSLCommerzPayment(
-      'test6717ab6bc2044',
-      'test6717ab6bc2044@ssl',
+      process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_ADMISSION,
+      process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_ADMISSION,
       false
     );
 

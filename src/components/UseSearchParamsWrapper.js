@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation';
 function SearchParamsWrapper({ children }) {
   const searchParams = useSearchParams();
   const subject = searchParams.get('subject');
+  console.log(subject);
 
   return (
     <>

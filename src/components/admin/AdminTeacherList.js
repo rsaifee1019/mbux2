@@ -21,7 +21,7 @@ const AdminTeacherList = () => {
   };
 
   return (
-    <div>
+    <div className=''>
       <h2>Teachers</h2>
       <button onClick={() => router.push('/admin/teachers/new')}>Add New Teacher</button>
       <table>
