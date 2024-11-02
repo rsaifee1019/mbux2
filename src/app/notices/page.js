@@ -1,11 +1,11 @@
 import NoticePage from "@/components/NoticePage";
 import Notice from "@/models/Notice";
-import sequelize from "@/lib/sequelize";
-import NoticeBoard from "@/components/NoticeBoard";
+
+import NoticeBoardClient from "@/components/NoticeBoardClient";
 
 export default async function Notices() {
-    const notices = await Notice.findAll();
+    const notices = await Notice.find();
     console.log("notices", notices);
     
-    return <NoticeBoard />
+    return <NoticeBoardClient notices={notices} />
 }
