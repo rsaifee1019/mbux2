@@ -10,7 +10,7 @@ dotenv.config();
 export async function generateMonthlyFeeRecords() {
   // Ensure database connection
   if (mongoose.connection.readyState !== 1) {
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(process.env.NEXT_PUBLIC_MONGO_URI);
   }
 
   const session = await mongoose.startSession();
