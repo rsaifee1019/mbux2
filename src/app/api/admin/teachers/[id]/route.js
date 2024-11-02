@@ -1,4 +1,4 @@
-import Teacher3 from '@/models/Teacher3';
+import Teacher3 from '@/models/Teacher';
 import { NextResponse } from 'next/server';
 import connectionToDatabase from '@/lib/mongodb';
 
