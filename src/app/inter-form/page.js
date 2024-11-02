@@ -1,5 +1,5 @@
 'use client'
-import { useSearchParams } from 'next/navigation'
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -15,11 +15,22 @@ import { Suspense } from 'react';
 import Cookies  from "js-cookie"
 const AdmissionForm = () => {
   const router = useRouter();
-  const searchParams = useSearchParams()
-  const subject = searchParams.get('subject');
   const [bSectionSubjects, setBSectionSubjects] = useState(false);
   const [fourthSubjectOptions, setFourthSubjectOptions] = useState(false);
   
+  const getSearchParams = () => {
+    // Only run on client side
+    if (typeof window !== 'undefined') {
+      const searchParams = new URL(window.location.href).searchParams
+      return {
+        subject: searchParams.get('subject')
+      }
+    }
+    return {}
+  }
+
+  const params = getSearchParams()
+  const subject = params.subject;
 
   useEffect(() => {
     if (subject === 'science') {
