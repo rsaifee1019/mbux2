@@ -89,7 +89,7 @@ export default function Faculty() {
       </div>    
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {teachers.length === 0 && <div>খোজা হচ্ছে</div>}
+      {teachers.length === 0 && <Spinner />}
       {teachers && teachers.map((teacher) => (
           <Card key={teacher.id}>
             <CardContent className="p-6 flex flex-col items-center">
