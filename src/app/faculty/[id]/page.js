@@ -7,8 +7,15 @@ import connectionToDatabase from "@/lib/mongodb";
 export default async function Faculty({ params }) {
     await connectionToDatabase();
     const { id } = params; // Get the ID from the URL parameters
-    const teacher = await Teacher3.findOne({ id: id });
-    console.log(teacher);
+    const teacherDoc = await Teacher3.findOne({ id: id });
+
+    // Convert the Mongoose document to a plain object
+    const teacher = teacherDoc ? teacherDoc.toObject() : null;
+
+    // If teacher is not found, you might want to handle that case
+    if (!teacher) {
+        return <div>Teacher not found</div>;
+    }
 
     return (
         <div className="container mx-auto px-4 py-8">
@@ -65,4 +72,4 @@ export default async function Faculty({ params }) {
             </Link>
         </div>
     );
-}
+}   
