@@ -6,8 +6,8 @@ import { Bell } from 'lucide-react';
 
 export default function NoticeBoardClient({ notices }) {
   const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('bn-BD', options);
+    const options = { month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('en-US', options);
   }
 
   return (
@@ -23,10 +23,10 @@ export default function NoticeBoardClient({ notices }) {
           {notices.length === 0 && <li>কোনো নোটিশ পাওয়া যায়নি</li>}
           {notices.map((notice) => (
             <li key={notice.id}>
-              <Link href={`/notices/${notice.id}`} className="block hover:bg-accent rounded-lg p-3 transition-colors">
+              <Link href={`${notice.link}`} target="_blank" className="block hover:bg-accent rounded-lg p-3 transition-colors">
                 <div className="flex justify-between items-start">
                   <span className="font-medium">{notice.title}</span>
-                  <Badge variant="secondary" className="ml-2 shrink-0">
+                  <Badge variant="secondary" className="ml-2 shrink-0 text-white">
                     {formatDate(notice.dateUploaded)}
                   </Badge>
                 </div>

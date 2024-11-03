@@ -233,7 +233,7 @@ const AdmissionForm = () => {
           <div className="w-24 h-24 "></div>
         </div>
         <div className="mt-4 p-2">
-          <p className="font-bold">শাখাঃ গার্হস্থ্য বিজ্ঞান</p>
+          <p className="font-bold">শাখাঃ {subject === 'humanities' ? 'মানবিক' : subject === 'science' ? 'বিজ্ঞান' : 'গার্হস্থ্য বিজ্ঞান'}</p>
         </div>
       </CardHeader>
       <CardContent>

@@ -17,8 +17,8 @@ export async function POST(req) {
 
     // Construct the absolute URL for the redirect
     const {status, tran_id} = body;
- if (status === 'FAILED'){
-    const redirectUrl = `${url.protocol}//${url.host}/fail?tran_id=${tran_id}`;
+ if (status === 'FAILED' || status === 'CANCELLED'){
+    const redirectUrl = `${process.env.NEXT_PUBLIC_APP_URL}/fail/${tran_id}`;
     const payment = await Payment.findOne({transactionId: tran_id})
     payment.status = 'failed';
     await payment.save();
@@ -35,7 +35,7 @@ export async function GET(req) {
   await connectionToDatabase()
   try {
     const url = new URL(req.url);
-    const redirectUrl = `${url.protocol}//${url.host}/success`;
+    const redirectUrl = `${process.env.NEXT_PUBLIC_APP_URL}/fail?tran_id=${tran_id}`;
 
     return NextResponse.redirect(redirectUrl,);
   } catch (error) {

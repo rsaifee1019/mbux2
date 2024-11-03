@@ -23,12 +23,19 @@ const Fees = () => {
     name:'',
     phone:''
   });
-
-  const paymentTypes = {
-    interTuition: 300,
-    mastersTuition: 100,
-    honsTuition: 100
+const [feesData, setFeesData] = useState([]);
+  const [amount, setAmount] = useState(0);
+  const fetchAmount = async () => {
+    const response = await fetch(`/api/fees`);
+    const data = await response.json();
+    setFeesData(data);
+    console.log(data)
   };
+
+  useEffect(() => {
+    fetchAmount();
+  }, []);
+  
 const fetchFees = async () => {
     const response = await fetch(`/api/fees`);
     const data = await response.json();
@@ -70,6 +77,9 @@ const fetchFees = async () => {
       [name]: value
     }));
     console.log(formData)
+    if(formData.paymentType && formData.degree){
+      setAmount(feesData.find(fee => fee.subtype === formData.paymentType && fee.degree === formData.degree).amount)
+    }
   };
 
   if (loading) {
@@ -80,9 +90,9 @@ const fetchFees = async () => {
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto mt-6">
+    <Card className="w-full max-w-md mx-auto mt-20">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">ফি পরিশোধ</CardTitle>
+        <CardTitle className="text-2xl font-bold text-center">ফি পরিশোধ ফর্ম</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -183,7 +193,7 @@ const fetchFees = async () => {
           {formData.paymentType && (
             <div className="mt-4 p-4 bg-gray-50 rounded-md">
               <p className="text-lg font-semibold">
-              পরিমান: Tk {paymentTypes[formData.paymentType]}
+              পরিমান: Tk {amount}
               </p>
             </div>
           )}
@@ -192,7 +202,7 @@ const fetchFees = async () => {
       <CardFooter>
      {buttonLoading ?   <Button 
     
-      onClick={handleSubmit}
+ 
    
         className="w-full py-2 rounded-md"
      
@@ -207,7 +217,7 @@ const fetchFees = async () => {
           className="w-full py-2 rounded-md"
           onClick={handleSubmit}
         >
-          Proceed to Payment
+        জমা দিন
         </Button>
         )}
       </CardFooter>

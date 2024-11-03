@@ -44,17 +44,26 @@ const HomePage = async () => {
                 <div className='flex flex-col md:flex-row justify-start '>
                     {/* NoticeBoard section */}
                     <NoticeBoardClient notices={notices} className="md:w-1/3" />
-                    <div className="grid grid-cols-1 md:grid-cols-1 gap-4 m-4 md:w-2/3">
+                    <div className="grid grid-cols-1 md:grid-cols-1 gap-4 m-4 md:w-2/3 ">
                         {/* Featured Content */}
-                        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-                            <Link href={`/fees`} className='col-span-1'>
-                                <Image src="/tuition.jfif" alt="tuition" width={500} height={500} className="rounded-lg" />
+                        <div className='grid grid-cols-1 md:grid-cols-2 gap-4 md:ml-8'>
+                            <Link href={`/fees`} className='col-span-1 relative'>
+                                <div className='w-full h-full bg-gradient-to-r from-[#a4192d] to-[#701724] rounded-lg'></div>
+                                <div className='absolute inset-0 flex items-center justify-center'>
+                                    <h1 className='text-white text-4xl font-semibold hover:underline decoration-white decoration-4'>টিউশন ফি</h1>
+                                </div>
                             </Link>
-                            <Link href={`/admissions`} className='col-span-1'>
-                                <Image src="/admission.jpg" alt="admission" width={500} height={500} className="rounded-lg" />
+                            <Link href={`/admissions`} className='col-span-1 relative'>
+                                <div className='w-full h-full bg-gradient-to-r from-[#a4192d] to-[#701724] rounded-lg'></div>
+                                <div className='absolute inset-0 flex items-center justify-center'>
+                                    <h1 className='text-white text-4xl font-semibold hover:underline decoration-white decoration-4'>অ্যাডমিশন</h1>
+                                </div>
                             </Link>
-                            <Link href={`/admissions`} className='col-span-2'>
-                                <Image src="/admission.jpg" alt="admission" width={500} height={500} className="rounded-lg" />
+                            <Link href={`/faculty`} className='col-span-2 relative'>
+                                <div className='w-full h-full bg-gradient-to-r from-[#a4192d] to-[#701724] rounded-lg'></div>
+                                <div className='absolute inset-0 flex items-center justify-center'>
+                                    <h1 className='text-white text-4xl font-semibold hover:underline decoration-white decoration-4'>ফ্যাকাল্টি</h1>
+                                </div>
                             </Link>
                         </div>
                     </div>

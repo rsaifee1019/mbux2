@@ -1,55 +1,56 @@
 // site/src/app/contact/page.js
 import React from 'react';
-
+import PageHero from '@/components/PageHero';
 export default function ContactPage() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">Contact Us</h1>
-      <p className="mb-4">
-        We would love to hear from you! Please reach out to us using the information below.
+      <PageHero text="আমাদের সাথে যোগাযোগ করুন" />
+     
+      <p className="my-4">
+        আমাদের সাথে যোগাযোগ করতে আগ্রহী? নিচের তথ্যগুলি ব্যবহার করুন।
       </p>
-      <h2 className="text-2xl font-semibold mb-2">Our Address</h2>
+      <h2 className="text-2xl font-semibold mb-2">আমাদের ঠিকানা</h2>
       <p className="mb-4">
-        123 Education Lane, <br />
-        Knowledge City, <br />
-        Learning State, 12345
+        ১২৩ শিক্ষা লেন, <br />
+        জ্ঞান নগর, <br />
+        শিক্ষা রাজ্য, ১২৩৪৫
       </p>
-      <h2 className="text-2xl font-semibold mb-2">Phone</h2>
-      <p className="mb-4">+1 (123) 456-7890</p>
-      <h2 className="text-2xl font-semibold mb-2">Email</h2>
+      <h2 className="text-2xl font-semibold mb-2">ফোন</h2>
+      <p className="mb-4">+১ (১২৩) ৪৫৬-৭৮৯০</p>
+      <h2 className="text-2xl font-semibold mb-2">ইমেইল</h2>
       <p className="mb-4">info@educationinstitution.com</p>
-      <h2 className="text-2xl font-semibold mb-2">Follow Us</h2>
+      <h2 className="text-2xl font-semibold mb-2">আমাদের অনুসরণ করুন</h2>
       <p className="mb-4">
-        Stay connected with us on social media:
+        সামাজিক মিডিয়ায় আমাদের সাথে সংযুক্ত থাকুন:
       </p>
       <ul className="list-disc list-inside mb-4">
-        <li><a href="https://facebook.com" className="text-blue-600">Facebook</a></li>
-        <li><a href="https://twitter.com" className="text-blue-400">Twitter</a></li>
-        <li><a href="https://instagram.com" className="text-pink-600">Instagram</a></li>
+        <li><a href="https://facebook.com" className="text-blue-600">ফেসবুক</a></li>
+        <li><a href="https://twitter.com" className="text-blue-400">টুইটার</a></li>
+        <li><a href="https://instagram.com" className="text-pink-600">ইনস্টাগ্রাম</a></li>
       </ul>
-      <h2 className="text-2xl font-semibold mb-2">Contact Form</h2>
+      <h2 className="text-2xl font-semibold mb-2">যোগাযোগ ফর্ম</h2>
       <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-            Name
+            নাম
           </label>
-          <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Your Name" />
+          <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="আপনার নাম" />
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-            Email
+            ইমেইল
           </label>
-          <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Your Email" />
+          <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="আপনার ইমেইল" />
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="message">
-            Message
+            বার্তা
           </label>
-          <textarea className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="message" placeholder="Your Message" rows="4"></textarea>
+          <textarea className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="message" placeholder="আপনার বার্তা" rows="4"></textarea>
         </div>
         <div className="flex items-center justify-between">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-            Send Message
+            বার্তা পাঠান
           </button>
         </div>
       </form>

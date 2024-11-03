@@ -8,7 +8,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-      <header className="bg-primary text-primary border-b-4 border-b-accent z-0">
+      <header className="bg-primary text-primary border-b-8 border-b-[#ffc72e] z-0">
         <div className="px-2 py-2 flex justify-between items-center">
           <Link href="/" className="text-2xl font-bold">
             <Image src="/logo-main.png" alt="logo" width={400} height={200} />
