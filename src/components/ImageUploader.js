@@ -1,8 +1,8 @@
-// app/upload/page.js
+// site/src/components/ImageUploader.js
 'use client';
 import { useState } from 'react';
 
-export default function UploadPage() {
+export default function ImageUploader({ setImageUrl }) {
   const [file, setFile] = useState(null);
   const [uploadResult, setUploadResult] = useState(null);
 
@@ -23,19 +23,13 @@ export default function UploadPage() {
 
     const result = await res.json();
     setUploadResult(result);
+    setImageUrl(`https://pub-67bde4aa3aa34d01a261d06d103bf2d6.r2.dev/${result.Key}`);
   };
 
   return (
     <div>
       <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload Image</button>
-
-      {uploadResult && (
-        <div>
-          <h4>Upload Result:</h4>
-          <pre>{JSON.stringify(uploadResult, null, 2)}</pre>
-        </div>
-      )}
+      <button type="button" onClick={handleUpload}>Upload Image</button>
     </div>
   );
 }

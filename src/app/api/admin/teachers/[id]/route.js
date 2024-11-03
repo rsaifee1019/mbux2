@@ -12,7 +12,7 @@ export async function GET(req) {
   console.log(id);
 
   try {
-    const teacher = await Teacher3.findById(id);
+    const teacher = await Teacher3.findOne({ id });
     if (!teacher) return NextResponse.json({ message: 'Teacher not found' }, { status: 404 });
     return NextResponse.json(teacher, { status: 200 });
   } catch (error) {
@@ -28,10 +28,16 @@ export async function PUT(req) {
   const id = pathname.split('/').pop(); // Get the last segment of the path
 
   try {
-    const teacher = await Teacher3.findById(id);
+    // Assuming req.body is not directly accessible due to the context of the application
+    // and the need to parse the request body manually
+    const requestBody = await req.json(); // Parse the request body as JSON
+
+    const teacher = await Teacher3.findOne({id});
+   
     if (!teacher) return NextResponse.json({ message: 'Teacher not found' }, { status: 404 });
     // Update the teacher with the request body
-    Object.assign(teacher, req.body); // Update the teacher with new data
+    console.log(requestBody);
+    Object.assign(teacher, requestBody); // Update the teacher with new data
     await teacher.save(); // Save the updated teacher
     return NextResponse.json(teacher, { status: 200 });
   } catch (error) {

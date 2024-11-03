@@ -1,9 +1,9 @@
-import AdminCreateEditNotice from '@/components/admin/AdminCreateEditNotice';
+import AdminCreateEditTeacher from '@/components/admin/AdminCreateEditTeacher';
 
-export default function NoticePage({ params }) {
+export default function TeacherPage({ params }) {
     return (
       <div className="p-6">
-        <AdminCreateEditNotice noticeId={params.id} />
+        <AdminCreateEditTeacher teacherId={params.id} />
       </div>
     );
   }
