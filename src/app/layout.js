@@ -16,7 +16,7 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: "মাদার বখ্শ গার্হস্থ অর্থনীতি কলেজ",
+  title: "মাদার বখ্শ গার্হস্থ্য অর্থনীতি কলেজ",
   description: "জ্ঞান এবং উদ্ভাবনের কেন্দ্র",
 };
 

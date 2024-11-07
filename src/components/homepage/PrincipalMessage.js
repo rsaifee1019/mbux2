@@ -3,14 +3,15 @@ import Post from '@/models/Post'
 import connectionToDatabase from '@/lib/mongodb'
 export default async function PrincipalMessage() {
     await connectionToDatabase()
-    const post = {title: 'সালমা শাহাদাত', author: 'অধ্যক্ষ', description: 'আমাদের প্রতিষ্ঠানের সকল শিক্ষার্থী, শিক্ষক ও কর্মচারীদের প্রতি আমি সম্মান ও আন্তরিক শুভেচ্ছা জানাই। আমরা সবাই একসাথে মিলে আমাদের প্রতিষ্ঠানকে উন্নতির পথে এগিয়ে নিয়ে যাবো। আমাদের প্রতিষ্ঠান একটি সমৃদ্ধ ও সমবেত সমাজ গঠনের লক্ষ্যে কাজ করছে। আমরা চাই আমাদের শিক্ষার্থীরা সমাজের সক্রিয় সদস্য হিসেবে অবদান রাখবে এবং তাদের জীবনের লক্ষ্য অর্জন করবে। আমরা আমাদের শিক্ষক ও কর্মচারীদের সহযোগিতায় এই লক্ষ্য অর্জনের চেষ্টা করছি।'}
-
+    const post = {title: 'সালমা শাহাদাত', author: 'অধ্যক্ষ',
+       description: 'আমাদের বিশ্ববিদ্যালয়ের পক্ষ থেকে আপনাদের সকলকে জানাই আন্তরিক শুভেচ্ছা। একজন শিক্ষাবিদ হিসেবে এবং এই প্রতিষ্ঠানের অধ্যক্ষ হিসেবে আপনাদের সাথে কিছু কথা শেয়ার করতে পেরে আমি আনন্দিত।গত তিন দশক ধরে আমাদের বিশ্ববিদ্যালয় উচ্চশিক্ষার ক্ষেত্রে একটি উজ্জ্বল নক্ষত্র হিসেবে আলোকবর্তিকা হয়ে আছে। আমাদের প্রাক্তন শিক্ষার্থীরা আজ দেশের বিভিন্ন গুরুত্বপূর্ণ অবস্থানে কর্মরত থেকে জাতির উন্নয়নে অবদান রেখে চলেছেন। আমাদের গবেষণা কার্যক্রম জাতীয় ও আন্তর্জাতিক স্বীকৃতি অর্জন করেছে। বর্তমানে আমাদের রয়েছে অত্যাধুনিক গবেষণাগার, সমৃদ্ধ লাইব্রেরি, এবং দক্ষ শিক্ষকমণ্ডলী। আমরা শুধু পাঠ্যপুস্তকের জ্ঞান নয়, বরং জীবন দক্ষতা, নৈতিক মূল্যবোধ এবং সামাজিক দায়বদ্ধতার শিক্ষাও প্রদান করে থাকি। আমাদের লক্ষ্য শিক্ষার্থীদের একজন যোগ্য নাগরিক হিসেবে গড়ে তোলা।'}
+      
     if (!post) return null
     return (
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white rounded-lg shadow-md p-6 mx-4">
             <h2 className="text-2xl font-bold mb-4">অধ্যক্ষের বার্তা</h2>
       <div className="space-y-4">
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center mb-8">
       <Image src="/principal.jpg" alt="Principal" width={400} height={400} />
       </div>
         <div className="text-center mb-4">
@@ -18,7 +19,7 @@ export default async function PrincipalMessage() {
           <h3 className="font-semibold">{post.title}</h3>
           <p className="text-sm text-gray-500">{post.author}</p>
         </div>
-        <div className="text-gray-600">
+        <div className="text-gray-600 px-4">
           <div dangerouslySetInnerHTML={{ __html: post.description }} />
             </div>
         </div>

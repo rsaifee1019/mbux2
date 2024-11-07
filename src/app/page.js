@@ -39,7 +39,7 @@ const HomePage = async () => {
                         />
                         <div className="absolute inset-0 flex items-center justify-center">
                             <div className="text-center">
-                                <h1 className="text-4xl p-2 bg-black/70 md:text-6xl font-semibold mb-4">মাদার বখ্শ গার্হস্থ অর্থনীতি কলেজ</h1>
+                                <h1 className="text-4xl p-2 bg-black/70 md:text-6xl font-semibold mb-4">মাদার বখ্শ গার্হস্থ্য অর্থনীতি কলেজ</h1>
                             </div>
                         </div>
                     </section>
