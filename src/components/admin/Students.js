@@ -14,7 +14,7 @@ const StudentCSVUpload = () => {
     const students = csvData.map(row => ({
       studentId: row.studentId?.trim(),
       name: row.name?.trim(),
-      phone: row.phone?.trim(),
+      
       guardianPhone: row['guardian phone']?.trim(),
       degree: row.degree?.toLowerCase(),
       department: row.department,
