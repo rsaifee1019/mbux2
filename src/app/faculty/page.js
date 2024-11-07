@@ -16,7 +16,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination"
+} from "@/components/ui/pagination.jsx"
 
 export default function Faculty() {
   const [teachers, setTeachers] = useState([]);

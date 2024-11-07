@@ -11,7 +11,7 @@ export default function NoticeBoardClient({ notices }) {
   }
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <Card className="w-full ">
       <CardHeader>
         <CardTitle className="text-2xl font-bold flex items-center gap-2">
           <Bell className="h-6 w-6" />

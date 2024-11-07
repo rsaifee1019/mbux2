@@ -14,6 +14,10 @@ const StudentSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  guardianPhone: {
+    type: String,
+    required: false,
+  },
   studentId: {
     type: String,
     required: false,
@@ -23,10 +27,18 @@ const StudentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  department: {
+    type: String,
+    required: false,
+  },
   year: {
     type: String,
     required: false,
   },
+  session: {
+    type: String,
+    required: false,
+  },  
   imageUrl: {
     type: String,
     required: false,

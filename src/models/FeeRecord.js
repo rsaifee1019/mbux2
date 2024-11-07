@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+
 const feeRecordSchema = new mongoose.Schema({
     student: {
       type: mongoose.Schema.Types.ObjectId,

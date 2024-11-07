@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 const PostSchema = new mongoose.Schema({
 
   title: { type: String, required: true }, 
+  author: { type: String, required: false },
   category: { type: String, required: false },
   image: { type: String, required: false }, // Image of the post (optional)
   description: { type: String, required: false }, // Description of the post (optional)

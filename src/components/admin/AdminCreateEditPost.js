@@ -3,16 +3,28 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useRouter } from 'next/navigation';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import ImageUploader from '@/components/ImageUploader';
+import ReactQuill from 'react-quill'; // Import React Quill
+import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 
 const AdminCreateEditPost = ({ postId }) => {
   const router = useRouter();
   const [formData, setFormData] = useState({
     title: '',
-    description: '',
-    link: ''
+    category: '',
+    description: '', // Keep this as a string for HTML content
+    link: '',
+    image: '',
+    dateUploaded: new Date().toISOString().split('T')[0]
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -21,15 +33,17 @@ const AdminCreateEditPost = ({ postId }) => {
   useEffect(() => {
     const fetchPost = async () => {
       if (postId && postId !== 'new') {
-       
         try {
           const response = await fetch(`/api/admin/posts/${postId}`);
           if (!response.ok) throw new Error('Failed to fetch post');
           const data = await response.json();
           setFormData({
             title: data.title || '',
-            description: data.description || '',
-            link: data.link || ''
+            category: data.category || '',
+            description: data.description || '', // This will now hold HTML
+            link: data.link || '',
+            image: data.image || '',
+            dateUploaded: new Date(data.dateUploaded).toISOString().split('T')[0]
           });
           setIsEditing(true);
         } catch (err) {
@@ -46,6 +60,20 @@ const AdminCreateEditPost = ({ postId }) => {
     setFormData(prev => ({
       ...prev,
       [name]: value
+    }));
+  };
+
+  const handleSelectChange = (name, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleImageUrl = (url) => {
+    setFormData(prev => ({
+      ...prev,
+      image: url
     }));
   };
 
@@ -72,9 +100,8 @@ const AdminCreateEditPost = ({ postId }) => {
         throw new Error(data.message || 'Something went wrong');
       }
 
-      // Redirect to notices list after successful submission
-    
-      router.refresh(); // Refresh the page to update the posts list
+      router.push('/admin/posts');
+      router.refresh();
       
     } catch (err) {
       setError(err.message);
@@ -111,16 +138,33 @@ const AdminCreateEditPost = ({ postId }) => {
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="description" className="block text-sm font-medium">
+            <label htmlFor="category" className="block text-sm font-medium">
+              Category
+            </label>
+            <Select
+              value={formData.category}
+              onValueChange={(value) => handleSelectChange('category', value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="news">News</SelectItem>
+                <SelectItem value="event">Event</SelectItem>
+                <SelectItem value="announcement">Announcement</SelectItem>
+                <SelectItem value="other">Other</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium">
               Description
             </label>
-            <Textarea
-              id="description"
-              name="description"
+            <ReactQuill
               value={formData.description}
-              onChange={handleChange}
+              onChange={(value) => setFormData(prev => ({ ...prev, description: value }))}
               placeholder="Enter post description"
-              rows={4}
             />
           </div>
 
@@ -134,7 +178,36 @@ const AdminCreateEditPost = ({ postId }) => {
               type="url"
               value={formData.link}
               onChange={handleChange}
-              placeholder="Enter file link (optional)"
+              placeholder="Enter related link (optional)"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium">
+              Image
+            </label>
+            <ImageUploader setImageUrl={handleImageUrl} />
+            {formData.image && (
+              <div className="mt-2">
+                <img 
+                  src={formData.image} 
+                  alt="Post" 
+                  className="w-32 h-32 object-cover rounded-lg"
+                />
+              </div>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="dateUploaded" className="block text-sm font-medium">
+              Date
+            </label>
+            <Input
+              id="dateUploaded"
+              name="dateUploaded"
+              type="date"
+              value={formData.dateUploaded}
+              onChange={handleChange}
             />
           </div>
 
@@ -144,13 +217,13 @@ const AdminCreateEditPost = ({ postId }) => {
               className="flex-1"
               disabled={loading}
             >
-              {loading ? 'Saving...' : isEditing ? 'Update Notice' : 'Create Notice'}
+              {loading ? 'Saving...' : isEditing ? 'Update Post' : 'Create Post'}
             </Button>
             
             <Button 
               type="button"
               variant="outline"
-              onClick={() => router.push('/admin/notices')}
+              onClick={() => router.push('/admin/posts')}
             >
               Cancel
             </Button>
@@ -161,4 +234,4 @@ const AdminCreateEditPost = ({ postId }) => {
   );
 };
 
-export default AdminCreateEditNotice;
+export default AdminCreateEditPost;

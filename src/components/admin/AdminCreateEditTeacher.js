@@ -6,16 +6,20 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useRouter } from 'next/navigation';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import ImageUploader from '@/components/ImageUploader';
-import Image from 'next/image';
 
 const AdminCreateEditTeacher = ({ teacherId }) => {
   const router = useRouter();
   const [imageUrl, setImageUrl] = useState('');
   const [formData, setFormData] = useState({
-    id: teacherId,
     title: '',
-    publicationDate: '',
     nationalId: '',
     gender: '',
     religion: '',
@@ -31,10 +35,17 @@ const AdminCreateEditTeacher = ({ teacherId }) => {
     fathersName: '',
     mothersName: '',
     imageUrl: '',
+    status: 'active'
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    if (imageUrl) {
+      setFormData(prev => ({ ...prev, imageUrl }));
+    }
+  }, [imageUrl]);
 
   useEffect(() => {
     const fetchTeacher = async () => {
@@ -43,25 +54,7 @@ const AdminCreateEditTeacher = ({ teacherId }) => {
           const response = await fetch(`/api/admin/teachers/${teacherId}`);
           if (!response.ok) throw new Error('Failed to fetch teacher');
           const data = await response.json();
-          setFormData({
-            title: data.title || '',
-            publicationDate: data.publicationDate || '',
-            nationalId: data.nationalId || '',
-            gender: data.gender || '',
-            religion: data.religion || '',
-            bloodGroup: data.bloodGroup || '',
-            mobileNo: data.mobileNo || '',
-            email: data.email || '',
-            designation: data.designation || '',
-            educationQualifications: data.educationQualifications || '',
-            educationBackground: data.educationBackground || '',
-            presentAddress: data.presentAddress || '',
-            permanentAddress: data.permanentAddress || '',
-            maritalStatus: data.maritalStatus || '',
-            fathersName: data.fathersName || '',
-            mothersName: data.mothersName || '',
-            imageUrl: data.imageUrl || '',
-          });
+          setFormData(data);
           setIsEditing(true);
         } catch (err) {
           setError('Failed to fetch teacher details');
@@ -72,20 +65,19 @@ const AdminCreateEditTeacher = ({ teacherId }) => {
     fetchTeacher();
   }, [teacherId]);
 
-  useEffect(() => {
-    setFormData(prev => ({
-      ...prev,
-      imageUrl
-    }));
-  }, [imageUrl]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
-    console.log(formData);
+  };
+
+  const handleSelectChange = (name, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -111,8 +103,8 @@ const AdminCreateEditTeacher = ({ teacherId }) => {
         throw new Error(data.message || 'Something went wrong');
       }
 
-      // Redirect to teachers list after successful submission
-    //   router.push('/admin');
+      router.push('/admin/teachers');
+      router.refresh();
       
     } catch (err) {
       setError(err.message);
@@ -122,255 +114,278 @@ const AdminCreateEditTeacher = ({ teacherId }) => {
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <Card className="w-full max-w-4xl mx-auto">
       <CardHeader>
         <CardTitle>{isEditing ? 'Edit Teacher' : 'Create New Teacher'}</CardTitle>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           {error && (
             <Alert variant="destructive">
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
-          
-          <div className="space-y-2">
-            <label htmlFor="title" className="block text-sm font-medium">
-              Name *
-            </label>
-            <Input
-              id="title"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              required
-              placeholder="Enter teacher name"
-            />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label htmlFor="title" className="text-sm font-medium">
+                Full Name *
+              </label>
+              <Input
+                id="title"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="nationalId" className="text-sm font-medium">
+                National ID
+              </label>
+              <Input
+                id="nationalId"
+                name="nationalId"
+                value={formData.nationalId}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="gender" className="text-sm font-medium">
+                Gender
+              </label>
+              <Select
+                value={formData.gender}
+                onValueChange={(value) => handleSelectChange('gender', value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select gender" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="male">Male</SelectItem>
+                  <SelectItem value="female">Female</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="religion" className="text-sm font-medium">
+                Religion
+              </label>
+              <Input
+                id="religion"
+                name="religion"
+                value={formData.religion}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="bloodGroup" className="text-sm font-medium">
+                Blood Group
+              </label>
+              <Select
+                value={formData.bloodGroup}
+                onValueChange={(value) => handleSelectChange('bloodGroup', value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select blood group" />
+                </SelectTrigger>
+                <SelectContent>
+                  {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map((group) => (
+                    <SelectItem key={group} value={group}>{group}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="mobileNo" className="text-sm font-medium">
+                Mobile Number
+              </label>
+              <Input
+                id="mobileNo"
+                name="mobileNo"
+                value={formData.mobileNo}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="email" className="text-sm font-medium">
+                Email
+              </label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="designation" className="text-sm font-medium">
+                Designation *
+              </label>
+              <Input
+                id="designation"
+                name="designation"
+                value={formData.designation}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="maritalStatus" className="text-sm font-medium">
+                Marital Status
+              </label>
+              <Select
+                value={formData.maritalStatus}
+                onValueChange={(value) => handleSelectChange('maritalStatus', value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select marital status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="single">Single</SelectItem>
+                  <SelectItem value="married">Married</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="description" className="block text-sm font-medium">
-              Description
-            </label>
-            <Textarea
-              id="description"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              placeholder="Enter teacher description"
-              rows={4}
-            />
-          </div>
-
-          {/* Additional fields for the other properties */}
-          <div className="space-y-2">
-            <label htmlFor="nationalId" className="block text-sm font-medium">
-              National ID
-            </label>
-            <Input
-              id="nationalId"
-              name="nationalId"
-              value={formData.nationalId}
-              onChange={handleChange}
-              placeholder="Enter national ID"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="gender" className="block text-sm font-medium">
-              Gender
-            </label>
-            <Input
-              id="gender"
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-              placeholder="Enter gender"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="religion" className="block text-sm font-medium">
-              Religion
-            </label>
-            <Input
-              id="religion"
-              name="religion"
-              value={formData.religion}
-              onChange={handleChange}
-              placeholder="Enter religion"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="bloodGroup" className="block text-sm font-medium">
-              Blood Group
-            </label>
-            <Input
-              id="bloodGroup"
-              name="bloodGroup"
-              value={formData.bloodGroup}
-              onChange={handleChange}
-              placeholder="Enter blood group"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="mobileNo" className="block text-sm font-medium">
-              Mobile No
-            </label>
-            <Input
-              id="mobileNo"
-              name="mobileNo"
-              value={formData.mobileNo}
-              onChange={handleChange}
-              placeholder="Enter mobile number"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="email" className="block text-sm font-medium">
-              Email
-            </label>
-            <Input
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Enter email"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="designation" className="block text-sm font-medium">
-              Designation
-            </label>
-            <Input
-              id="designation"
-              name="designation"
-              value={formData.designation}
-              onChange={handleChange}
-              placeholder="Enter designation"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="educationQualifications" className="block text-sm font-medium">
+            <label htmlFor="educationQualifications" className="text-sm font-medium">
               Education Qualifications
             </label>
-            <Input
+            <Textarea
               id="educationQualifications"
               name="educationQualifications"
               value={formData.educationQualifications}
               onChange={handleChange}
-              placeholder="Enter education qualifications"
+              rows={3}
             />
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="educationBackground" className="block text-sm font-medium">
+            <label htmlFor="educationBackground" className="text-sm font-medium">
               Education Background
             </label>
-            <Input
+            <Textarea
               id="educationBackground"
               name="educationBackground"
               value={formData.educationBackground}
               onChange={handleChange}
-              placeholder="Enter education background"
+              rows={3}
             />
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="presentAddress" className="block text-sm font-medium">
-              Present Address
-            </label>
-            <Textarea
-              id="presentAddress"
-              name="presentAddress"
-              value={formData.presentAddress}
-              onChange={handleChange}
-              placeholder="Enter present address"
-              rows={2}
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label htmlFor="presentAddress" className="text-sm font-medium">
+                Present Address
+              </label>
+              <Textarea
+                id="presentAddress"
+                name="presentAddress"
+                value={formData.presentAddress}
+                onChange={handleChange}
+                rows={3}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="permanentAddress" className="text-sm font-medium">
+                Permanent Address
+              </label>
+              <Textarea
+                id="permanentAddress"
+                name="permanentAddress"
+                value={formData.permanentAddress}
+                onChange={handleChange}
+                rows={3}
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label htmlFor="fathersName" className="text-sm font-medium">
+                Father's Name
+              </label>
+              <Input
+                id="fathersName"
+                name="fathersName"
+                value={formData.fathersName}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="mothersName" className="text-sm font-medium">
+                Mother's Name
+              </label>
+              <Input
+                id="mothersName"
+                name="mothersName"
+                value={formData.mothersName}
+                onChange={handleChange}
+              />
+            </div>
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="permanentAddress" className="block text-sm font-medium">
-              Permanent Address
-            </label>
-            <Textarea
-              id="permanentAddress"
-              name="permanentAddress"
-              value={formData.permanentAddress}
-              onChange={handleChange}
-              placeholder="Enter permanent address"
-              rows={2}
-            />
+            <label className="text-sm font-medium">Profile Image</label>
+            <ImageUploader setImageUrl={setImageUrl} />
+            {formData.imageUrl && (
+              <div className="mt-2">
+                <img 
+                  src={formData.imageUrl} 
+                  alt="Profile" 
+                  className="w-32 h-32 object-cover rounded-lg"
+                />
+              </div>
+            )}
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="maritalStatus" className="block text-sm font-medium">
-              Marital Status
+            <label htmlFor="status" className="text-sm font-medium">
+              Status
             </label>
-            <Input
-              id="maritalStatus"
-              name="maritalStatus"
-              value={formData.maritalStatus}
-              onChange={handleChange}
-              placeholder="Enter marital status"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="fathersName" className="block text-sm font-medium">
-              Father's Name
-            </label>
-            <Input
-              id="fathersName"
-              name="fathersName"
-              value={formData.fathersName}
-              onChange={handleChange}
-              placeholder="Enter father's name"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="mothersName" className="block text-sm font-medium">
-              Mother's Name
-            </label>
-            <Input
-              id="mothersName"
-              name="mothersName"
-              value={formData.mothersName}
-              onChange={handleChange}
-              placeholder="Enter mother's name"
-            />
-          </div>
-          <ImageUploader setImageUrl={setImageUrl} />
-          <div className="space-y-2">
-            <label htmlFor="imageUrl" className="block text-sm font-medium">
-              Current Image
-            </label>
-            <Image src={formData.imageUrl} alt="Current Teacher Image" width={100} height={100} />
-          </div>
-
-          
-
-          <div className="flex gap-4">
-            <Button 
-              type="submit" 
-              className="flex-1"
-              disabled={loading}
+            <Select
+              value={formData.status}
+              onValueChange={(value) => handleSelectChange('status', value)}
             >
-              {loading ? 'Saving...' : isEditing ? 'Update Teacher' : 'Create Teacher'}
-            </Button>
-            
-            <Button 
+              <SelectTrigger>
+                <SelectValue placeholder="Select status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="active">Active</SelectItem>
+                <SelectItem value="inactive">Inactive</SelectItem>
+                <SelectItem value="on-leave">On Leave</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="flex justify-end gap-4">
+            <Button
               type="button"
               variant="outline"
               onClick={() => router.push('/admin/teachers')}
             >
               Cancel
+            </Button>
+            <Button 
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? 'Saving...' : isEditing ? 'Update Teacher' : 'Create Teacher'}
             </Button>
           </div>
         </form>

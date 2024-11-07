@@ -7,6 +7,8 @@ import AdminNoticeList from './admin/AdminNoticeList';
 import AdminTeacherList from './admin/AdminTeacherList';
 import AdminStudentList from './admin/AdminStudentList';
 import AdminFeeList from './admin/AdminFeeList';
+import StudentCSVUpload from './admin/Students';
+import AdminPostList from './admin/AdminPostList';
 const DashboardHome = () => {
   const [activeSection, setActiveSection] = useState('applicants');
 
@@ -16,6 +18,8 @@ const DashboardHome = () => {
         return <AdminApplicantList />;
       case 'notices':
         return <AdminNoticeList />;
+      case 'posts':
+        return <AdminPostList />;
       case 'teachers':
         return <AdminTeacherList />;
       case 'payments':
@@ -24,6 +28,8 @@ const DashboardHome = () => {
         return <AdminStudentList />;
       case 'fees':
         return <AdminFeeList />;
+      case 'import':
+        return <StudentCSVUpload />;
       default:
         return <AdminApplicantList />;
     }
@@ -32,31 +38,37 @@ const DashboardHome = () => {
   return (
     <div style={styles.dashboardContainer} className='overflow-y-scroll'>
       <aside style={styles.sidebar}>
-        <h2>Admin Dashboard</h2>
+    
         <ul style={styles.navList}>
           <li style={styles.navItem}>
-            <button onClick={() => setActiveSection('applicants')}>Applicants</button>
+            <button className={`w-full  p-2 rounded-md ${activeSection === 'applicants' ? 'bg-accent text-accent-foreground' : ''}`} onClick={() => setActiveSection('applicants')}>Applicants</button>
           </li>
           <li style={styles.navItem}>
-            <button onClick={() => setActiveSection('notices')}>Notices</button>
+            <button className={`w-full p-2 rounded-md ${activeSection === 'notices' ? 'bg-accent text-accent-foreground' : ''}`} onClick={() => setActiveSection('notices')}>Notices</button>
           </li>
           <li style={styles.navItem}>
-            <button onClick={() => setActiveSection('teachers')}>Teachers</button>
+            <button className={`w-full  p-2 rounded-md ${activeSection === 'teachers' ? 'bg-accent text-accent-foreground' : ''}`} onClick={() => setActiveSection('teachers')}>Teachers</button>
           </li>
           <li style={styles.navItem}>
-            <button onClick={() => setActiveSection('payments')}>Payments</button>
+            <button className={`w-full  p-2 rounded-md ${activeSection === 'payments' ? 'bg-accent text-accent-foreground' : ''}`} onClick={() => setActiveSection('payments')}>Payments</button>
           </li>
           <li style={styles.navItem}>
-            <button onClick={() => setActiveSection('students')}>Students</button>
+            <button className={`w-full t p-2 rounded-md ${activeSection === 'students' ? 'bg-accent text-accent-foreground' : ''}`} onClick={() => setActiveSection('students')}>Students</button>
           </li>
           <li style={styles.navItem}>
-            <button onClick={() => setActiveSection('fees')}>Fees</button>
+            <button className={`w-full  p-2 rounded-md ${activeSection === 'fees' ? 'bg-accent text-accent-foreground' : ''}`} onClick={() => setActiveSection('fees')}>Fees</button>
           </li>
+          <li style={styles.navItem}>
+            <button className={`w-full  p-2 rounded-md ${activeSection === 'posts' ? 'bg-accent text-accent-foreground' : ''}`} onClick={() => setActiveSection('posts')}>Posts</button>
+          </li>
+          <li style={styles.navItem}>
+          <button className={`w-full  p-2 rounded-md ${activeSection === 'import' ? 'bg-accent text-accent-foreground' : ''}`} onClick={() => setActiveSection('import')}>Import</button>
+        </li>
         </ul>
       </aside>
 
       <main style={styles.mainContent}>
-        <h2>{activeSection.charAt(0).toUpperCase() + activeSection.slice(1)}</h2>
+
         {renderSection()}
       </main>
     </div>

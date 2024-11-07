@@ -49,8 +49,8 @@ export async function DELETE(req) {
   try {
     const notice = await Notice.findById(id);
     if (!notice) return NextResponse.json({ message: 'Notice not found' }, { status: 404 });
-    await notice.remove(); // Use remove() instead of destroy()
-    return NextResponse.json(null, { status: 204 });
+    await notice.deleteOne(); // Use remove() instead of destroy()
+    return NextResponse.json(null, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: 'Failed to delete notice', error: error.message }, { status: 500 });
   }

@@ -41,6 +41,7 @@ const fetchFees = async () => {
     const data = await response.json();
     setFees(data);
     setLoading(false);
+
   };
   useEffect(() => {
     fetchFees();
@@ -77,11 +78,13 @@ const fetchFees = async () => {
       [name]: value
     }));
     console.log(formData)
-    if(formData.paymentType && formData.degree){
-      setAmount(feesData.find(fee => fee.subtype === formData.paymentType && fee.degree === formData.degree).amount)
-    }
+   
   };
-
+useEffect(() => {
+  if(formData.paymentType && formData.degree){
+    setAmount(feesData.find(fee => fee.subtype === formData.paymentType && fee.degree === formData.degree).amount)
+  }
+}, [formData.paymentType, formData.degree])
   if (loading) {
     return <Spinner />;
   }

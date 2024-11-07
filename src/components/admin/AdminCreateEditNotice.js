@@ -12,7 +12,8 @@ const AdminCreateEditNotice = ({ noticeId }) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    link: ''
+    link: '',
+    dateUploaded: new Date().toISOString().split('T')[0]
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -21,7 +22,6 @@ const AdminCreateEditNotice = ({ noticeId }) => {
   useEffect(() => {
     const fetchNotice = async () => {
       if (noticeId && noticeId !== 'new') {
-       
         try {
           const response = await fetch(`/api/admin/notices/${noticeId}`);
           if (!response.ok) throw new Error('Failed to fetch notice');
@@ -29,7 +29,8 @@ const AdminCreateEditNotice = ({ noticeId }) => {
           setFormData({
             title: data.title || '',
             description: data.description || '',
-            link: data.link || ''
+            link: data.link || '',
+            dateUploaded: new Date(data.dateUploaded).toISOString().split('T')[0]
           });
           setIsEditing(true);
         } catch (err) {
@@ -72,9 +73,8 @@ const AdminCreateEditNotice = ({ noticeId }) => {
         throw new Error(data.message || 'Something went wrong');
       }
 
-      // Redirect to notices list after successful submission
-    
-      router.refresh(); // Refresh the page to update the notices list
+      router.push('/admin/notices');
+      router.refresh();
       
     } catch (err) {
       setError(err.message);
@@ -135,6 +135,19 @@ const AdminCreateEditNotice = ({ noticeId }) => {
               value={formData.link}
               onChange={handleChange}
               placeholder="Enter file link (optional)"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="dateUploaded" className="block text-sm font-medium">
+              Date
+            </label>
+            <Input
+              id="dateUploaded"
+              name="dateUploaded"
+              type="date"
+              value={formData.dateUploaded}
+              onChange={handleChange}
             />
           </div>
 
