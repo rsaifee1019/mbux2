@@ -10,6 +10,7 @@ export async function POST(req) {
     const students = await Student.find({_id: {$in: studentIds}});
     const messages = students.map(student => {
         let phone = student.guardianPhone;
+        console.log(phone)
         if(phone.startsWith('0')){
             phone = phone.slice(1);
         }
