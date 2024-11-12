@@ -20,7 +20,7 @@ export async function GET(request) {
         messages: [
             {
                 to: "8801329671994", // Replace with the actual recipient number
-                message: "Hello Mr.Romel, do your work in Nabil Group? Can we talk?"
+                message: "Hello Mr.Romel, do your work in Nabil Group? Can we talk? kjsdfj"
             },
         ]
     };
