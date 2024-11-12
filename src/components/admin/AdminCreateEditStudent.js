@@ -19,7 +19,6 @@ const AdminCreateEditStudent = ({ studentId }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    guardianPhone: '',
     phone: '',
     studentId: '',
     degree: '',
@@ -145,13 +144,14 @@ const AdminCreateEditStudent = ({ studentId }) => {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="guardianPhone" className="text-sm font-medium">
-                Guardian Phone
+              <label htmlFor="email" className="text-sm font-medium">
+                Email
               </label>
               <Input
-                id="guardianPhone"
-                name="guardianPhone"
-                value={formData.guardianPhone}
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
                 onChange={handleChange}
               />
             </div>

@@ -136,7 +136,7 @@ const AdminStudentList = () => {
     return (
       (!filters.name || student.name.toLowerCase().includes(filters.name.toLowerCase())) &&
       (!filters.studentId || student.studentId.toLowerCase().includes(filters.studentId.toLowerCase())) &&
-      (!filters.guardianPhone || student.guardianPhone.toLowerCase().includes(filters.guardianPhone.toLowerCase())) &&
+      (!filters.email || student.email.toLowerCase().includes(filters.email.toLowerCase())) &&
       (filters.degree === 'all' || student.degree === filters.degree) && // Change here
       (!filters.department || student.department.toLowerCase().includes(filters.department.toLowerCase())) &&
       (filters.paymentStatus === 'all' || student.paymentStatus === filters.paymentStatus) // Change here
@@ -175,8 +175,8 @@ const AdminStudentList = () => {
             <TableRow>
               <TableHead>Name</TableHead>
               <TableHead>Student ID</TableHead>
-              <TableHead>Guardian Phone</TableHead>
-              <TableHead>Student Phone</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Phone</TableHead>
               <TableHead>Degree</TableHead>
               <TableHead>Department</TableHead>
               <TableHead>Year</TableHead>
@@ -189,7 +189,7 @@ const AdminStudentList = () => {
               <TableRow key={student._id}>
                 <TableCell>{student.name}</TableCell>
                 <TableCell>{student.studentId}</TableCell>
-                <TableCell>{student.guardianPhone}</TableCell>
+                <TableCell>{student.email}</TableCell>
                 <TableCell>{student.phone}</TableCell>
                 <TableCell>{student.degree}</TableCell>
                 <TableCell>{student.department}</TableCell>

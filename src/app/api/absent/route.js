@@ -9,12 +9,9 @@ export async function POST(req) {
 
     const students = await Student.find({_id: {$in: studentIds}});
     const messages = students.map(student => {
-        let phone = student.guardianPhone;
-        console.log(phone)
-        if(phone.startsWith('0')){
-            phone = phone.slice(1);
-        }
-        return ({to: `880${phone}`,
+        
+        
+        return ({to: `88${student.phone}`,
              message: `প্রিয় অভিভাবক, ${student.name} আজ অনুপস্থিত।`})
     });
 
