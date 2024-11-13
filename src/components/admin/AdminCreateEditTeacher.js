@@ -19,46 +19,24 @@ import axios from 'axios';
 const AdminCreateEditTeacher = ({ teacherId }) => {
   const [users, setUsers] = useState([]);
 
+
   useEffect(() => {
     const fetchAuth0Users = async () => {
       try {
-        // Step 1: Get the access token from Auth0
-        const options = {
-          method: 'POST',
-          url: `https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/oauth/token`,
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          data: new URLSearchParams({
-            grant_type: 'client_credentials',
-            client_id: process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID,
-            client_secret: process.env.NEXT_PUBLIC_AUTH0_CLIENT_SECRET,
-            audience: `https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/api/v2/`,
-          }),
-        };
-
-        const tokenResponse = await axios.request(options);
-        const { access_token } = tokenResponse.data;
-
-        // Step 2: Fetch users from Auth0 Management API
-        const usersOptions = {
-          method: 'GET',
-          url: `https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/api/v2/users`,
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
-        };
-
-        const response = await axios.request(usersOptions);
-        setUsers(response.data); // Set the users data
+        const response = await fetch('/api/admin/teachers/emails');
+        if (!response.ok) throw new Error('Failed to fetch users');
+        const data = await response.json();
+        setUsers(data);
       } catch (error) {
         console.error('Error fetching Auth0 users:', error);
         setError('Failed to fetch users');
       } finally {
-        setLoading(false); // Set loading to false after fetching
+        setLoading(false);
       }
     };
 
     fetchAuth0Users();
-  }, []); // Empty dependency array means this runs once on mount
+  }, []);
 
 
 
