@@ -9,6 +9,7 @@ import AdminStudentList from './admin/AdminStudentList';
 import AdminFeeList from './admin/AdminFeeList';
 import StudentCSVUpload from './admin/Students';
 import AdminPostList from './admin/AdminPostList';
+import Authorized from './absent/Authorized';
 const DashboardHome = () => {
   const [activeSection, setActiveSection] = useState('applicants');
 
@@ -30,6 +31,8 @@ const DashboardHome = () => {
         return <AdminFeeList />;
       case 'import':
         return <StudentCSVUpload />;
+        case "authorized":
+          return <Authorized />
       default:
         return <AdminApplicantList />;
     }
@@ -63,6 +66,9 @@ const DashboardHome = () => {
           </li>
           <li style={styles.navItem}>
           <button className={`w-full  p-2 rounded-md ${activeSection === 'import' ? 'bg-accent text-accent-foreground' : ''}`} onClick={() => setActiveSection('import')}>Import</button>
+        </li>
+        <li style={styles.navItem}>
+          <button className={`w-full  p-2 rounded-md ${activeSection === 'authorized' ? 'bg-accent text-accent-foreground' : ''}`} onClick={() => setActiveSection('authorized')}>Authorized</button>
         </li>
         </ul>
       </aside>

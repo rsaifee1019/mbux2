@@ -1,9 +1,10 @@
 import Link from 'next/link'
+
 export default function QuickLinks() {
     const links = [
       { title: 'অনলাইন টিউশন ফি', href: '/fees', icon: '💰' },
       { title: 'শিক্ষকমণ্ডলী', href: '/faculty', icon: '👥' },
-      { title: 'ফলাফল', href: '/results', icon: '📊' },
+      { title: 'হাজিরা', href: '/absent', icon: '📊' },
       { title: 'ভর্তি', href: '/admission', icon: '📝' },
     ]
   

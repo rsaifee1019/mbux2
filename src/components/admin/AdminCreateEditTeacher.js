@@ -14,12 +14,59 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import ImageUploader from '@/components/ImageUploader';
+import axios from 'axios';
 
 const AdminCreateEditTeacher = ({ teacherId }) => {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchAuth0Users = async () => {
+      try {
+        // Step 1: Get the access token from Auth0
+        const options = {
+          method: 'POST',
+          url: `https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/oauth/token`,
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          data: new URLSearchParams({
+            grant_type: 'client_credentials',
+            client_id: process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID,
+            client_secret: process.env.NEXT_PUBLIC_AUTH0_CLIENT_SECRET,
+            audience: `https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/api/v2/`,
+          }),
+        };
+
+        const tokenResponse = await axios.request(options);
+        const { access_token } = tokenResponse.data;
+
+        // Step 2: Fetch users from Auth0 Management API
+        const usersOptions = {
+          method: 'GET',
+          url: `https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/api/v2/users`,
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        };
+
+        const response = await axios.request(usersOptions);
+        setUsers(response.data); // Set the users data
+      } catch (error) {
+        console.error('Error fetching Auth0 users:', error);
+        setError('Failed to fetch users');
+      } finally {
+        setLoading(false); // Set loading to false after fetching
+      }
+    };
+
+    fetchAuth0Users();
+  }, []); // Empty dependency array means this runs once on mount
+
+
+
   const router = useRouter();
   const [imageUrl, setImageUrl] = useState('');
   const [formData, setFormData] = useState({
     title: '',
+    userEmail: '',
     nationalId: '',
     gender: '',
     religion: '',
@@ -103,7 +150,7 @@ const AdminCreateEditTeacher = ({ teacherId }) => {
         throw new Error(data.message || 'Something went wrong');
       }
 
-      router.push('/admin/teachers');
+      router.push(`/admin/teachers/${teacherId}`);
       router.refresh();
       
     } catch (err) {
@@ -139,6 +186,26 @@ const AdminCreateEditTeacher = ({ teacherId }) => {
                 required
               />
             </div>
+            <div className="space-y-2">
+            <label htmlFor="userEmail" className="text-sm font-medium">
+              User Email *
+            </label>
+            <Select
+              value={formData.userEmail}
+              onValueChange={(value) => handleSelectChange('userEmail', value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder={formData.userEmail || 'Select user email'} />
+              </SelectTrigger>
+              <SelectContent>
+                {users.map((user) => (
+                  <SelectItem key={user.user_id} value={user.email}>
+                    {user.name} ({user.email})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
             <div className="space-y-2">
               <label htmlFor="nationalId" className="text-sm font-medium">

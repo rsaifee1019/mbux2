@@ -33,11 +33,13 @@ export async function PUT(req) {
     const requestBody = await req.json(); // Parse the request body as JSON
 
     const teacher = await Teacher3.findOne({id});
+    console.log("current teacher", teacher);
    
     if (!teacher) return NextResponse.json({ message: 'Teacher not found' }, { status: 404 });
     // Update the teacher with the request body
-    console.log(requestBody);
-    Object.assign(teacher, requestBody); // Update the teacher with new data
+   
+    Object.assign(teacher, requestBody); 
+    console.log("updated teacher", teacher);
     await teacher.save(); // Save the updated teacher
     return NextResponse.json(teacher, { status: 200 });
   } catch (error) {

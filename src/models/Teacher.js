@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 
 const TeacherSchema = new mongoose.Schema({
   id: { type: String, required: true, unique: true },
+  userEmail: { type: String },
+
   title: { type: String, required: true },
   publicationDate: { type: Date },
   nationalId: { type: String },

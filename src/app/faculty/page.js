@@ -17,12 +17,24 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination.jsx"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
 export default function Faculty() {
   const [teachers, setTeachers] = useState([]);
   const [filter, setFilter] = useState("all");
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [showSignIn, setShowSignIn] = useState(false);
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
+
   // Fetch teachers data
   const fetchTeachers = async () => {
     const response = await fetch(`/api/teachers?page=${page}&status=${filter}`, {
@@ -45,8 +57,12 @@ export default function Faculty() {
       setLoading(false);
   },[teachers]);
 
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    console.log('Sign in attempted with:', userId, password);
+  };
 
- {loading && <Spinner />}
+  {loading && <Spinner />}
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -64,8 +80,51 @@ export default function Faculty() {
 
     </div>
   </section>
+
+    
+    <Dialog open={showSignIn} onOpenChange={setShowSignIn}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Sign In</DialogTitle>
+        </DialogHeader>
+        <form onSubmit={handleSignIn} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="userId">User ID</Label>
+            <Input
+              id="userId"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+              placeholder="Enter your user ID"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+            />
+          </div>
+          <Button 
+            type="submit" 
+            className="w-full bg-[#e81727] hover:bg-[#c71522] text-white"
+          >
+            Sign In
+          </Button>
+        </form>
+      </DialogContent>
+    </Dialog>
+
+
+   
+
+
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-[#a6192e]">Our Faculty</h1>
+       
+
         <div className="flex items-center">
           <Pagination className="w-fit">
             <PaginationPrevious className={page === 1 ? "opacity-50 cursor-not-allowed" : ""} onClick={() => setPage(page - 1)} />
@@ -74,7 +133,7 @@ export default function Faculty() {
         </div>
       </div>
       
-      <div className="mb-6">
+      <div className="mb-6 flex items-center justify-between">
         <Select onValueChange={(value) => setFilter(value)}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="বাছাই করুন" />
@@ -86,6 +145,12 @@ export default function Faculty() {
             <SelectItem value="staff">স্টাফ </SelectItem>
           </SelectContent>
         </Select>
+        <Button 
+        onClick={() => setShowSignIn(true)}
+        className="bg-[#e81727] hover:bg-[#c71522] text-white"
+      >
+        Sign In
+      </Button>
       </div>    
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
