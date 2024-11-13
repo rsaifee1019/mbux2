@@ -148,8 +148,22 @@ export default function AttendancePage() {
                     onClick={() => handleSelectStudent(student)}
                     className="flex items-center justify-between p-2 rounded-md hover:bg-accent cursor-pointer"
                   >
+                  <div className="flex gap-4">
+                  <Badge variant="outline">{student.studentId}</Badge>
+
                     <span>{student.name}</span>
-                    <Badge variant="outline">{student.roll}</Badge>
+                    </div>
+                    <div className="flex gap-2">
+
+                   
+                    <Badge variant="outline">{student.degree}</Badge>
+                  
+                    <Badge variant="outline">{student.department}</Badge>
+
+                    
+                    </div>
+              
+
                   </div>
                 ))
               ) : (
@@ -169,11 +183,18 @@ export default function AttendancePage() {
           <CardContent>
             <div className="space-y-2 max-h-96 overflow-y-auto">
               {selectedStudents.map((student) => (
+                
                 <div
                   key={student._id}
                   className="flex items-center justify-between p-2 rounded-md bg-accent"
                 >
+                <div className="flex gap-2">
+                <Badge variant="outline">{student.studentId}</Badge>
                   <span>{student.name}</span>
+                 
+                 
+
+                  </div>
                   <Button
                     variant="ghost"
                     size="icon"
@@ -181,7 +202,8 @@ export default function AttendancePage() {
                   >
                     <X className="h-4 w-4" />
                   </Button>
-                </div>
+                  </div>
+              
               ))}
             </div>
             <Button

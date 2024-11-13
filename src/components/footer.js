@@ -40,6 +40,7 @@ export default function Footer() {
           <Input type="email" placeholder="আপনার ইমেইল" className="rounded-r-none" />
           <Button type="submit" className="rounded-l-none">সাবস্ক্রাইব</Button>
         </form>
+        <a href="/admin">Admin</a>
       </div>
     </div>
     <div className="mt-8 text-center">

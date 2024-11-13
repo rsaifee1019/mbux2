@@ -1,7 +1,13 @@
 // site/src/app/contact/page.js
 import React from 'react';
 import PageHero from '@/components/PageHero';
-export default function ContactPage() {
+import connectionToDatabase from '@/lib/mongodb';
+import Teacher3 from '@/models/Teacher';
+
+export default async function ContactPage() {
+  await connectionToDatabase();
+  const teachers = await Teacher3.find();
+  console.log(teachers);
   return (
     <div className="container mx-auto px-4 py-8">
       <PageHero text="আমাদের সাথে যোগাযোগ করুন" />
