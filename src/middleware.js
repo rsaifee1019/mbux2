@@ -37,7 +37,7 @@ export default async function middleware(req) {
   if (path.startsWith('/absent') || path.startsWith('/api/absent')) {
     try {
      
-     const response = await axios.get('https://mbhec.edu.bd/api/teachersAll');
+     const response = await axios.get('http://localhost:3000/api/teachersAll');
      const teachers = response.data; // Assuming the response data is an array of teachers
      const teacherEmails = teachers.map(teacher => teacher.userEmail);
 

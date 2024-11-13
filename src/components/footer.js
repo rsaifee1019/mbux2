@@ -34,13 +34,13 @@ export default function Footer() {
         </ul>
       </div>
       <div>
-        <h3 className="text-lg font-bold mb-4">নিউজলেটার</h3>
+         <a href="/admin" className="text-primary-foreground text-lg font-bold mb-4 hover:underline">Admin</a>
         <p className="mb-4">আমাদের নিউজলেটারে সাবস্ক্রাইব করুন</p>
         <form className="flex">
           <Input type="email" placeholder="আপনার ইমেইল" className="rounded-r-none" />
           <Button type="submit" className="rounded-l-none">সাবস্ক্রাইব</Button>
         </form>
-        <a href="/admin">Admin</a>
+       
       </div>
     </div>
     <div className="mt-8 text-center">
