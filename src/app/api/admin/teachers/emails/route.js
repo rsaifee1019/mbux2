@@ -11,8 +11,8 @@ export async function GET() {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({
           grant_type: 'client_credentials',
-          client_id: process.env.AUTH0_CLIENT_ID,
-          client_secret: process.env.AUTH0_CLIENT_SECRET,
+          client_id: process.env.AUTH0_API_CLIENT_ID,
+          client_secret: process.env.AUTH0_API_CLIENT_SECRET,
           audience: `https://${process.env.AUTH0_DOMAIN}/api/v2/`,
         }),
       });
@@ -25,7 +25,7 @@ export async function GET() {
       }
   
       const { access_token } = await tokenResponse.json();
-      console.log('Access token fetched successfully:', access_token);
+ 
   
       console.log('Attempting to fetch users from Auth0 Management API...');
       // Fetch users from Auth0 Management API
