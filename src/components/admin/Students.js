@@ -3,6 +3,7 @@ import { Upload } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import Link from 'next/link';
 
 const StudentCSVUpload = () => {
   const [uploading, setUploading] = useState(false);
@@ -82,9 +83,13 @@ const StudentCSVUpload = () => {
 
   return (
     <Card className="w-full max-w-xl mx-auto">
+    <div className='flex justify-between'>
       <CardHeader>
-        <CardTitle>Bulk Upload Students</CardTitle>
-      </CardHeader>
+          <CardTitle>Bulk Upload Students</CardTitle>
+        </CardHeader>
+
+        <Button variant='outline' className='bg-blue-500 text-white m-4'><Link href='https://pub-67bde4aa3aa34d01a261d06d103bf2d6.r2.dev/students.csv'>স্যাম্পল ফাইল</Link></Button>
+      </div>
       <CardContent>
         <div className="space-y-4">
           <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6">
