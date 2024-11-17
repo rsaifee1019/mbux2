@@ -1,3 +1,4 @@
+import { NextResponse } from 'next/server';
 // Cache object to store the token
 let tokenCache = null;
 
@@ -41,18 +42,16 @@ async function getManagementToken() {
 
 export async function GET() {
   try {
-    // Get a valid token
     const access_token = await getManagementToken();
 
     console.log('Attempting to fetch users from Auth0 Management API...');
     
-    // Add timestamp to prevent response caching
     const usersResponse = await fetch(
       `https://${process.env.AUTH0_DOMAIN}/api/v2/users?_=${Date.now()}`, 
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
-          'Cache-Control': 'no-cache',
+          'Cache-Control': 'no-store',
         },
       }
     );
@@ -65,7 +64,14 @@ export async function GET() {
 
     const users = await usersResponse.json();
     console.log('Users fetched successfully:', users);
-    return Response.json(users);
+    
+    // Set headers to prevent caching in the response
+    const response = NextResponse.json(users);
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+
+    return response;
     
   } catch (error) {
     console.error('Error fetching Auth0 users:', error);
