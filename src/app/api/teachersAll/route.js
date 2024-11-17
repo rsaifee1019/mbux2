@@ -5,5 +5,6 @@ import connectionToDatabase from '@/lib/mongodb';
 export async function GET(request) {
   await connectionToDatabase();
   const teachers = await Teacher3.find();
+  console.log('Teachers data:', teachers);
   return NextResponse.json(teachers);
 }
