@@ -14,7 +14,7 @@ export async function GET() {
           client_id: process.env.API_CLIENT_ID,
           client_secret: process.env.API_CLIENT_SECRET,
           audience: `https://${process.env.AUTH0_DOMAIN}/api/v2/`,
-          scope: 'read:users read:user_idp_tokens'
+     scope: 'read:users read:user_idp_tokens read:roles'
         }),
       });
   

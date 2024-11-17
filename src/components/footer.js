@@ -2,9 +2,12 @@ import React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { getSession } from '@auth0/nextjs-auth0';
 
-export default function Footer() {
-  return (
+export default async function Footer() {
+  const session = await getSession();
+  const isLoggedIn = session?.user;
+  return (  
  
   <footer className="bg-primary text-primary-foreground py-8">
   <div className="container mx-auto px-4">
@@ -13,7 +16,7 @@ export default function Footer() {
         <h3 className="text-lg font-bold mb-4">যোগাযোগ</h3>
         <p>ঠিকানা: আপনার বিশ্ববিদ্যালয়ের ঠিকানা</p>
         <p>ফোন: 01760067186</p>
-        <p>ইমেইল: info@mbux.edu.bd</p>
+        <p>ইমেইল: mbhec@yahoo.</p>
       </div>
       <div>
         <h3 className="text-lg font-bold mb-4">দ্রুত লিঙ্ক</h3>
@@ -34,8 +37,11 @@ export default function Footer() {
         </ul>
       </div>
       <div>
+      <div className='flex flex-col gap-4'>
          <a href="/admin" className="text-primary-foreground text-lg font-bold mb-4 hover:underline">Admin</a>
-        <p className="mb-4">আমাদের নিউজলেটারে সাবস্ক্রাইব করুন</p>
+         {isLoggedIn && (<a href="/api/auth/logout" className="text-primary-foreground text-lg font-bold mb-4 hover:underline">Logout</a>)}
+         </div>
+         <p className="mb-4">আমাদের নিউজলেটারে সাবস্ক্রাইব করুন</p>
         <form className="flex">
           <Input type="email" placeholder="আপনার ইমেইল" className="rounded-r-none" />
           <Button type="submit" className="rounded-l-none">সাবস্ক্রাইব</Button>

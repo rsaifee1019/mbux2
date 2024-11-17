@@ -5,7 +5,7 @@ export default function QuickLinks() {
       { title: 'অনলাইন টিউশন ফি', href: '/fees', icon: '💰' },
       { title: 'শিক্ষকমণ্ডলী', href: '/faculty', icon: '👥' },
       { title: 'হাজিরা', href: '/absent', icon: '📊' },
-      { title: 'ভর্তি', href: '/admission', icon: '📝' },
+      { title: 'ভর্তি', href: '/admissions', icon: '📝' },
     ]
   
     return (
