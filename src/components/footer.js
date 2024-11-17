@@ -12,8 +12,8 @@ export default function Footer() {
       <div>
         <h3 className="text-lg font-bold mb-4">যোগাযোগ</h3>
         <p>ঠিকানা: আপনার বিশ্ববিদ্যালয়ের ঠিকানা</p>
-        <p>ফোন: +880 1234 567890</p>
-        <p>ইমেইল: info@youruniversity.edu.bd</p>
+        <p>ফোন: 01760067186</p>
+        <p>ইমেইল: info@mbux.edu.bd</p>
       </div>
       <div>
         <h3 className="text-lg font-bold mb-4">দ্রুত লিঙ্ক</h3>

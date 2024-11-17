@@ -11,9 +11,10 @@ export async function GET() {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({
           grant_type: 'client_credentials',
-          client_id: process.env.AUTH0_API_CLIENT_ID,
-          client_secret: process.env.AUTH0_API_CLIENT_SECRET,
+          client_id: process.env.API_CLIENT_ID,
+          client_secret: process.env.API_CLIENT_SECRET,
           audience: `https://${process.env.AUTH0_DOMAIN}/api/v2/`,
+          scope: 'read:users read:user_idp_tokens'
         }),
       });
   
