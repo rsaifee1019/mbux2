@@ -20,6 +20,7 @@ async function getManagementToken() {
       client_secret: process.env.API_CLIENT_SECRET,
       audience: `https://${process.env.AUTH0_DOMAIN}/api/v2/`,
       scope: 'read:users',
+      _: Date.now(),
     }),
   });
 
