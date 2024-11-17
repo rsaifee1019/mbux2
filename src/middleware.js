@@ -37,7 +37,7 @@ export default async function middleware(req) {
   if (path.startsWith('/absent') || path.startsWith('/api/absent')) {
     try {
       console.log('Checking teacher routes for user:', userEmail);
-      const response = await fetch(`/api/teachersAll?timestamp=${Date.now()}`);
+    const response = await fetch(`https://mbhec.edu.bd/api/teachersAll?timestamp=${Date.now()}`);
       const data = await response.json();
  
       const teachers = data; // Assuming the response data is an array of teachers
