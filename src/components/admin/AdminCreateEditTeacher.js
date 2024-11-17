@@ -23,7 +23,7 @@ const AdminCreateEditTeacher = ({ teacherId }) => {
   useEffect(() => {
     const fetchAuth0Users = async () => {
       try {
-        const response = await fetch('/api/admin/teachers/emails');
+        const response = await fetch(`/api/admin/teachers/emails?_=${Date.now()}`);
         if (!response.ok) throw new Error('Failed to fetch users');
         const data = await response.json();
         setUsers(data);
