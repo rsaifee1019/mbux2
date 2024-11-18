@@ -147,7 +147,7 @@ export default function Faculty() {
         </Select>
         <Button 
         onClick={() => setShowSignIn(true)}
-        className="bg-[#e81727] hover:bg-[#c71522] text-white"
+        className="bg-primary text-white"
       >
         Sign In
       </Button>
@@ -169,7 +169,7 @@ export default function Faculty() {
               <p className="text-[#585252] mb-2">{teacher.designation || "No Designation"}</p>
               <p className="text-[#585252] mb-2">{teacher.educationBackground || "No Education Background"}</p>
               <p className="text-[#585252] mb-4">{teacher.mobileNo || "No Mobile Number"}</p>
-              <Button asChild className="bg-[#e81727] hover:bg-[#c71522] text-white">
+              <Button asChild className="bg-primary text-white">
                 <Link href={`/faculty/${teacher.id}`}>View Profile</Link>
               </Button>
             </CardContent>
