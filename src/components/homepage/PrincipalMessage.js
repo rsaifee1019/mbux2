@@ -9,10 +9,10 @@ export default async function PrincipalMessage() {
     if (!post) return null
     return (
         <div className="bg-white rounded-lg shadow-md p-6 mx-4">
-            <h2 className="text-2xl font-bold mb-4">অধ্যক্ষের বার্তা</h2>
+       {     <h2 className="text-2xl font-bold mb-4 text-center">অধ্যক্ষের বার্তা</h2>}
       <div className="space-y-4">
       <div className="flex justify-center items-center mb-8">
-      <Image src="/principal.jpg" alt="Principal" width={400} height={400} />
+      <Image src="/principal.jpeg" alt="Principal" width={400} height={400} className='w-[60vw]'/>
       </div>
         <div className="text-center mb-4">
    

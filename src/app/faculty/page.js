@@ -68,11 +68,11 @@ export default function Faculty() {
     <div className="container mx-auto px-4 py-8">
     <section className="relative h-[500px] flex items-center justify-center text-center text-white">
     <Image
-      src="/collegeFront.jpg"
+      src="/faculty.jpeg"
       alt="University campus"
       layout="fill"
       objectFit="cover"
-      className="absolute inset-0 z-0"
+      className="absolute inset-0 z-0 "
     />
     <div className="relative z-10 -0 space-y-4 p-4 bg-black bg-opacity-50 rounded-lg">
       <h1 className="text-6xl font-bold">ফ্যাকাল্টি শাখা</h1>
