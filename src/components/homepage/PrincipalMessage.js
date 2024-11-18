@@ -16,10 +16,10 @@ export default async function PrincipalMessage() {
       </div>
         <div className="text-center mb-4">
    
-          <h3 className="font-semibold">{post.title}</h3>
+          <h2 className="font-semibold">{post.title}</h2>
           <p className="text-sm text-gray-500">{post.author}</p>
         </div>
-        <div className="text-gray-600 px-4">
+        <div className="text-gray-600 px-4 max-w-[80vw] mx-auto">
           <div dangerouslySetInnerHTML={{ __html: post.description }} />
             </div>
         </div>
