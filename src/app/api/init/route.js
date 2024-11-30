@@ -54,7 +54,7 @@ export async function POST(req) {
     const sslcz = new SSLCommerzPayment(
       process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_ADMISSION,
       process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_ADMISSION,
-      false
+      true
     );
 
     const apiResponse = await sslcz.init(data);
