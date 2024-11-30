@@ -8,20 +8,19 @@ export default async function PrincipalMessage() {
       
     if (!post) return null
     return (
-        <div className="bg-white rounded-lg shadow-md p-6 mx-4">
-       {     <h2 className="text-2xl font-bold mb-4 text-center">অধ্যক্ষের বার্তা</h2>}
+        <div className="bg-white rounded-lg shadow-md p-6 mx-4 flex flex-row justify-between">
+        <div className="flex flex-col justify-center items-center">
+            <h2 className="text-2xl font-bold mb-8 text-center ">অধ্যক্ষের বার্তা</h2>
       <div className="space-y-4">
-      <div className="flex justify-center items-center mb-8">
-      <Image src="/principal.jpeg" alt="Principal" width={400} height={400} className='w-[60vw]'/>
-      </div>
-        <div className="text-center mb-4">
    
-          <h2 className="font-semibold">{post.title}</h2>
-          <p className="text-sm text-gray-500">{post.author}</p>
-        </div>
-        <div className="text-gray-600 px-4 max-w-[80vw] mx-auto">
+        <div className="text-gray-600 px-4 max-w-[80vw] ">
           <div dangerouslySetInnerHTML={{ __html: post.description }} />
             </div>
+
+        </div></div>
+        
+        <div className="flex justify-center items-center mb-8">
+        <Image src="/principal.jpeg" alt="Principal" width={350} height={350} className='w-[60vw]'/>
         </div>
         </div>
     )

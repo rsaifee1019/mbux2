@@ -29,7 +29,7 @@ const HomePage = async () => {
             <main className="">
                 {/* Hero section */}
                 <div className='mb-4'>
-                    <section className="relative h-[60vh] text-white">
+                    <section className="relative h-[40vh] md:h-[60vh] text-white">
                         <Image
                             src="/slider2.jpg"
                             alt="University campus"
@@ -37,22 +37,22 @@ const HomePage = async () => {
                             objectFit="cover"
                             className=""
                         />
-                        <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="absolute top-1/4 md:top-1/2 left-0 right-0 flex items-center justify-center">
                             <div className="text-center">
-                                <h1 className="text-4xl p-2 bg-black/70 md:text-6xl font-semibold mb-4">মাদার বখ্শ গার্হস্থ্য অর্থনীতি কলেজ</h1>
+                                <h1 className="text-4xl md:text-6xl p-4 bg-transparent/30  md:bg-transparent/50  font-bold ">মাদার বখ্শ গার্হস্থ্য অর্থনীতি কলেজ</h1>
                             </div>
                         </div>
                     </section>
                 </div>
                 <QuickLinks />
-                <div className='flex justify-between gap-4 my-4 mx-4'>
+                <div className='flex flex-col md:flex-row justify-between gap-4 my-4 mx-4'>
                     {/* NoticeBoard section */}
                     <NoticeBoardClient notices={notices} className="" />
                     <EventsCalendar />
                  
 
                 </div>
-                <PrincipalMessage />
+          
 
                 <Suspense fallback={<div>Loading...</div>}>
                     <div className='flex flex-col md:flex-row justify-start '>

@@ -2,6 +2,7 @@ import connectionToDatabase from '@/lib/mongodb';
 import Event from '@/models/Event';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { CalendarDays } from 'lucide-react';
 
 export default async function EventsCalendar() {
   await connectionToDatabase();
@@ -14,9 +15,12 @@ export default async function EventsCalendar() {
 
 
   return (
-    <Card className="bg-white rounded-lg shadow-md p-6 w-full">
+    <Card className="w-full ">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold">ইভেন্ট ক্যালেন্ডার</CardTitle>
+        <CardTitle className="text-2xl font-bold flex items-center gap-2">
+          <CalendarDays className="h-6 w-6" />
+          ইভেন্ট ক্যালেন্ডার
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
