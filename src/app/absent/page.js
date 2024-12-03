@@ -17,9 +17,9 @@ export default function AttendancePage() {
   const [isLoading, setIsLoading] = useState(false)
 
   const departments = [
-    { value: 'science', label: 'বিজ্ঞান' },
-    { value: 'hscience', label: 'গৃহ বিজ্ঞান' },
-    { value: 'humanities', label: 'মানবিক' },
+    { value: 'Science', label: 'বিজ্ঞান' },
+    { value: 'Home Science', label: 'গৃহ বিজ্ঞান' },
+    { value: 'Humanities', label: 'মানবিক' },
   ]
 
   const classes = [
