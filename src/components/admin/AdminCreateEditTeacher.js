@@ -16,25 +16,30 @@ import {
 import ImageUploader from '@/components/ImageUploader';
 import axios from 'axios';
 
-
-
-
-
-
 const AdminCreateEditTeacher = ({ teacherId }) => {
   const [users, setUsers] = useState([]);
 
 
-  
-
-  const fetchUsers = async () => {
-    const response = await axios.get('/api/admin/users');
-    setUsers(response.data);
-  }
-
   useEffect(() => {
-    fetchUsers();
-  }, []);
+    const fetchAuth0Users = async () => {
+      try {
+        const response = await fetch(`/api/admin/teachers/emails?_=${Date.now()}`,
+        { next: { revalidate: 0 } }
+        );
+        if (!response.ok) throw new Error('Failed to fetch users');
+        const data = await response.json();
+        setUsers(data);
+      } catch (error) {
+        console.error('Error fetching Auth0 users:', error);
+        setError('Failed to fetch users');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAuth0Users();
+  }, []);zzz
+
 
 
   const router = useRouter();
@@ -135,8 +140,6 @@ const AdminCreateEditTeacher = ({ teacherId }) => {
     }
   };
 
- 
-
   return (
     <Card className="w-full max-w-4xl mx-auto">
       <CardHeader>
@@ -176,8 +179,8 @@ const AdminCreateEditTeacher = ({ teacherId }) => {
               </SelectTrigger>
               <SelectContent>
                 {users.map((user) => (
-                  <SelectItem key={user._id} value={user.email}>
-                    {user.name} {user.email} {`(password: ${user.password})`} {`phone-${user.phone}`}
+                  <SelectItem key={user.user_id} value={user.email}>
+                    {user.name} ({user.email})
                   </SelectItem>
                 ))}
               </SelectContent>
