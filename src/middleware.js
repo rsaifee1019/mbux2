@@ -42,7 +42,7 @@ export default async function middleware(req) {
  
       const teachers = data; // Assuming the response data is an array of teachers
       const teacherEmails = teachers.map(teacher => teacher.userEmail);
-      console.log('Teacher emails:', teacherEmails);
+
 
       if (!teacherEmails.includes(userEmail)) {
         console.log('User email not found in teacher emails, redirecting to unauthorized page.');
