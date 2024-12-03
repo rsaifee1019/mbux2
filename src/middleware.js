@@ -12,6 +12,10 @@ export default async function middleware(req) {
 
 
   // Check if user is authenticated
+  if (!session?.user) {
+    console.log('User not authenticated, redirecting to login.');
+    return NextResponse.redirect(new URL('/api/auth/login', req.url));
+  }
 
   const userEmail = session.user.email;
   console.log('Authenticated user email:', userEmail);
@@ -20,55 +24,36 @@ export default async function middleware(req) {
   const path = req.nextUrl.pathname;
   console.log('Requested path:', path);
 
-
-
-
   // Admin routes check
   if (path.startsWith('/dashboard') || path.startsWith('/admin') || path.startsWith('/api/admin')) {
-    if (!session?.user) {
-      console.log('User not authenticated, redirecting to login.');
-      return NextResponse.redirect(new URL('/api/auth/login', req.url));
-    }
-  
     if (userEmail !== 'mbuxbd@gmail.com') {
       console.log('User is not authorized for admin routes, redirecting to unauthorized page.');
       return NextResponse.redirect(new URL('/unauthorized', req.url));
     }
     console.log('User authorized for admin routes.');
   }
- // Manually parse cookies from the request headers
- const cookieHeader = req.headers.get('cookie');
- const cookies = Object.fromEntries(cookieHeader?.split('; ').map(cookie => {
-   const [name, value] = cookie.split('=');
-   return [name, decodeURIComponent(value)];
- }) || []);
-
- const token = cookies.auth_token;
 
   // Teacher routes check
-  if (path.startsWith('/absent') || path.startsWith('/api/absent')) {
-    try {
-      console.log('Checking teacher routes for user:', userEmail);
-    const response = await fetch(`https://mbhec.edu.bd/api/teachersAll?timestamp=${Date.now()}`,
-
-     { next: { revalidate: 0 } }
-    );
-      const data = await response.json();
+  // if (path.startsWith('/absent') || path.startsWith('/api/absent')) {
+  //   try {
+  //   //   console.log('Checking teacher routes for user:', userEmail);
+  //   // const response = await fetch(`https://mbhec.edu.bd/api/teachersAll?timestamp=${Date.now()}`);
+  //   //   const data = await response.json();
  
-      const teachers = data; // Assuming the response data is an array of teachers
-      const teacherEmails = teachers.map(teacher => teacher.userEmail);
-      console.log('Teacher emails:', teacherEmails);
+  //   //   const teachers = data; // Assuming the response data is an array of teachers
+  //   //   const teacherEmails = teachers.map(teacher => teacher.userEmail);
+  //   //   console.log('Teacher emails:', teacherEmails);
 
-      if (!teacherEmails.includes(userEmail)) {
-        console.log('User email not found in teacher emails, redirecting to unauthorized page.');
-        return NextResponse.redirect(new URL('/unauthorized', req.url));
-      }
+  //     if (!teacherEmails.includes(userEmail)) {
+  //       console.log('User email not found in teacher emails, redirecting to unauthorized page.');
+  //       return NextResponse.redirect(new URL('/unauthorized', req.url));
+  //     }
 
-    } catch (error) {
+  //   } catch (error) {
  
-      return NextResponse.redirect(new URL('/error', req.url));
-    }
-  }
+  //     return NextResponse.redirect(new URL('/error', req.url));
+  //   }
+  // }
 
   return res;
 }
