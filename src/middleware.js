@@ -21,7 +21,7 @@ export default async function middleware(req) {
   console.log('Requested path:', path);
 
 
-  const customUser = 
+
 
   // Admin routes check
   if (path.startsWith('/dashboard') || path.startsWith('/admin') || path.startsWith('/api/admin')) {
