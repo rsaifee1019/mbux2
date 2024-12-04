@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import ImageUploader from '@/components/ImageUploader';
+import ImageUploader from '@/components/FileUploader';
 
 const AdminCreateEditStudent = ({ studentId }) => {
   const router = useRouter();

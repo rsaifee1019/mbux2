@@ -6,8 +6,12 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useRouter } from 'next/navigation';
+import FileUploader from '@/components/FileUploader';
 
 const AdminCreateEditNotice = ({ noticeId }) => {
+  const [fileUrl, setFileUrl] = useState('');
+
+
   const router = useRouter();
   const [formData, setFormData] = useState({
     title: '',
@@ -42,12 +46,23 @@ const AdminCreateEditNotice = ({ noticeId }) => {
     fetchNotice();
   }, [noticeId]);
 
+  useEffect(() => {
+  setFormData(prev => ({
+    ...prev,
+    link: fileUrl
+  }));
+  console.log(formData);
+  console.log('file ' + fileUrl);
+  }, [fileUrl]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
+    console.log(formData);
+    console.log(fileUrl);
   };
 
   const handleSubmit = async (e) => {
@@ -73,8 +88,7 @@ const AdminCreateEditNotice = ({ noticeId }) => {
         throw new Error(data.message || 'Something went wrong');
       }
 
-      router.push('/admin/notices');
-      router.refresh();
+    
       
     } catch (err) {
       setError(err.message);
@@ -137,6 +151,7 @@ const AdminCreateEditNotice = ({ noticeId }) => {
               placeholder="Enter file link (optional)"
             />
           </div>
+          <FileUploader setFileUrl={setFileUrl} />
 
           <div className="space-y-2">
             <label htmlFor="dateUploaded" className="block text-sm font-medium">

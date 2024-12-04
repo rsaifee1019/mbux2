@@ -2,7 +2,7 @@
 'use client';
 import { useState } from 'react';
 
-export default function ImageUploader({ setImageUrl }) {
+export default function FileUploader({ setFileUrl }) {
   const [file, setFile] = useState(null);
   const [uploadResult, setUploadResult] = useState(null);
 
@@ -22,14 +22,16 @@ export default function ImageUploader({ setImageUrl }) {
     });
 
     const result = await res.json();
+    console.log('setting')
     setUploadResult(result);
-    setImageUrl(`https://pub-67bde4aa3aa34d01a261d06d103bf2d6.r2.dev/${result.Key}`);
+    setFileUrl(`https://pub-67bde4aa3aa34d01a261d06d103bf2d6.r2.dev/${result.Key}`);
+    console.log('set')
   };
 
   return (
     <div>
       <input type="file" onChange={handleFileChange} />
-      <button type="button" onClick={handleUpload}>Upload Image</button>
+      <button type="button" onClick={handleUpload}>Upload File</button>
     </div>
   );
 }

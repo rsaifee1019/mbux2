@@ -21,6 +21,7 @@ export async function GET(req) {
 }
 
 export async function PUT(req) {
+  
   await connectionToDatabase();
   
   // Access the id from req.nextUrl.pathname
@@ -30,8 +31,12 @@ export async function PUT(req) {
   try {
     const notice = await Notice.findById(id);
     if (!notice) return NextResponse.json({ message: 'Notice not found' }, { status: 404 });
-    // Update the notice with the request body
-    Object.assign(notice, req.body); // Update the notice with new data
+    
+    // Parse the request body as JSON
+    const body = await req.json(); // Ensure the body is parsed correctly
+    Object.assign(notice, body); // Update the notice with new data
+    console.log(body);
+    
     await notice.save(); // Save the updated notice
     return NextResponse.json(notice, { status: 200 });
   } catch (error) {

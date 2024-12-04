@@ -1,8 +1,10 @@
+import connectionToDatabase from "@/lib/mongodb";
 import Post from '@/models/Post';
 import { NextResponse } from 'next/server';
 
 export async function GET(request) {
   try {
+    await connectionToDatabase();
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page')) || 1;
     const limit = parseInt(searchParams.get('limit')) || 10;
