@@ -49,7 +49,8 @@ export async function GET(request) {
 
 export async function POST(req) {
   try {
-    const newNotice = await Notice.create(req.body);
+    const body = await req.json();
+    const newNotice = await Notice.create(body);
     return NextResponse.json(newNotice, { status: 201 });
   } catch (error) {
     return NextResponse.json(
