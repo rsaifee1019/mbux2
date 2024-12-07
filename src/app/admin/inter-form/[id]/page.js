@@ -36,58 +36,11 @@ const AdmissionForm = () => {
       .set(options) // Apply the options
       .save();
 };
-  const getSearchParams = () => {
-    // Only run on client side
-    if (typeof window !== 'undefined') {
-      const searchParams = new URL(window.location.href).searchParams
-      return {
-        subject: searchParams.get('subject')
-      }
-    }
-    return {}
-  }
 
-  const params = getSearchParams()
-  const subject = params.subject;
+ 
 
-  useEffect(() => {
-    if (subject === 'science') {
-      setBSectionSubjects([
-        { id: 'higherMath', label: 'উচ্চতর গণিত (২৬৫,২৬৬)' },
-        { id: 'chemistry', label: 'রসায়ন (১৭৬,১৭৭)' },
-        { id: 'biology', label: 'জীববিজ্ঞান (১৭৮,১৭৯)' },
-        { id: 'physics', label: 'পদার্থবিজ্ঞান (১৭৪,১৭৫)' },
-      ]);
-    
-      setFourthSubjectOptions([
-        { id: 'psychology', label: 'মনোবিজ্ঞান (১২৩,১২৪)' },
-        { id: 'biology', label: 'জীববিজ্ঞান (১৭৮,১৭৯)' },
-        { id: 'higherMath', label: 'উচ্চতর গণিত (২৬৫,২৬৬)' },
-      ]);
 
-      console.log(bSectionSubjects);
-    } else if (subject === 'humanities') {
-      setBSectionSubjects([
-        { id: 'economics', label: 'অর্থনীতি (১০৯,১১০)' },
-        { id: 'politics', label: 'পৌরনীতি (২৬৯,২৭০)' },
-        { id: 'islamicHistory', label: 'ইসলামের ইতিহাস (২৬৭,২৬৮)' },
-        { id: 'socialWork', label: 'সমাজকর্ম (২৭১,২৭২)' },
-      ]);
-    
-      setFourthSubjectOptions([
-        { id: 'healthScience', label: 'গার্হস্থ্য বিজ্ঞান (২৭৩,২৭৪)' },
-        { id: 'psychology', label: 'মনোবিজ্ঞান (১২৩,১২৪)' },
-        { id: 'higherMath', label: 'উচ্চতর গণিত (২৬৫,২৬৬)' },
-      ]);
-    } 
-    else {
   
-      setFourthSubjectOptions([
-        { id: 'psychology', label: 'মনোবিজ্ঞান (১২৩,১২৪)' },
-        {id:'arts', label:'শিল্পকলা ও বস্ত্র পরিচ্ছদ (২৮৪,২৮৫)'}
-      ]);
-    }
-  }, [subject]);
 
   const [formData, setFormData] = useState({
     subject,
@@ -133,9 +86,9 @@ const AdmissionForm = () => {
     ssc_Institution_Village: '',
     ssc_Institution_Thana: '',
     ssc_Institution_Zip: '',
-    subjectsA: (subject !== 'hscience') ? ['বাংলা (১০১,১০২)', 'ইংরেজি (১০৭,১০৮)', 'তথ্য ও যোগাযোগ প্রযুক্তি (১০৯,১১০)'] : ['বাংলা (১০১,১০২)', 'ইংরেজি (১০৭,১০৮)', 'তথ্য ও যোগাযোগ প্রযুক্তি (১০৯,১১০)', 'খাদ্য ও পুষ্টি (১১১,১১২)', 'গৃহ ব্যবস্থাপনা (১১৩,১১৪)', 'শ��শু উন্নয়ন (১১৫,১১৬)'],
+    subjectsA: [],
     subjectsB: [],
-    fourthSubject: [],
+    fourthSubject: '',
     extraCurricularActivities: '',
     hobbies: '',
     socialServiceExperience: '',
@@ -153,90 +106,29 @@ const AdmissionForm = () => {
   useEffect(() => {
     axios.get(`/api/admin/applicants/${id}`)
     .then(response => {
-      setFormData(response.data);
+      const parsedData = {
+        ...response.data,
+        subjectsA: JSON.parse(response.data.subjectsA), // Parse subjectsA
+        subjectsB: JSON.parse(response.data.subjectsB), // Parse subjectsB
+        fourthSubject: response.data.fourthSubject, // No need to parse, it's already a string
+      };
+      setFormData(parsedData);
+      console.log(parsedData);
     })
     .catch(error => {
       console.error('Error fetching applicant:', error);
     });
   }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
-    console.log(formData);
-  };
-  const handleBSectionChange = (subjectId) => {
-    setFormData(prevData => {
-      const currentSelection = prevData.subjectsB;
-      const isSelected = currentSelection.includes(subjectId);
 
-      if (isSelected) {
-        // Remove subject if already selected
-        return {
-          ...prevData,
-          subjectsB: currentSelection.filter(id => id !== subjectId)
-        };
-      } else if (currentSelection.length < 3) {
-        // Add subject if not selected and less than 3 subjects are selected
-        return {
-          ...prevData,
-          subjectsB: [...currentSelection, subjectId]
-        };
-      }
-      return prevData; // Do nothing if already 3 subjects are selected
-    });
-  };
 
-  const handleFourthSubjectChange = (subjectId) => {
-    setFormData(prevData => ({
-      ...prevData,
-      fourthSubject: subjectId
-    }));
-  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
 
-    try {
-      const response = await fetch('/api/applicants', { // Adjust the API endpoint as needed
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-      Cookies.set("tran_id", data.tran_id);
-      if (response.ok) {
-        // Redirect to the checkout page on successful submission
-        router.push('/checkout');
-      } else {
-        // Handle error response
-        const errorData = await response.json();
-        console.error('Error submitting form:', errorData);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
-  const handleAddressChange = (addressType, field, value) => {
-    setFormData(prevData => ({
-      ...prevData,
-      [addressType]: {
-        ...prevData[addressType],
-        [field]: value,
-      },
-    }));
-  };
 
   
   return (
     <Suspense fallback={<div>Loading...</div>}>
-    <SearchParamsWrapper>
+
     <Card className="w-full max-w-4xl mx-auto" id="hj">
 
       <CardHeader className="text-center">
@@ -461,15 +353,45 @@ const AdmissionForm = () => {
             <p className="text-sm">{formData.ssc_Institution_District}</p> {/* Smaller text */}
           </div>
           </div>
+      {formData.subjectsA && (
+          <div>
+            <h3>পড়তে ইচ্ছুক বিষয়ের নাম ও কোড নম্বরঃ:</h3>
+            <ul>
+              {formData.subjectsA.map(subject => (
+                <li key={subject}>{subject}</li>
+              ))}
+            </ul>
+          </div>
+          )}
+          
 
-         
+          {formData.subjectsB &&  (
+            <div>
+              <h3>B বিভাগ বিষয়সমূহ :</h3>
+              <ul>
+                {formData.subjectsB.map(subject => (
+                  <li key={subject}>{subject}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          
+          {/* Displaying Fourth Subject Options if true */}
+          {formData.fourthSubject && (
+            <div>
+              <h3>চতুর্থ বিষয় :</h3>
+              <ul>
+                <li>{formData.fourthSubject}</li>
+              </ul>
+            </div>
+          )}
         </form>
       </CardContent>
     </Card>
     <div className="text-center">
       <Button type="button" onClick={handleDownloadPDF} className="mt-4 mb-4 ">ডাউনলোড PDF</Button>
     </div>
-    </SearchParamsWrapper>
+ 
     </Suspense>
   );
 };

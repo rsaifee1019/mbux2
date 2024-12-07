@@ -35,38 +35,38 @@ const AdmissionForm = () => {
   useEffect(() => {
     if (subject === 'science') {
       setBSectionSubjects([
-        { id: 'higherMath', label: 'উচ্চতর গণিত (২৬৫,২৬৬)' },
-        { id: 'chemistry', label: 'রসায়ন (১৭৬,১৭৭)' },
-        { id: 'biology', label: 'জীববিজ্ঞান (১৭৮,১৭৯)' },
-        { id: 'physics', label: 'পদার্থবিজ্ঞান (১৭৪,১৭৫)' },
+        { id: 'উচ্চতর গণিত (২৬৫,২৬৬)', label: 'উচ্চতর গণিত (২৬৫,২৬৬)' },
+        { id: 'রসায়ন (১৭৬,১৭৭)', label: 'রসায়ন (১৭৬,১৭৭)' },
+        { id: 'জীববিজ্ঞান (১৭৮,১৭৯)', label: 'জীববিজ্ঞান (১৭৮,১৭৯)' },
+        { id: 'পদার্থবিজ্ঞান (১৭৪,১৭৫)', label: 'পদার্থবিজ্ঞান (১৭৪,১৭৫)' },
       ]);
     
       setFourthSubjectOptions([
-        { id: 'psychology', label: 'মনোবিজ্ঞান (১২৩,১২৪)' },
-        { id: 'biology', label: 'জীববিজ্ঞান (১৭৮,১৭৯)' },
-        { id: 'higherMath', label: 'উচ্চতর গণিত (২৬৫,২৬৬)' },
+          { id: 'মনোবিজ্ঞান (১২৩,১২৪)', label: 'মনোবিজ্ঞান (১২৩,১২৪)' },
+        { id: 'জীববিজ্ঞান (১৭৮,১৭৯)', label: 'জীববিজ্ঞান (১৭৮,১৭৯)' },
+        { id: 'উচ্চতর গণিত (২৬৫,২৬৬)', label: 'উচ্চতর গণিত (২৬৫,২৬৬)' },
       ]);
 
-      console.log(bSectionSubjects);
+ 
     } else if (subject === 'humanities') {
       setBSectionSubjects([
-        { id: 'economics', label: 'অর্থনীতি (১০৯,১১০)' },
-        { id: 'politics', label: 'পৌরনীতি (২৬৯,২৭০)' },
-        { id: 'islamicHistory', label: 'ইসলামের ইতিহাস (২৬৭,২৬৮)' },
-        { id: 'socialWork', label: 'সমাজকর্ম (২৭১,২৭২)' },
+        { id: 'অর্থনীতি (১০৯,১১০)', label: 'অর্থনীতি (১০৯,১১০)' },
+        { id: 'পৌরনীতি (২৬৯,২৭০)', label: 'পৌরনীতি (২৬৯,২৭০)' },
+        { id: 'ইসলামের ইতিহাস (২৬৭,২৬৮)', label: 'ইসলামের ইতিহাস (২৬৭,২৬৮)' },
+        { id: 'সমাজকর্ম (২৭১,২৭২)', label: 'সমাজকর্ম (২৭১,২৭২)' },
       ]);
     
       setFourthSubjectOptions([
-        { id: 'healthScience', label: 'গার্হস্থ্য বিজ্ঞান (২৭৩,২৭৪)' },
-        { id: 'psychology', label: 'মনোবিজ্ঞান (১২৩,১২৪)' },
-        { id: 'higherMath', label: 'উচ্চতর গণিত (২৬৫,২৬৬)' },
+        { id: 'গার্হস্থ্য বিজ্ঞান (২৭৩,২৭৪)', label: 'গার্হস্থ্য বিজ্ঞান (২৭৩,২৭৪)' },
+        { id: 'মনোবিজ্ঞান (১২৩,১২৪)', label: 'মনোবিজ্ঞান (১২৩,১২৪)' },
+        { id: 'উচ্চতর গণিত (২৬৫,২৬৬)', label: 'উচ্চতর গণিত (২৬৫,২৬৬)' },
       ]);
     } 
     else {
   
       setFourthSubjectOptions([
-        { id: 'psychology', label: 'মনোবিজ্ঞান (১২৩,১২৪)' },
-        {id:'arts', label:'শিল্পকলা ও বস্ত্র পরিচ্ছদ (২৮৪,২৮৫)'}
+        { id: 'মনোবিজ্ঞান (১২৩,১২৪)', label: 'মনোবিজ্ঞান (১২৩,১২৪)' },
+        {id:'শিল্পকলা ও বস্ত্র পরিচ্ছদ (২৮৪,২৮৫)', label:'শিল্পকলা ও বস্ত্র পরিচ্ছদ (২৮৪,২৮৫)'}
       ]);
     }
   }, [subject]);
@@ -281,8 +281,8 @@ const AdmissionForm = () => {
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="married">বিবাহিত</SelectItem>
-                  <SelectItem value="unmarried">অবিবাহিত</SelectItem>
+                  <SelectItem value="বিবাহিত">বিবাহিত</SelectItem>
+                  <SelectItem value="অবিবাহিত">অবিবাহিত</SelectItem>
                 </SelectContent>
               </Select>
             </div>
