@@ -28,7 +28,7 @@ const AdmissionForm = () => {
         margin: 5, // Reduced margin to 5mm to fit into one page
         filename: 'admission_form.pdf', // Name of the downloaded PDF
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 1.5 }, // Adjusted scale to make the content smaller
+        html2canvas: { scale: 2 }, // Adjusted scale to make the content smaller
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
     html2pdf()
@@ -92,7 +92,7 @@ const AdmissionForm = () => {
   const [formData, setFormData] = useState({
     subject,
     type: 'admission',
-    ssc_registration: '',
+    ssc_Registration: '',
     name_Bangla: '',
     name_English: '',
     birthRegNo: '',
@@ -121,14 +121,14 @@ const AdmissionForm = () => {
     guardians_Occupation: '',
     guardians_Monthly_Income: '',
     guardians_Mobile_Number: '',
-    sscBranch: '',
+    ssc_Section: '',
     ssc_Board: '',
     ssc_Roll: '',
-    ssc_registration: '',
+
     sss_Year: '',
     sss_Year: '',
     ssc_GPA: '',
-    sscInstituteName: '',
+    ssc_Institution_Name: '',
     ssc_Institution_District: '',
     ssc_Institution_Village: '',
     ssc_Institution_Thana: '',
@@ -265,40 +265,40 @@ const AdmissionForm = () => {
           {/* Displaying information instead of input fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-2">
             <div>
-            <Label>১। এসএসসি রেজিস্ট্রেশন নম্বর:</Label>
-            <p className="text-sm">{formData.ssc_registration}</p> {/* Smaller text */}
+            <Label>এসএসসি রেজিস্ট্রেশন নম্বর:</Label>
+            <p className="text-sm">{formData.ssc_Registration}</p> {/* Smaller text */}
           </div>
           <div>
-            <Label>২। ছাত্রীর নাম (বাংলায়):</Label>
-            <p className="text-sm">{formData.nameInBengali}</p> {/* Smaller text */}
+            <Label>ছাত্রীর নাম (বাংলায়):</Label>
+            <p className="text-sm">{formData.name_Bangla}</p> {/* Smaller text */}
           </div>
           <div>
-            <Label>৩। ইংরেজিতে:</Label>
-            <p className="text-sm">{formData.nameInEnglish}</p> {/* Smaller text */}
+            <Label>ইংরেজিতে:</Label>
+            <p className="text-sm">{formData.name_English}</p> {/* Smaller text */}
           </div>
           <div>
-            <Label>৪। জন্ম নিবন্ধন নম্বর:</Label>
+            <Label>জন্ম নিবন্ধন নম্বর:</Label>
             <p className="text-sm">{formData.birthRegNo}</p> {/* Smaller text */}
           </div>
           <div>
-            <Label>৫। মোবাইল নম্বর:</Label>
+            <Label>মোবাইল নম্বর:</Label>
             <p className="text-sm">{formData.mobile}</p> {/* Smaller text */}
           </div>
           <div>
-            <Label>৬। জন্ম তারিখ:</Label>
+            <Label>জন্ম তারিখ:</Label>
             <p className="text-sm">{formData.birth}</p> {/* Smaller text */}
           </div>
           <div>
-            <Label>৭। জাতীয়তা:</Label>
+            <Label>জাতীয়তা:</Label>
             <p className="text-sm">{formData.nationality}</p> {/* Smaller text */}
           </div>
           <div>
-            <Label>৮। ধর্ম:</Label>
+            <Label>ধর্ম:</Label>
             <p className="text-sm">{formData.religion}</p> {/* Smaller text */}
           </div>
           <div>
-            <Label>৯। বিবাহিত/অবিবাহিত:</Label>
-            <p className="text-sm">{formData.maritalStatus}</p> {/* Smaller text */}
+            <Label>বিবাহিত/অবিবাহিত:</Label>
+            <p className="text-sm">{formData.married}</p> {/* Smaller text */}
           </div>
         </div>
 
@@ -343,47 +343,47 @@ const AdmissionForm = () => {
         </div>
 
         {/* Displaying Permanent Address */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-2">
-          <div className="col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-2">
+          <div >
             <Label>স্থায়ী ঠিকানা (গ্রাম):</Label>
             <p className="text-sm">{formData.address_Permanent}</p> {/* Smaller text */}
           </div>
-          <div className="col-span-1">
+          <div >
             <Label>স্থায়ী ঠিকানা (পোস্ট অফিস):</Label>
             <p className="text-sm">{formData.zip_Permanent}</p> {/* Smaller text */}
           </div>
-          <div className="col-span-2">
+          <div >
             <Label>স্থায়ী ঠিকানা (থানা):</Label>
             <p className="text-sm">{formData.thana_Permanent}</p> {/* Smaller text */}
           </div>
-          <div className="col-span-1">
+          <div >
             <Label>স্থায়ী ঠিকানা (জেলা):</Label>
             <p className="text-sm">{formData.district_Permanent}</p> {/* Smaller text */}
           </div>
         </div>
 
         {/* Displaying Present Address */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-2">
-          <div className="col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-2">
+          <div >
             <Label>বর্তমান ঠিকানা (গ্রাম):</Label>
             <p className="text-sm">{formData.address_Current}</p> {/* Smaller text */}
           </div>
-          <div className="col-span-1">
+          <div>
             <Label>বর্তমান ঠিকানা (পোস্ট অফিস):</Label>
             <p className="text-sm">{formData.zip_Current}</p> {/* Smaller text */}
           </div>
-          <div className="col-span-2">
+          <div >
             <Label>বর্তমান ঠিকানা (থানা):</Label>
             <p className="text-sm">{formData.thana_Current}</p> {/* Smaller text */}
           </div>
-          <div className="col-span-1">
+          <div >
             <Label>বর্তমান ঠিকানা (জেলা):</Label>
             <p className="text-sm">{formData.district_Current}</p> {/* Smaller text */}
           </div>
         </div>
-
+        <div className="pt-4"></div>
         {/* Displaying Guardian Information */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-2 ">
           <div>
             <Label>অভিভাবকের নাম:</Label>
             <p className="text-sm">{formData.guardians_Name}</p> {/* Smaller text */}
@@ -409,7 +409,7 @@ const AdmissionForm = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-2">
           <div>
             <Label>এসএসসি শাখা:</Label>
-            <p className="text-sm">{formData.sscBranch}</p> {/* Smaller text */}
+            <p className="text-sm">{formData.ssc_Section}</p> {/* Smaller text */}
           </div>
           <div>
             <Label>এসএসসি বোর্ড:</Label>
@@ -435,7 +435,7 @@ const AdmissionForm = () => {
           </div>
           <div>
             <Label>এসএসসি প্রতিষ্ঠান নাম:</Label>
-            <p className="text-sm">{formData.sscInstituteName}</p> {/* Smaller text */}
+            <p className="text-sm">{formData.ssc_Institution_Name}</p> {/* Smaller text */}
           </div>
         </div>
 

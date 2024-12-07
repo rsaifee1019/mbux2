@@ -53,7 +53,7 @@ export async function POST(req) {
       socialServiceExperience,
       documents,
     } = body;
-
+console.log('ssssc_registration',ssc_registration, 'subject',subject);
 
     const timestamp = Date.now();
     const random = Math.floor(Math.random() * 1000000);
@@ -74,6 +74,7 @@ export async function POST(req) {
       name_Bangla: nameInBengali,
       name_English: nameInEnglish,
       subject,
+      nationality,
       birth: dateOfBirth,
       birthRegNo,
       religion,
@@ -89,11 +90,11 @@ export async function POST(req) {
       mothers_Mobile: motherMobile,
       address_Permanent: permanentAddress.village,
       district_Permanent: permanentAddress.district,
-      zip_Permanent: permanentAddress.zip, // Assuming you have a zip field
+      zip_Permanent: permanentAddress.postOffice, // Assuming you have a zip field
       thana_Permanent: permanentAddress.thana,
       address_Current: presentAddress.village,
       district_Current: presentAddress.district,
-      zip_Current: presentAddress.zip, // Assuming you have a zip field
+      zip_Current: presentAddress.postOffice, // Assuming you have a zip field
       thana_Current: presentAddress.thana,
       guardians_Name: guardianName,
       guardians_Monthly_Income: guardianIncome,
@@ -103,7 +104,7 @@ export async function POST(req) {
       subjectsB: JSON.stringify(subjectsB), // Store as JSON string if needed
       fourthSubject,
       ssc_Section: sscBranch,
-      ssc_registration,
+      ssc_Registration: ssc_registration,
       ssc_Board: sscBoard,
       ssc_Roll: sscRoll,
       sss_Year: sscYear,
@@ -126,7 +127,7 @@ export async function POST(req) {
       fathers_Nid_Card: '', // Placeholder for father's NID card, adjust as necessary
       mothers_Nid_Card: '', // Placeholder for mother's NID card, adjust as necessary
     });
-
+console.log('newPersonalDetails',newPersonalDetails);
     // Associate PersonalDetails with Applicant
     await newApplicant.updateOne({ personalDetailsId: newPersonalDetails.id });
 
@@ -143,6 +144,6 @@ export async function POST(req) {
     return NextResponse.json({ tran_id, status: 201 });
   } catch (error) {
     console.error('Error creating applicant:', error);
-    return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ message: 'Internal server error: ' + error }, { status: 500 });
   }
 }

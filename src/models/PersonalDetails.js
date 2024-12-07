@@ -6,6 +6,8 @@ const PersonalDetailsSchema = new mongoose.Schema({
   roll: { type: String, required: false },
   name_English: { type: String, required: false },
   name_Bangla: { type: String, required: false },
+  ssc_Registration: { type: String, required: false },
+  nationality: { type: String, required: false },
   birth: { type: String, required: false }, // Assuming birth date is in YYYY-MM-DD format
   birthRegNo: { type: String, required: false },
   religion: { type: String, required: false },
@@ -53,7 +55,7 @@ const PersonalDetailsSchema = new mongoose.Schema({
   social_Service: { type: String, required: false },
   ssc_Transcript: { type: String, required: false },
   ssc_Certificate: { type: String, required: false },
-  ssc_Registration: { type: String, required: false },
+ 
   ssc_Admit: { type: String, required: false },
   image: { type: String, required: false },
   birth_Certificate: { type: String, required: false },
