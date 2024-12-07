@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { PlusCircle, Pencil, Trash2 } from "lucide-react";
 import { DataTableFilter } from '@/components/ui/DataTableFilter';
 import { Pagination } from "@/components/ui/Pagination";
-
+import Link from 'next/link';
 const AdminApplicantList = () => {
   const [applicants, setApplicants] = useState([]);
   const [filters, setFilters] = useState({
@@ -173,8 +173,12 @@ const AdminApplicantList = () => {
           <TableBody>
             {applicants.map((applicant) => (
               <TableRow key={applicant._id}>
-                <TableCell>{applicant.name_English}</TableCell>
-                <TableCell>{applicant.ssc_registration}</TableCell>
+                <Link href={`/admin/inter-form/${applicant._id}`} target="_blank">
+                  <TableCell>{applicant.name_English}</TableCell>
+                </Link>
+                <Link href={`/admin/inter-form/${applicant._id}`} target="_blank">
+                  <TableCell>{applicant.ssc_registration}</TableCell>
+                </Link>   
                 <TableCell>{applicant.phone}</TableCell>
                 <TableCell>{new Date(applicant.application_date).toLocaleDateString()}</TableCell>
                 <TableCell>

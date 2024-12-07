@@ -73,7 +73,9 @@ const AdmissionForm = () => {
 
   const [formData, setFormData] = useState({
     subject,
+    
     type: 'admission',
+    ssc_registration: '',
     nameInBengali: '',
     nameInEnglish: '',
     birthRegNo: '',
@@ -109,7 +111,7 @@ const AdmissionForm = () => {
     sscBranch: '',
     sscBoard: '',
     sscRoll: '',
-    ssc_registration: '',
+   
     sscYear: '',
     sscPassYear: '',
     sscGPA: '',
@@ -143,7 +145,7 @@ const AdmissionForm = () => {
       ...prevData,
       [name]: value
     }));
-    console.log(formData);
+
   };
   const handleBSectionChange = (subjectId) => {
     setFormData(prevData => {

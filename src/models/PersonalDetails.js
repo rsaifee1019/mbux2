@@ -7,6 +7,7 @@ const PersonalDetailsSchema = new mongoose.Schema({
   name_English: { type: String, required: false },
   name_Bangla: { type: String, required: false },
   birth: { type: String, required: false }, // Assuming birth date is in YYYY-MM-DD format
+  birthRegNo: { type: String, required: false },
   religion: { type: String, required: false },
   mobile: { type: String, required: false }, // Adjust size as needed
   married: { type: String, required: false },
@@ -21,9 +22,11 @@ const PersonalDetailsSchema = new mongoose.Schema({
   address_Permanent: { type: String, required: false },
   district_Permanent: { type: String, required: false },
   zip_Permanent: { type: String, required: false },
+  thana_Permanent: { type: String, required: false },
   address_Current: { type: String, required: false },
   district_Current: { type: String, required: false },
   zip_Current: { type: String, required: false },
+  thana_Current: { type: String, required: false },
   guardians_Name: { type: String, required: false },
   guardians_Monthly_Income: { type: String, required: false },
   guardians_Occupation: { type: String, required: false },
@@ -34,7 +37,7 @@ const PersonalDetailsSchema = new mongoose.Schema({
   ssc_Section: { type: String, required: false },
   ssc_Board: { type: String, required: false },
   ssc_Roll: { type: String, required: false },
-  ssc_Registration: { type: String, required: false },
+
   ssc_Year_Span: { type: String, required: false },
   sss_Year: { type: String, required: false },
   ssc_GPA: { type: String, required: true },
@@ -43,6 +46,7 @@ const PersonalDetailsSchema = new mongoose.Schema({
   ssc_Institution_Zip: { type: String, required: false },
   ssc_Institution_District: { type: String, required: false },
   ssc_Institution_Village: { type: String, required: false },
+  ssc_Institution_Thana: { type: String, required: false },
   subject_List: { type: String, required: false },
   extracurriculars: { type: String, required: false },
   hobbies: { type: String, required: false },

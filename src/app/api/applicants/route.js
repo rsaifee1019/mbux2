@@ -73,7 +73,9 @@ export async function POST(req) {
     const newPersonalDetails = await PersonalDetails.create({
       name_Bangla: nameInBengali,
       name_English: nameInEnglish,
+      subject,
       birth: dateOfBirth,
+      birthRegNo,
       religion,
       mobile,
       married: maritalStatus,
@@ -88,9 +90,11 @@ export async function POST(req) {
       address_Permanent: permanentAddress.village,
       district_Permanent: permanentAddress.district,
       zip_Permanent: permanentAddress.zip, // Assuming you have a zip field
+      thana_Permanent: permanentAddress.thana,
       address_Current: presentAddress.village,
       district_Current: presentAddress.district,
       zip_Current: presentAddress.zip, // Assuming you have a zip field
+      thana_Current: presentAddress.thana,
       guardians_Name: guardianName,
       guardians_Monthly_Income: guardianIncome,
       guardians_Occupation: guardianOccupation,
@@ -99,6 +103,7 @@ export async function POST(req) {
       subjectsB: JSON.stringify(subjectsB), // Store as JSON string if needed
       fourthSubject,
       ssc_Section: sscBranch,
+      ssc_registration,
       ssc_Board: sscBoard,
       ssc_Roll: sscRoll,
       sss_Year: sscYear,
@@ -106,9 +111,10 @@ export async function POST(req) {
       ssc_GPA: sscGPA,
       ssc_Institution_Name: sscInstituteName,
       ssc_Institution_Address: sscInstituteAddress.village, // Assuming you want to store village
-
+      ssc_Institution_Thana: sscInstituteAddress.thana,
       ssc_Institution_District: sscInstituteAddress.district,
       ssc_Institution_Village: sscInstituteAddress.village,
+      ssc_Institution_Zip: sscInstituteAddress.postOffice,
       extracurriculars: extraCurricularActivities,
       hobbies,
       social_Service: socialServiceExperience,

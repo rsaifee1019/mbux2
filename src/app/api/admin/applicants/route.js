@@ -1,7 +1,9 @@
 import Applicant from '@/models/Applicant';
 import { NextResponse } from 'next/server';
+import connectionToDatabase from '@/lib/mongodb';
 
 export async function GET(request) {
+  await connectionToDatabase();
   try {
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page')) || 1;
