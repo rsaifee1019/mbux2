@@ -36,9 +36,19 @@ const AdmissionForm = () => {
       .set(options) // Apply the options
       .save();
 };
+  const getSearchParams = () => {
+    // Only run on client side
+    if (typeof window !== 'undefined') {
+      const searchParams = new URL(window.location.href).searchParams
+      return {
+        subject: searchParams.get('subject')
+      }
+    }
+    return {}
+  }
 
- 
-
+  const params = getSearchParams()
+  const subject = params.subject;
 
   
 
