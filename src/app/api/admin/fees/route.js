@@ -1,66 +1,99 @@
 import FeeRecord from '@/models/FeeRecord';
 import { NextResponse } from 'next/server';
 import connectionToDatabase from '@/lib/mongodb';
+import Student from '@/models/Student';
 
 export async function GET(request) {
   try {
     await connectionToDatabase();
-    console.log('GET request received');
     const { searchParams } = new URL(request.url);
-    console.log('Search params:', searchParams);
-    const page = parseInt(searchParams.get('page')) || 1;
-    const limit = parseInt(searchParams.get('limit')) || 10;
+    const studentId = searchParams.get('studentId');
+    const studentName = searchParams.get('studentName');
+    const status = searchParams.get('status');
+    const page = parseInt(searchParams.get('page') || '1', 10);
+    const limit = parseInt(searchParams.get('limit') || '10', 10);
+    const monthFrom = searchParams.get('monthFrom');
+    const monthTo = searchParams.get('monthTo');
+
+    // Calculate skip value for pagination
     const skip = (page - 1) * limit;
 
-    // Get filters from query params
-    const filters = {};
-    if (searchParams.get('studentName')) {
-      filters['student.name'] = { $regex: searchParams.get('studentName'), $options: 'i' };
-    }
-    if (searchParams.get('studentId')) {
-      filters['student.studentId'] = { $regex: searchParams.get('studentId'), $options: 'i' };
-    }
-    if (searchParams.get('status')) {
-      filters.status = searchParams.get('status');
-    }
-    if (searchParams.get('paymentType')) {
-      filters.paymentType = searchParams.get('paymentType');
-    }
-    if (searchParams.get('monthFrom')) {
-      filters.month = { $gte: new Date(searchParams.get('monthFrom')) };
-    }
-    if (searchParams.get('monthTo')) {
-      filters.month = { 
-        ...filters.month,
-        $lte: new Date(searchParams.get('monthTo'))
-      };
-    }
-    console.log('Filters:', filters);
-    const fees = await FeeRecord.find(filters)
-      .populate('student', 'name studentId')
-      .sort({ dueDate: -1 })
-      .skip(skip)
-      .limit(limit)
-      .lean();
-    console.log('Fees:', fees);
-    const totalItems = await FeeRecord.countDocuments(filters);
-    console.log('Total items:', totalItems);
+    // Prepare base query
+    let query = {};
 
+    // If status is provided, add to query
+    if (status) {
+      query.status = status.toUpperCase(); // Ensure status is in uppercase
+    }
+
+    // If monthFrom and monthTo are provided, add to query
+    if (monthFrom) {
+      query.month = { $gte: new Date(monthFrom) }; // Greater than or equal to monthFrom
+    }
+    if (monthTo) {
+      query.month = { ...query.month, $lte: new Date(monthTo) }; // Less than or equal to monthTo
+    }
+
+    // If studentId is provided, find the student first
+    if (studentId) {
+      // Find student by studentId (string field)
+      const student = await Student.findOne({ studentId});
+
+      if (!student) {
+        query = {};
+      }
+      else{
+        query = { student: student._id };
+      }
+    }
+    if (studentName) {
+      console.log('studentName', studentName);
+      const searchRegex = new RegExp(studentName, 'i'); // 'i' for case-insensitive
+      const student = await Student.findOne({ name: { $regex: searchRegex } });
+      if (!student) {
+        query = {};
+      }
+      else{
+        query = { student: student._id };
+      }
+    }
+
+    // Find fee records with optional student filtering
+    const [fees, total] = await Promise.all([
+      FeeRecord.find(query)
+        .populate({
+          path: 'student',
+          select: 'name email studentId degree department' // Select specific student fields
+        })
+        .skip(skip)
+        .limit(limit)
+        .sort({ createdAt: -1 }), // Sort by most recent first
+      
+      FeeRecord.countDocuments(query)
+    ]);
+
+    // Calculate total pages
+    const totalPages = Math.ceil(total / limit);
+
+    // Return the paginated fee records with metadata
     return NextResponse.json({
       fees,
-      totalItems,
-      currentPage: page,
-      pageSize: limit,
-      totalPages: Math.ceil(totalItems / limit)
-    });
+      pagination: {
+        currentPage: page,
+        totalPages,
+        totalRecords: total,
+        recordsOnPage: fees.length
+      }
+    }, { status: 200 });
+
   } catch (error) {
+    console.error('Error fetching fee records:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch fees' },
+      { error: 'Internal Server Error' }, 
       { status: 500 }
     );
   }
 }
-
 export async function POST(req) {
   try {
     await connectionToDatabase();

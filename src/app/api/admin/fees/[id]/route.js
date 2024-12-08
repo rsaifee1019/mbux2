@@ -26,12 +26,25 @@ export async function PUT(req) {
   // Access the id from req.nextUrl.pathname
   const { pathname } = req.nextUrl;
   const id = pathname.split('/').pop(); // Get the last segment of the path
+  console.log('id', id);
 
   try {
     const fee = await FeeRecord.findById(id);
-    if (!fee) return NextResponse.json({ message: 'Fee not found' }, { status: 404 });
-    // Update the fee with the request body
-    Object.assign(fee, req.body); // Update the fee with new data
+    console.log('fee', fee);
+
+    // Convert the ReadableStream to a JSON object
+    const requestBody = await req.json();
+    console.log('req.body', requestBody);
+    let status = requestBody.status; // Extract status from request body
+    if (status !== 'PAID'){
+      status = 'PAID';
+    }
+    else{
+      status = 'PENDING';
+    }
+
+    
+    fee.status = status; // Update the fee's status
     await fee.save(); // Save the updated fee
     return NextResponse.json(fee, { status: 200 });
   } catch (error) {

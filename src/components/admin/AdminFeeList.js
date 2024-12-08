@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { DataTableFilter } from '@/components/ui/DataTableFilter';
 import { Pagination } from "@/components/ui/Pagination";
-
+import axios from 'axios';
 const AdminFeeList = () => {
   const [fees, setFees] = useState([]);
   const [filters, setFilters] = useState({
@@ -132,6 +132,12 @@ const AdminFeeList = () => {
     }));
   };
 
+  const handleStatusChange = async (id, status) => {
+    const response = await axios.put(`/api/admin/fees/${id}`, { status });
+    await fetchFees();
+   
+  };
+
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-6">
       <div className="flex justify-between items-center">
@@ -168,11 +174,11 @@ const AdminFeeList = () => {
                 <TableCell>৳{fee.amount}</TableCell>
                 <TableCell>{new Date(fee.dueDate).toLocaleDateString()}</TableCell>
                 <TableCell>{fee.paymentType}</TableCell>
-                <TableCell>
+                <TableCell onClick={() => handleStatusChange(fee._id, fee.status)} style={{ cursor: 'pointer' }}>
                   <span className={`px-2 py-1 rounded-full text-xs ${
-                    fee.status === 'paid' 
+                    fee.status === 'PAID' 
                       ? 'bg-green-100 text-green-800'
-                      : fee.status === 'overdue'
+                      : fee.status === 'OVERDUE'
                       ? 'bg-red-100 text-red-800'
                       : 'bg-yellow-100 text-yellow-800'
                   }`}>

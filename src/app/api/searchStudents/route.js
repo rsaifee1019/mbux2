@@ -19,6 +19,7 @@ export async function POST(req) {
 
   // Apply additional filters if provided
   if (filter) {
+    console.log('Filter:', filter);
     if (filter.department) {
       filterConditions.department = filter.department; // Filter by department
     }
