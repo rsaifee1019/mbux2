@@ -25,21 +25,16 @@ const Fees = () => {
   });
 const [feesData, setFeesData] = useState([]);
   const [amount, setAmount] = useState(0);
-  const fetchAmount = async () => {
-    const response = await fetch(`/api/fees`);
-    const data = await response.json();
-    setFeesData(data);
-    console.log(data)
-  };
-
-  useEffect(() => {
-    fetchAmount();
-  }, []);
+ 
   
 const fetchFees = async () => {
     const response = await fetch(`/api/fees`);
     const data = await response.json();
-    setFees(data);
+    const filteredArray = data.filter(function(item) {
+      return item.subtype !== 'admission';
+  });
+
+    setFees(filteredArray);
     setLoading(false);
 
   };
@@ -82,9 +77,17 @@ const fetchFees = async () => {
   };
 useEffect(() => {
   if(formData.paymentType && formData.degree){
-    setAmount(feesData.find(fee => fee.subtype === formData.paymentType && fee.degree === formData.degree).amount)
+    try{
+      setAmount(feesData.find(fee => fee.subtype === formData.paymentType && fee.degree === formData.degree).amount || 0)
+    }catch(error){
+      setAmount(0)
+    }
   }
-}, [formData.paymentType, formData.degree])
+
+  if(formData.paymentType == 'test-exam'){
+    setAmount(feesData.find(fee => fee.subtype === formData.paymentType && fee.degree === formData.degree && fee.year === formData.year).amount)
+  }
+}, [formData.paymentType, formData.degree, formData.year])
   if (loading) {
     return <Spinner />;
   }
@@ -99,81 +102,8 @@ useEffect(() => {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="studentId">রোল নং</Label>
-            <Input
-              id="studentId"
-              name="studentId"
-              placeholder="রোল নং লিখুন "
-              required
-              className="w-full"
-              value={formData.studentId}
-              onChange={handleInputChange}
-            />
-          </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="name">নাম</Label>
-            <Input
-              id="name"
-              name="name"
-              placeholder="নাম লিখুন "
-              required
-              className="w-full"
-              value={formData.name}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="phone">মোবাইল নং</Label>
-            <Input
-              id="phone"
-              name="phone"
-              placeholder="মোবাইল নং লিখুন "
-              required
-              className="w-full"
-              value={formData.phone}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="year">বর্ষ</Label>
-            <select
-            id="year"
-            name="year"
-            className="w-full rounded-md border border-gray-300 p-2"
-            required
-            value={formData.year}
-            onChange={handleInputChange}
-          >
-          <option value="">বাছাই করুন</option>
-         <option value={1}>১ম বর্ষ</option>
-         <option value={2}>২য় বর্ষ</option>
-         <option value={3}>৩য় বর্ষ</option>
-         <option value={4}>৪র্থ বর্ষ</option>
-          </select>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="degree">ডিগ্রী</Label>
-            <select
-              id="degree"
-              name="degree"
-              className="w-full rounded-md border border-gray-300 p-2"
-              required
-              value={formData.degree}
-              onChange={handleInputChange}
-            >
-              <option value="">বাছাই করুন</option>
-           {Array.from(new Set(fees.map(fee => fee.degree))).map((degree, index) => (
-            <option key={index} value={degree}>{degree}</option>
-           ))}
-            </select>
-          </div>
-
-          <div className="space-y-2">
+        <div className="space-y-2">
             <Label htmlFor="paymentType">ফি এর উদ্দেশ্য </Label>
             <select
               id="paymentType"
@@ -192,6 +122,89 @@ useEffect(() => {
               })}
             </select>
           </div>
+
+          <div className="space-y-2">
+          <Label htmlFor="name">নাম</Label>
+          <Input
+            id="name"
+            name="name"
+            placeholder="নাম লিখুন "
+            required
+            className="w-full"
+            value={formData.name}
+            onChange={handleInputChange}
+          />
+        </div>
+
+          
+          <div className="space-y-2">
+            <Label htmlFor="degree">ডিগ্রী</Label>
+            <select
+              id="degree"
+              name="degree"
+              className="w-full rounded-md border border-gray-300 p-2"
+              required
+              value={formData.degree}
+              onChange={handleInputChange}
+            >
+              <option value="">বাছাই করুন</option>
+           {Array.from(new Set(fees.map(fee => fee.degree))).map((degree, index) => (
+            <option key={index} value={degree}>{degree}</option>
+           ))}
+            </select>
+          </div>
+
+          
+          <div className="space-y-2">
+            <Label htmlFor="year">বর্ষ</Label>
+            <select
+            id="year"
+            name="year"
+            className="w-full rounded-md border border-gray-300 p-2"
+            required
+            value={formData.year}
+            onChange={handleInputChange}
+          >
+          <option value="">বাছাই করুন</option>
+         <option value={1}>১ম বর্ষ</option>
+         <option value={2}>২য় বর্ষ</option>
+         <option value={3}>৩য় বর্ষ</option>
+         <option value={4}>৪র্থ বর্ষ</option>
+          </select>
+          </div>
+
+
+          
+          <div className="space-y-2">
+            <Label htmlFor="studentId">রোল নং</Label>
+            <Input
+              id="studentId"
+              name="studentId"
+              placeholder="রোল নং লিখুন "
+              required
+              className="w-full"
+              value={formData.studentId}
+              onChange={handleInputChange}
+            />
+          </div>
+
+   
+
+          <div className="space-y-2">
+            <Label htmlFor="phone">মোবাইল নং</Label>
+            <Input
+              id="phone"
+              name="phone"
+              placeholder="মোবাইল নং লিখুন "
+              required
+              className="w-full"
+              value={formData.phone}
+              onChange={handleInputChange}
+            />
+          </div>
+
+
+          
 
           {formData.paymentType && (
             <div className="mt-4 p-4 bg-gray-50 rounded-md">

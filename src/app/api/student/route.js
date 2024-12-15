@@ -35,8 +35,22 @@ export async function POST(req) {
   
     }
 
-
-    const fees = await Fee.findOne({degree, subtype: paymentType}) 
+if(paymentType == 'test-exam'){
+    const fees = await Fee.findOne({
+        degree,
+        subtype: paymentType,
+        year: year,
+        // Corrected conditional logic
+   
+    });
+}
+     // ... existing code ...
+    const fees = await Fee.findOne({
+        degree,
+        subtype: paymentType,
+        // Corrected conditional logic
+   
+    });
 
     const payment = await Payment.create({amount: fees.amount, transactionId: tran_id, userType: 'student', studentId, paymentType: paymentType })
 

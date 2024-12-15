@@ -17,6 +17,10 @@ const FeeSchema = new mongoose.Schema({
     type: String,     // Description of the fee (optional)
     required: true,
   },
+  year: {
+    type: String,     // Description of the fee (optional)
+    required: true,
+  },
 });
 
 const Fee = mongoose.models.Fee || mongoose.model('Fee', FeeSchema);

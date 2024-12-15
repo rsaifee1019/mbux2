@@ -16,9 +16,14 @@ let store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TUITION
 
   // Check if payment exists
   const payment = await Payment.findOne({ transactionId: tran_id });
-  if(payment.paymentType !== 'tuition'){
+  if(payment.paymentType == 'admission'){
     store_id = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_ADMISSION
     store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_ADMISSION
+  }
+
+  if(payment.paymentType == 'test-exam'){
+    store_id = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_TEST_EXAM
+    store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TEST_EXAM
   }
   
   // Log the payment object for debugging
