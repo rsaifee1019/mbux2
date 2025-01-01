@@ -10,6 +10,8 @@ export async function POST(req) {
   const { tran_id } = body;
   
   // Log the transaction ID for debugging
+  const store_id_test = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_TEST
+  const store_passwd_test = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TEST
 let store_id = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_TUITION
 let store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TUITION
 
@@ -25,6 +27,8 @@ let store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TUITION
     store_id = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_TEST_EXAM
     store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TEST_EXAM
   }
+
+ 
   
   // Log the payment object for debugging
   console.log('Payment object:', payment);
@@ -42,8 +46,8 @@ let store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TUITION
 
   try {
       const data = {
-        store_id,
-      store_passwd,
+        store_id: store_id,
+        store_passwd: store_passwd,
       total_amount: amount,
       currency: 'BDT',
       tran_id,
@@ -68,7 +72,7 @@ let store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TUITION
     const sslcz = new SSLCommerzPayment(
       store_id,
       store_passwd,
-      false
+      true
     );
 
     const apiResponse = await sslcz.init(data);
