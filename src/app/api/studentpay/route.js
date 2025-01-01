@@ -10,8 +10,8 @@ export async function POST(req) {
   const { tran_id } = body;
   
   // Log the transaction ID for debugging
-  const store_id_test = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_TEST
-  const store_passwd_test = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TEST
+  // const store_id_test = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_TEST
+  // const store_passwd_test = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TEST
 let store_id = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_TUITION
 let store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TUITION
 
