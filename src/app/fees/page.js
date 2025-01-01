@@ -34,8 +34,10 @@ const fetchFees = async () => {
       return item.subtype !== 'admission';
   });
 
-    setFees(filteredArray);
+    setFees(data);
+    setFeesData(data);
     setLoading(false);
+    console.log(data)
 
   };
   useEffect(() => {
@@ -85,8 +87,17 @@ useEffect(() => {
   }
 
   if(formData.paymentType == 'test-exam'){
-    setAmount(feesData.find(fee => fee.subtype === formData.paymentType && fee.degree === formData.degree && fee.year === formData.year).amount)
-  }
+    try{
+
+      setAmount(feesData.find(fee => fee.subtype === formData.paymentType && fee.degree === formData.degree && fee.year === formData.year).amount)
+
+    }
+
+    catch(error){
+
+      setAmount(0)
+    }
+     }
 }, [formData.paymentType, formData.degree, formData.year])
   if (loading) {
     return <Spinner />;
