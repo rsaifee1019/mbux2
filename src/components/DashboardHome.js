@@ -29,6 +29,9 @@ const DashboardHome = () => {
         return <AdminStudentList />;
       case 'fees':
         return <AdminFeeList />;
+        case 'setFees':
+          return <AdminFeeList />;
+
       case 'import':
         return <StudentCSVUpload />;
         case "authorized":
@@ -61,6 +64,9 @@ const DashboardHome = () => {
           <li style={styles.navItem}>
             <button className={`w-full  p-2 rounded-md ${activeSection === 'fees' ? 'bg-accent text-accent-foreground' : ''}`} onClick={() => setActiveSection('fees')}>Fees</button>
           </li>
+          <li style={styles.navItem}>
+          <button className={`w-full  p-2 rounded-md ${activeSection === 'setFees' ? 'bg-accent text-accent-foreground' : ''}`} onClick={() => setActiveSection('setFees')}>Set Fees</button>
+        </li>
           <li style={styles.navItem}>
             <button className={`w-full  p-2 rounded-md ${activeSection === 'posts' ? 'bg-accent text-accent-foreground' : ''}`} onClick={() => setActiveSection('posts')}>Posts</button>
           </li>

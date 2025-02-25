@@ -14,8 +14,8 @@ export default function QuickLinks() {
           <Link
             key={link.title}
             href={link.href}
-            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
-          >
+            className="bg-gray-200 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+          >      
             <div className="text-center">
               <span className="text-3xl mb-2 block">{link.icon}</span>
               <h3 className="font-semibold">{link.title}</h3>

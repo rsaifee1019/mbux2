@@ -1,15 +1,23 @@
+
+
+
+
+
 // site/src/components/ImageUploader.js
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function FileUploader({ setFileUrl }) {
   const [file, setFile] = useState(null);
   const [uploadResult, setUploadResult] = useState(null);
 
-  const handleFileChange = (event) => {
+  const handleFileChange = async (event) => {
+    console.log("file changed")
     setFile(event.target.files[0]);
   };
-
+useEffect(()=>{
+  handleUpload()
+}, [file])
   const handleUpload = async () => {
     if (!file) return;
 
@@ -31,7 +39,6 @@ export default function FileUploader({ setFileUrl }) {
   return (
     <div>
       <input type="file" onChange={handleFileChange} />
-      <button type="button" onClick={handleUpload}>Upload File</button>
-    </div>
+     </div>
   );
 }

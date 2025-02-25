@@ -27,6 +27,7 @@ let store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TUITION
     store_id = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_TEST_EXAM
     store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TEST_EXAM
   }
+    
 
  
   

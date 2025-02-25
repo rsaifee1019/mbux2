@@ -94,6 +94,7 @@ const AdminCreateEditNotice = ({ noticeId }) => {
       setError(err.message);
     } finally {
       setLoading(false);
+      router.push('/admin');
     }
   };
 
