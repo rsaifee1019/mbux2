@@ -5,7 +5,7 @@ export default function NoticePage({ params }) {
   console.log(params.id)
     return (
       <div className="p-6">
-        <AdminSetFee feeId={params.id} />
+        <AdminSetFee  />
       </div>
     );
   }

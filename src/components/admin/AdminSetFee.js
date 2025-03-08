@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -16,12 +16,12 @@ import {
 
 
 
-const AdminCreateEditEvent = ({ eventId }) => {
+const AdminSetFee = ({ feeId }) => {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    title: '',
-    category: '',
-    description: '',
+    degree: '',
+    subtype: '',
+    amount: '',
     link: '',
     image: '',
     dateUploaded: new Date().toISOString().split('T')[0]
@@ -32,19 +32,12 @@ const AdminCreateEditEvent = ({ eventId }) => {
 
   useEffect(() => {
     const fetchEvent = async () => {
-      if (eventId && eventId !== 'new') {
+      if (feeId && feeId !== 'new') {
         try {
-          const response = await fetch(`/api/admin/fees/${feeId}`);
+          const response = await fetch(`/api/admin/SetAd/${feeId}`);
           if (!response.ok) throw new Error('Failed to fetch post');
           const data = await response.json();
-          setFormData({
-            title: data.title || '',
-            category: data.category || '',
-            description: data.description || '',
-            link: data.link || '',
-            image: data.image || '',
-            dateUploaded: new Date(data.dateUploaded).toISOString().split('T')[0]
-          });
+          setFormData(data);
           setIsEditing(true);
         } catch (err) {
           setError('Failed to fetch post details');
@@ -53,7 +46,10 @@ const AdminCreateEditEvent = ({ eventId }) => {
     };
 
     fetchEvent();
-  }, [eventId]);
+  }, [feeId]);
+  useEffect(() => {
+    console.log(formData)
+  }, [formData])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -77,15 +73,15 @@ const AdminCreateEditEvent = ({ eventId }) => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e ) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
     try {
       const url = isEditing 
-        ? `/api/admin/events/${eventId}`
-        : '/api/admin/events';
+        ? `/api/admin/SetAd/${feeId}`
+        : '/api/admin/SetAd';
       
       const response = await fetch(url, {
         method: isEditing ? 'PUT' : 'POST',
@@ -100,7 +96,7 @@ const AdminCreateEditEvent = ({ eventId }) => {
         throw new Error(data.message || 'Something went wrong');
       }
 
-      router.push('/admin/events');
+      router.push('/admin');
       router.refresh();
       
     } catch (err) {
@@ -125,31 +121,59 @@ const AdminCreateEditEvent = ({ eventId }) => {
           
           <div className="space-y-2">
             <label htmlFor="title" className="block text-sm font-medium">
-              Title *
+              Degree
             </label>
             <Input
-              id="title"
-              name="title"
-              value={formData.title}
+              id="degree"
+              name="degree"
+              value={formData.degree}
               onChange={handleChange}
               required
-              placeholder="Enter event title"
+              placeholder="Enter degree"
             />
           </div>
-
           <div className="space-y-2">
-            <label htmlFor="date" className="block text-sm font-medium">
-              Date *
-            </label>
-            <Input
-              id="date"
-              name="date"
-              type="date"
-              value={formData.date}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          <label htmlFor="title" className="block text-sm font-medium">
+            Type *
+          </label>
+          <Input
+            id="subtype"
+            name="subtype"
+            value={formData.subtype}
+            onChange={handleChange}
+            required
+            placeholder="Enter degree"
+          />
+        </div>
+        <div className="space-y-2">
+        <label htmlFor="title" className="block text-sm font-medium">
+        year
+        </label>
+        <Input
+          id="year"
+          name="year"
+          value={formData.year || 'wjhb'}
+          onChange={handleChange}
+          required
+          placeholder="Enter year"
+        />
+      </div>
+
+        <div className="space-y-2">
+        <label htmlFor="title" className="block text-sm font-medium">
+        amount
+        </label>
+        <Input
+          id="amount"
+          name="amount"
+          value={formData.amount}
+          onChange={handleChange}
+          required
+          placeholder="Enter degree"
+        />
+      </div>
+
+ 
 
       
 
@@ -159,7 +183,7 @@ const AdminCreateEditEvent = ({ eventId }) => {
               className="flex-1"
               disabled={loading}
             >
-              {loading ? 'Saving...' : isEditing ? 'Update Event' : 'Create Event'}
+              {loading ? 'Saving...' : isEditing ? 'Update Fee' : 'Create Fee'}
             </Button>
             
             <Button 
@@ -176,4 +200,4 @@ const AdminCreateEditEvent = ({ eventId }) => {
   );
 };
 
-export default AdminCreateEditEvent;
+export default AdminSetFee;

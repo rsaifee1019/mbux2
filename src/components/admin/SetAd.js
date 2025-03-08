@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { DataTableFilter } from '@/components/ui/DataTableFilter';
-import { Pagination } from "@/components/ui/Pagination";
+import { Pagination } from "@/components/ui/Pagination";import { PlusCircle, Pencil, Trash2, ExternalLink } from "lucide-react";
 import axios from 'axios';
-const AdminFeeList = () => {
+import { useRouter } from 'next/navigation';
+const SetAd = () => {
   const [fees, setFees] = useState([]);
+  const router = useRouter()
   const [filters, setFilters] = useState({
     studentName: '',
     studentId: '',
@@ -84,10 +86,11 @@ const AdminFeeList = () => {
       )
     });
 
-    const response = await fetch(`/api/admin/fees?${queryParams}`);
+    const response = await fetch(`/api/fees`);
     const data = await response.json();
+    console.log(data)
     
-    setFees(data.fees);
+    setFees(data);
     setPagination(prev => ({
       ...prev,
       totalItems: data.totalItems,
@@ -132,11 +135,18 @@ const AdminFeeList = () => {
     }));
   };
 
-  const handleStatusChange = async (id, status) => {
-    const response = await axios.put(`/api/admin/fees/${id}`, { status });
-    await fetchFees();
+  const handleEdit = async (id) => {
+console.log('clicked')
+ router.push(`/admin/fees/${id}`)
+   
    
   };
+
+  const handleDelete = async (id, status) => {
+    console.log('clicked')
+        await fetchFees();
+       
+      };
 
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-6">
@@ -154,37 +164,43 @@ const AdminFeeList = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Student Name</TableHead>
-              <TableHead>Student ID</TableHead>
-              <TableHead>Month</TableHead>
+       
+              <TableHead>Degree</TableHead>
+ 
+              <TableHead>Type</TableHead>
+            
+              <TableHead>Years</TableHead>
               <TableHead>Amount</TableHead>
-              <TableHead>Due Date</TableHead>
-              <TableHead>Payment Type</TableHead>
-              <TableHead>Status</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {fees.map((fee) => (
               <TableRow key={fee._id}>
-                <TableCell>{fee.student?.name}</TableCell>
-                <TableCell>{fee.student?.studentId}</TableCell>
-                <TableCell>
-                  {new Date(fee.month).toLocaleString('default', { month: 'long', year: 'numeric' })}
-                </TableCell>
-                <TableCell>৳{fee.amount}</TableCell>
-                <TableCell>{new Date(fee.dueDate).toLocaleDateString()}</TableCell>
-                <TableCell>{fee.paymentType}</TableCell>
-                <TableCell onClick={() => handleStatusChange(fee._id, fee.status)} style={{ cursor: 'pointer' }}>
-                  <span className={`px-2 py-1 rounded-full text-xs ${
-                    fee.status === 'PAID' 
-                      ? 'bg-green-100 text-green-800'
-                      : fee.status === 'OVERDUE'
-                      ? 'bg-red-100 text-red-800'
-                      : 'bg-yellow-100 text-yellow-800'
-                  }`}>
-                    {fee.status}
-                  </span>
-                </TableCell>
+              <TableCell>{fee.degree}</TableCell>
+               
+                <TableCell>{fee.subtype}</TableCell>
+            
+                <TableCell >
+
+         
+                {fee.year || '?'}</TableCell>
+               
+           <TableCell>৳{fee.amount}      </TableCell>
+           <TableCell 
+           onClick={() => handleEdit(fee._id)} style={{ cursor: 'pointer' }}>
+           <Pencil className="h-4 w-4" />
+           </TableCell>
+
+           <TableCell
+           onClick={() => handleDelete(fee._id)} style={{ cursor: 'pointer' }}>
+           <Trash2 className="h-4 w-4" />
+           </TableCell>
+
+
+           
+           
+    
+               
               </TableRow>
             ))}
           </TableBody>
@@ -205,4 +221,4 @@ const AdminFeeList = () => {
   );
 };
 
-export default AdminFeeList;
+export default SetAd;

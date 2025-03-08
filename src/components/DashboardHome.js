@@ -10,6 +10,7 @@ import AdminFeeList from './admin/AdminFeeList';
 import StudentCSVUpload from './admin/Students';
 import AdminPostList from './admin/AdminPostList';
 import Authorized from './absent/Authorized';
+import SetAd from './admin/SetAd';
 const DashboardHome = () => {
   const [activeSection, setActiveSection] = useState('applicants');
 
@@ -30,7 +31,7 @@ const DashboardHome = () => {
       case 'fees':
         return <AdminFeeList />;
         case 'setFees':
-          return <AdminFeeList />;
+          return <SetAd />;
 
       case 'import':
         return <StudentCSVUpload />;

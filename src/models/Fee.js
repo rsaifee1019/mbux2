@@ -11,7 +11,7 @@ const FeeSchema = new mongoose.Schema({
   },
   division: {
     type: String,
-    required: true,
+    required: false,
   },
   type: {
     type: String,   // Type of fee (e.g., 'registration', 'tuition', 'sports', etc.)
