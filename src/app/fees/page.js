@@ -106,33 +106,47 @@ useEffect(() => {
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto mt-20">
+    <Card className="w-full max-w-md mx-auto mt-4 ">
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-center">ফি পরিশোধ ফর্ম</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
-
         <div className="space-y-2">
-            <Label htmlFor="paymentType">ফি এর উদ্দেশ্য </Label>
-            <select
-              id="paymentType"
-              name="paymentType"
-              className="w-full rounded-md border border-gray-300 p-2"
-              required
-              value={formData.paymentType}
-              onChange={handleInputChange}
-            >
-              <option value="">বাছাই করুন</option>
-              {Array.from(new Set(fees.map(fee => fee.subtype))).map((subtype, index) => {
-                console.log(`Subtype: ${subtype}`); // Log the subtype for debugging
-                return (
-                  <option key={index} value={subtype}>{subtype}</option>
-                );
-              })}
-            </select>
-          </div>
+        <Label htmlFor="degree">ডিগ্রী</Label>
+        <select
+          id="degree"
+          name="degree"
+          className="w-full rounded-md border border-gray-300 p-2"
+          required
+          value={formData.degree}
+          onChange={handleInputChange}
+        >
+          <option value="">বাছাই করুন</option>
+       {Array.from(new Set(fees.map(fee => fee.degree))).map((degree, index) => (
+        <option key={index} value={degree}>{degree}</option>
+       ))}
+        </select>
+      </div>
+      <div className="space-y-2">
+      <Label htmlFor="year">বর্ষ</Label>
+      <select
+      id="year"
+      name="year"
+      className="w-full rounded-md border border-gray-300 p-2"
+      required
+      value={formData.year}
+      onChange={handleInputChange}
+    >
+    <option value="">বাছাই করুন</option>
+   <option value={1}>১ম বর্ষ</option>
+   <option value={2}>২য় বর্ষ</option>
+   <option value={3}>৩য় বর্ষ</option>
+   <option value={4}>৪র্থ বর্ষ</option>
+    </select>
+    </div>
 
+        
           <div className="space-y-2">
           <Label htmlFor="name">নাম</Label>
           <Input
@@ -147,41 +161,10 @@ useEffect(() => {
         </div>
 
           
-          <div className="space-y-2">
-            <Label htmlFor="degree">ডিগ্রী</Label>
-            <select
-              id="degree"
-              name="degree"
-              className="w-full rounded-md border border-gray-300 p-2"
-              required
-              value={formData.degree}
-              onChange={handleInputChange}
-            >
-              <option value="">বাছাই করুন</option>
-           {Array.from(new Set(fees.map(fee => fee.degree))).map((degree, index) => (
-            <option key={index} value={degree}>{degree}</option>
-           ))}
-            </select>
-          </div>
+          
 
           
-          <div className="space-y-2">
-            <Label htmlFor="year">বর্ষ</Label>
-            <select
-            id="year"
-            name="year"
-            className="w-full rounded-md border border-gray-300 p-2"
-            required
-            value={formData.year}
-            onChange={handleInputChange}
-          >
-          <option value="">বাছাই করুন</option>
-         <option value={1}>১ম বর্ষ</option>
-         <option value={2}>২য় বর্ষ</option>
-         <option value={3}>৩য় বর্ষ</option>
-         <option value={4}>৪র্থ বর্ষ</option>
-          </select>
-          </div>
+       
 
 
           
@@ -212,6 +195,25 @@ useEffect(() => {
               onChange={handleInputChange}
             />
           </div>
+          <div className="space-y-2">
+          <Label htmlFor="paymentType">ফি এর উদ্দেশ্য </Label>
+          <select
+            id="paymentType"
+            name="paymentType"
+            className="w-full rounded-md border border-gray-300 p-2"
+            required
+            value={formData.paymentType}
+            onChange={handleInputChange}
+          >
+            <option value="">বাছাই করুন</option>
+            {Array.from(new Set(fees.map(fee => fee.subtype))).map((subtype, index) => {
+              console.log(`Subtype: ${subtype}`); // Log the subtype for debugging
+              return (
+                <option key={index} value={subtype}>{subtype}</option>
+              );
+            })}
+          </select>
+        </div>
 
 
           
