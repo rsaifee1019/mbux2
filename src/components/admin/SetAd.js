@@ -159,7 +159,7 @@ console.log('clicked')
         onClick={() => router.push('/admin/fees')}
         className="flex items-center gap-2 rounded-[10px]"
       >
-        <PlusCircles className="h-4 w-4" />
+        <PlusCircle className="h-4 w-4" />
         Add New Fee
       </Button>
       </div>
