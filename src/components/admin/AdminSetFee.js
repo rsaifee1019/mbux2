@@ -109,7 +109,7 @@ const AdminSetFee = ({ feeId }) => {
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle>{isEditing ? 'Edit Event' : 'Create New Event'}</CardTitle>
+        <CardTitle>{isEditing ? 'Edit Event' : 'Create New Fee'}</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -152,7 +152,7 @@ const AdminSetFee = ({ feeId }) => {
         <Input
           id="year"
           name="year"
-          value={formData.year || 'wjhb'}
+          value={formData.year || ''}
           onChange={handleChange}
           required
           placeholder="Enter year"
