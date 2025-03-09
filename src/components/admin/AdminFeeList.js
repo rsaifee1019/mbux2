@@ -3,6 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { DataTableFilter } from '@/components/ui/DataTableFilter';
 import { Pagination } from "@/components/ui/Pagination";
 import axios from 'axios';
+import { PlusCircle } from 'lucide-react';
 const AdminFeeList = () => {
   const [fees, setFees] = useState([]);
   const [filters, setFilters] = useState({
@@ -142,7 +143,15 @@ const AdminFeeList = () => {
     <div className="p-6 max-w-7xl mx-auto space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold tracking-tight">Fee Records</h2>
+        <Button 
+        onClick={() => router.push('/admin/fees')}
+        className="flex items-center gap-2 rounded-[10px]"
+      >
+        <PlusCircle className="h-4 w-4" />
+        Add New Fee
+      </Button>
       </div>
+      
 
       <DataTableFilter
         filters={filterConfig}

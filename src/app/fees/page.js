@@ -106,12 +106,13 @@ useEffect(() => {
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto mt-4 ">
+    <Card className="w-full max-w-md mx-auto my-4 ">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">ফি পরিশোধ ফর্ম</CardTitle>
+        <CardTitle className="text-xl font-bold text-center">ফি পরিশোধ ফর্ম</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="flex justify-between">
         <div className="space-y-2">
         <Label htmlFor="degree">ডিগ্রী</Label>
         <select
@@ -145,7 +146,7 @@ useEffect(() => {
    <option value={4}>৪র্থ বর্ষ</option>
     </select>
     </div>
-
+    </div>
         
           <div className="space-y-2">
           <Label htmlFor="name">নাম</Label>
@@ -159,15 +160,7 @@ useEffect(() => {
             onChange={handleInputChange}
           />
         </div>
-
-          
-          
-
-          
-       
-
-
-          
+        <div className="flex justify-between">  
           <div className="space-y-2">
             <Label htmlFor="studentId">রোল নং</Label>
             <Input
@@ -195,6 +188,8 @@ useEffect(() => {
               onChange={handleInputChange}
             />
           </div>
+
+          </div>
           <div className="space-y-2">
           <Label htmlFor="paymentType">ফি এর উদ্দেশ্য </Label>
           <select
@@ -207,13 +202,14 @@ useEffect(() => {
           >
             <option value="">বাছাই করুন</option>
             {Array.from(new Set(fees.map(fee => fee.subtype))).map((subtype, index) => {
-              console.log(`Subtype: ${subtype}`); // Log the subtype for debugging
+     
               return (
                 <option key={index} value={subtype}>{subtype}</option>
               );
             })}
           </select>
         </div>
+  
 
 
           
@@ -221,18 +217,18 @@ useEffect(() => {
           {formData.paymentType && (
             <div className="mt-4 p-4 bg-gray-50 rounded-md">
               <p className="text-lg font-semibold">
-              পরিমান: Tk {amount}
+              পরিমান:  {amount ?`Tk ${amount}` : `?`}
               </p>
             </div>
           )}
         </form>
       </CardContent>
-      <CardFooter>
+      <CardFooter className='flex justify-end'>
      {buttonLoading ?   <Button 
     
  
    
-        className="w-full py-2 rounded-md"
+        className="w-24 py-2 rounded-[20px] "
      
       >
         <Image src="/spinner-white.svg" alt="Loading..." width={40} height={40} />
@@ -242,7 +238,7 @@ useEffect(() => {
        
         
           type="submit"
-          className="w-full py-2 rounded-md"
+          className="w-24 py-2 rounded-[20px]"
           onClick={handleSubmit}
         >
         জমা দিন
