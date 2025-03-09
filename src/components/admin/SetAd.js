@@ -3,6 +3,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { DataTableFilter } from '@/components/ui/DataTableFilter';
 import { Pagination } from "@/components/ui/Pagination";import { PlusCircle, Pencil, Trash2, ExternalLink } from "lucide-react";
 import axios from 'axios';
+
+
+import { Button } from "@/components/ui/button";
 import { useRouter } from 'next/navigation';
 const SetAd = () => {
   const [fees, setFees] = useState([]);
