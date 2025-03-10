@@ -30,12 +30,15 @@ export async function POST(req) {
   console.log('id', id);
 
   try {
-    const fee = await Fee.findById(id);
+    let body = await req.json(); // Ensure the body is parsed correctly
+    body.type = 'student'
+    console.log('body', body)
+    const fee = await Fee.create(body);
     console.log('fee', fee);
 
 
-     const body = await req.json(); // Ensure the body is parsed correctly
-    Object.assign(fee, body); // Update the notice with new data
+    
+ 
     console.log(body);
     
     await fee.save(); // Save the updated notice

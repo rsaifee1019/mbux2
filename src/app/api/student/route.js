@@ -48,11 +48,12 @@ if(paymentType == 'test-exam'){
     const fees = await Fee.findOne({
         degree,
         subtype: paymentType,
+        
         // Corrected conditional logic
    
     });
 
-    const payment = await Payment.create({amount: fees.amount, transactionId: tran_id, userType: 'student', studentId, paymentType: paymentType })
+    const payment = await Payment.create({amount: fees.amount, transactionId: tran_id, userType: 'student', studentId, paymentType: paymentType, fund: fees.type })
 
 
     return NextResponse.json({tran_id}, {status: 200})

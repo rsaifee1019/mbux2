@@ -18,15 +18,21 @@ let store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TUITION
 
   // Check if payment exists
   const payment = await Payment.findOne({ transactionId: tran_id });
-  if(payment.paymentType == 'admission'){
+  if(payment.paymentType == 'admission' || payment.fund == 'general'){
     store_id = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_ADMISSION
     store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_ADMISSION
   }
 
-  if(payment.paymentType == 'test-exam'){
+  if(payment.fund == 'internal'){
     store_id = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_TEST_EXAM
     store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TEST_EXAM
   }
+
+  if(payment.fund == 'external'){
+    store_id = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_EXT
+    store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_EXT
+  }
+    
     
 
  

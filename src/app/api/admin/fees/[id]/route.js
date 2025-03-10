@@ -1,4 +1,4 @@
-import FeeRecord from '@/models/FeeRecord';
+import Fee from '@/models/Fee';
 import { NextResponse } from 'next/server';
 import connectionToDatabase from '@/lib/mongodb';
 
@@ -12,7 +12,7 @@ export async function GET(req) {
   console.log(id);
 
   try {
-    const fee = await FeeRecord.findById(id);
+    const fee = await Fee.findById(id);
     if (!fee) return NextResponse.json({ message: 'Fee not found' }, { status: 404 });
     return NextResponse.json(fee, { status: 200 });
   } catch (error) {
@@ -29,7 +29,7 @@ export async function PUT(req) {
   console.log('id', id);
 
   try {
-    const fee = await FeeRecord.findById(id);
+    const fee = await Fee.findById(id);
     console.log('fee', fee);
 
     // Convert the ReadableStream to a JSON object
@@ -52,18 +52,26 @@ export async function PUT(req) {
   }
 }
 
+
+
+
+
 export async function DELETE(req) {
   await connectionToDatabase();
-  
+  console.log('delete id');
+ 
   // Access the id from req.nextUrl.pathname
   const { pathname } = req.nextUrl;
   const id = pathname.split('/').pop(); // Get the last segment of the path
-
   try {
-    const fee = await FeeRecord.findByIdAndDelete(id);
+    console.log('id', id); // Fixed missing comma here
+
+    const fee = await Fee.findByIdAndDelete(id);
+    console.log('fee', fee); // Fixed missing comma here
     if (!fee) return NextResponse.json({ message: 'Fee not found' }, { status: 404 });
-    return NextResponse.json(null, { status: 204 });
+    return NextResponse.json({ success: true, message: 'Fee deleted successfully' }, { status: 200 });
   } catch (error) {
+    console.log(error)
     return NextResponse.json({ message: 'Failed to delete fee', error: error.message }, { status: 500 });
   }
 }
