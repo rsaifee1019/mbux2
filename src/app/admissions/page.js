@@ -38,10 +38,10 @@ export default function AdmissionsPage() {
           <Link href={option.link} key={index} className="block group">
             <Card className="h-full transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
               <CardHeader className="flex flex-col items-center text-center p-6">
-                <div className="rounded-full bg-primary p-3 mb-4">
+                <div className="rounded-full bg-primary p-3 mb-4 ">
                   {option.icon}
                 </div>
-                <CardTitle className="text-xl mb-2">{option.title}</CardTitle>
+                <CardTitle className="text-xl mb-2 text-accent">{option.title}</CardTitle>
                 <CardDescription>{option.description}</CardDescription>
               </CardHeader>
             </Card>

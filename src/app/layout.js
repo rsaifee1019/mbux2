@@ -11,7 +11,7 @@ const geistSans = localFont({
   weight: "100 900",
 });
 const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
+  src: "./fonts/banglaFont ANSI.ttf",
   variable: "--font-geist-mono",
   weight: "100 900",
 });
@@ -21,13 +21,14 @@ export const metadata = {
   description: "জ্ঞান এবং উদ্ভাবনের কেন্দ্র",
 };
 
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
     <UserProvider>
       <Providers>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased `}
+        className={` ${geistSans.variable} ${geistMono.variable} antialiased `}
       >
     
           <Header />

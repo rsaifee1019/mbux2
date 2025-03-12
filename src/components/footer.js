@@ -9,7 +9,7 @@ export default async function Footer() {
   const isLoggedIn = session?.user;
   return (  
  
-  <footer className="bg-primary text-primary-foreground py-8">
+  <footer className="font-banglaStraight bg-white text-[#4f4a4a] py-8 border-t border-[#4f4a4a] shadow-md">
   <div className="container mx-auto px-4">
     <div className="grid md:grid-cols-4 gap-8">
       <div>

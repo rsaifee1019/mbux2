@@ -15,10 +15,10 @@ export default async function EventsCalendar() {
 
 
   return (
-    <Card className="w-full ">
+    <Card className="w-full rounded-none shadow-none ">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold flex items-center gap-2">
-          <CalendarDays className="h-6 w-6" />
+        <CardTitle className="text-2xl md:text-4xl font-bold flex items-center gap-2">
+          <CalendarDays className="h-6 w-6 mr-2" />
           ইভেন্ট ক্যালেন্ডার
         </CardTitle>
       </CardHeader>
@@ -27,13 +27,13 @@ export default async function EventsCalendar() {
           {events.map((event, index) => (
             <div 
               key={index} 
-              className="flex justify-between items-center p-3 hover:bg-gray-50 rounded-md transition-colors"
+              className="block hover:bg-accent  p-3 transition-colors border-b-2 border-b-gray-300"
             >
               <div className="flex items-center">
-                <Badge variant="secondary" className="mr-3">
+                <Badge variant="secondary" className="mr-3 shrink-0 bg-accent hover:bg-accent text-white">
                   {new Date(event.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                 </Badge>
-                <span className="font-medium">{event.title}</span>
+                <span className="font-banglaStraight">{event.title}</span>
               </div>
             </div>
           ))}

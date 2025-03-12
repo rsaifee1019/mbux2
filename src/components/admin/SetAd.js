@@ -145,11 +145,25 @@ console.log('clicked')
    
   };
 
-  const handleDelete = async (id, status) => {
-    console.log('clicked')
-        await fetchFees();
-       
-      };
+  const handleDelete = async (id) => {
+    console.log('clicked delete');
+    console.log('clicked');
+    
+    try {
+      const response = await axios.delete(`/api/admin/fees/${id}`);
+      
+      // Check if the response status is 200
+      if (response.status === 200) {
+        console.log('Delete successful, refreshing page');
+        // Refresh the current page
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error('Error deleting fee:', error);
+      // You might want to show an error message to the user here
+      alert('Failed to delete fee. Please try again.');
+    }
+  };
 
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-6">

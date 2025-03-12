@@ -20,10 +20,12 @@ const AdminSetFee = ({ feeId }) => {
   const router = useRouter();
   const [formData, setFormData] = useState({
     degree: '',
+    type: '', // Changed from undefined to empty string
     subtype: '',
     amount: '',
     link: '',
     image: '',
+    year: '',
     dateUploaded: new Date().toISOString().split('T')[0]
   });
   const [error, setError] = useState('');
@@ -47,6 +49,7 @@ const AdminSetFee = ({ feeId }) => {
 
     fetchEvent();
   }, [feeId]);
+  
   useEffect(() => {
     console.log(formData)
   }, [formData])
@@ -73,7 +76,7 @@ const AdminSetFee = ({ feeId }) => {
     }));
   };
 
-  const handleSubmit = async (e ) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
@@ -120,7 +123,7 @@ const AdminSetFee = ({ feeId }) => {
           )}
           
           <div className="space-y-2">
-            <label htmlFor="title" className="block text-sm font-medium">
+            <label htmlFor="degree" className="block text-sm font-medium">
               Degree
             </label>
             <Input
@@ -132,50 +135,72 @@ const AdminSetFee = ({ feeId }) => {
               placeholder="Enter degree"
             />
           </div>
+          
+          {/* New Type Selection using shadcn Select component */}
+          
+          
           <div className="space-y-2">
-          <label htmlFor="title" className="block text-sm font-medium">
-            Type *
-          </label>
-          <Input
-            id="subtype"
-            name="subtype"
-            value={formData.subtype}
-            onChange={handleChange}
-            required
-            placeholder="Enter degree"
-          />
-        </div>
-        <div className="space-y-2">
-        <label htmlFor="title" className="block text-sm font-medium">
-        year
-        </label>
-        <Input
-          id="year"
-          name="year"
-          value={formData.year || ''}
-          onChange={handleChange}
-          required
-          placeholder="Enter year"
-        />
-      </div>
+            <label htmlFor="subtype" className="block text-sm font-medium">
+             Type
+            </label>
+            <Input
+              id="subtype"
+              name="subtype"
+              value={formData.subtype}
+              onChange={handleChange}
+              required
+              placeholder="Enter type"
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <label htmlFor="year" className="block text-sm font-medium">
+              Year
+            </label>
+            <Input
+              id="year"
+              name="year"
+              value={formData.year || ''}
+              onChange={handleChange}
+              placeholder="Enter year"
+            />
+          </div>
 
-        <div className="space-y-2">
-        <label htmlFor="title" className="block text-sm font-medium">
-        amount
-        </label>
-        <Input
-          id="amount"
-          name="amount"
-          value={formData.amount}
-          onChange={handleChange}
-          required
-          placeholder="Enter degree"
-        />
-      </div>
-
- 
-
-      
+          <div className="space-y-2">
+            <label htmlFor="amount" className="block text-sm font-medium">
+              Amount
+            </label>
+            <Input
+              id="amount"
+              name="amount"
+              value={formData.amount}
+              onChange={handleChange}
+              required
+              placeholder="Enter amount"
+              type="number"
+            />
+          </div>
+          <div className="space-y-2">
+            <label htmlFor="type" className="block text-sm font-medium">
+              Fund
+            </label>
+            <Select
+              value={formData.type}
+              onValueChange={(value) => handleSelectChange('type', value)}
+              required
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a type" />
+              </SelectTrigger>
+              <SelectContent>
+       
+                <SelectItem value="general">সাধারণ </SelectItem>
+                <SelectItem value="tuition">টিউশন </SelectItem>
+                <SelectItem value="external">বহিঃ-পরীক্ষা </SelectItem>
+                <SelectItem value="internal">অভ্যন্তরীণ </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
           <div className="flex gap-4">
             <Button 
@@ -189,7 +214,7 @@ const AdminSetFee = ({ feeId }) => {
             <Button 
               type="button"
               variant="outline"
-              onClick={() => router.push('/admin/events')}
+              onClick={() => router.push('/admin')}
             >
               Cancel  
             </Button>

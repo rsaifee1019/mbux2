@@ -43,6 +43,10 @@ const PaymentSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  fund:{
+    type: String,
+    required: false,
+  }
 });
 
 // Check if the model is already defined

@@ -11,22 +11,22 @@ export default function NoticeBoardClient({ notices }) {
   }
 
   return (
-    <Card className="w-full ">
+    <Card className="w-full rounded-none shadow-none ">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold flex items-center gap-2">
-          <Bell className="h-6 w-6" />
+        <CardTitle className="text-2xl md:text-4xl font-bold flex items-center gap-2">
+          <Bell className="h-6 w-6 mr-1 " />
           নোটিশ বোর্ড
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <ul className="space-y-4">
+        <ul className="">
           {notices.length === 0 && <li>কোনো নোটিশ পাওয়া যায়নি</li>}
           {notices.map((notice) => (
             <li key={notice.id}>
-              <Link href={`${notice.link}`} target="_blank" className="block hover:bg-accent rounded-lg p-3 transition-colors">
+              <Link href={`${notice.link}`} target="_blank" className="block hover:bg-accent  p-3 transition-colors border-b-2 border-b-gray-300">
                 <div className="flex justify-between items-start">
-                  <span className="font-medium">{notice.title}</span>
-                  <Badge variant="secondary" className="ml-2 shrink-0 text-white">
+                  <span className="font-banglaStraight">{notice.title}</span>
+                  <Badge variant="secondary" className="ml-2 shrink-0 bg-accent hover:bg-accent text-white">
                     {formatDate(notice.dateUploaded)}
                   </Badge>
                 </div>
