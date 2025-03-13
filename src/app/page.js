@@ -53,7 +53,7 @@ const HomePage = async () => {
                                 <h1 className="font-banglaStraight text-5xl md:text-7xl md:p-2  "
                                 style={{ fontWeight: 10 }} >মাদার বখ্শ গার্হস্থ্য অর্থনীতি কলেজ</h1>
                             </div>
-                            <p className=" text-lg md:text-3xl p-2  text-gray-100 md:mt-2 mb-8 md:mb-20 font-banglacurvy">"প্রতিটি শিক্ষার্থী, প্রতিটি স্বপ্নকে সম্মান"</p>
+                            <p className=" text-lg md:text-3xl p-2  text-gray-100 md:mt-2 mb-8 md:mb-20 font-bangla">"প্রতিটি শিক্ষার্থী, প্রতিটি স্বপ্নকে সম্মান"</p>
                             <div className="flex gap-4 ">
                             
                            

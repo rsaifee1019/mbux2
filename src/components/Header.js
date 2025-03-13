@@ -11,7 +11,8 @@ export default function Header() {
      {name:'টিউশন ফি',link:"/fees"},
      {name:'আমাদের সম্পর্কে',link:"/about-us"},
      {name:'যোগাযোগ',link:"/contact-us"},
-     {name:'নোটিশ',link:"/notices"}]
+     {name:'নোটিশ',link:"/notices"},
+     {name:'হাজিরা',link:"/absent"}  ]
 
   return (
       <header className="bg-white text-primary z-0 md:h-24 items-center shadow-sm inset-shadow-sm">
