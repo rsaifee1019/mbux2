@@ -31,7 +31,7 @@ const HomePage = async () => {
             <main className="">
                 {/* Hero section */}
                 <div className='mb-4'>
-                    <section className="relative h-[40vh] md:h-[90vh] text-white">\
+                    <section className="relative h-[60vh] md:h-[90vh] text-white">\
                     <div className="absolute top-0 z-20 bg-transparent/30  h-full w-full"> </div>
                         <Image
                             src="/collegeFront.jpg"
@@ -40,20 +40,20 @@ const HomePage = async () => {
                             objectFit="cover"
                             className="absolute z-10"
                         />
-                        <div className="absolute z-20 top-1/4 md:top-[5%] left-0 right-0 flex flex-col items-center justify-center">
+                        <div className="absolute z-20  top-[5%] left-0 right-0 flex flex-col items-center justify-center">
                         <Image
                         src="/logo.png"
                         alt="University campus"
                         width={100}
                         height={100}
-                        className="w-16 h-16 md:w-20 md:h-20 mb-10 "
+                        className="w-8 h-8 md:w-20 md:h-20 mb-2 md:mb-10 "
                       />
                   
                             <div className="text-center md:max-w-[80vw] border-b border-b-1 border-gray-200">
-                                <h1 className="font-banglaStraight text-4xl md:text-7xl p-2 font-thin "
+                                <h1 className="font-banglaStraight text-5xl md:text-7xl md:p-2  "
                                 style={{ fontWeight: 10 }} >মাদার বখ্শ গার্হস্থ্য অর্থনীতি কলেজ</h1>
                             </div>
-                            <p className=" text-3xl p-2 font-thin text-gray-100 md:mt-2  md:mb-20">"প্রতিটি শিক্ষার্থী, প্রতিটি স্বপ্নকে সম্মান"</p>
+                            <p className=" text-lg md:text-3xl p-2  text-gray-100 md:mt-2 mb-8 md:mb-20">"প্রতিটি শিক্ষার্থী, প্রতিটি স্বপ্নকে সম্মান"</p>
                             <div className="flex gap-4 ">
                             
                            
@@ -64,7 +64,7 @@ const HomePage = async () => {
                                         href='/admissions'
                                         className=" "
                                       >   
-                            <Button className='font-banglaStraight bg-[#007741] ring-lime-500 ring-2 rounded-none text-white  px-8 py-4 text-2xl hover:bg-white hover:ring-lime-500 hover:ring-2 hover:text-emerald-950'>আবেদন করুন</Button>
+                            <Button className='font-banglaStraight bg-[#007741] ring-lime-500 ring-1 md:ring-2 rounded-none text-white  h-fit md:h-10 py-0 px-2 md:px-8 md:py-4 text-xl md:text-2xl hover:bg-white hover:ring-lime-500 hover:ring-2 hover:text-emerald-950'>আবেদন করুন</Button>
                           
                             </Link>
                             </div>
@@ -72,9 +72,9 @@ const HomePage = async () => {
                     </section>
                 </div>
                 <QuickLinks />
-                <div className='bg-transparent/90 md:px-40 md:py-14 justify-center flex flex-col items-center gap-8'>
-                    <h1 className='text-white md:text-8xl text-center'>{fact.title}</h1>
-                    <p className='text-center font-banglaStraight text-white md:text-2xl'> {fact.description}</p>
+                <div className='bg-transparent/90 py-8 md:px-40 md:py-14 justify-center flex flex-col items-center gap-8'>
+                    <h1 className='text-white text-2xl md:text-8xl text-center'>{fact.title}</h1>
+                    <p className='text-center font-banglaStraight text-white text-sm md:text-2xl'> {fact.description}</p>
                 
                 
                 </div>

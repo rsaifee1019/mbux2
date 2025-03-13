@@ -39,12 +39,13 @@ const PaymentSchema = new mongoose.Schema({
     required: false,
     ref: 'Students',
   },
-  paymentType: {
+
+  fund:{
     type: String,
     required: false,
   },
-  fund:{
-    type: String,
+  months:{
+    type: Array,
     required: false,
   }
 });

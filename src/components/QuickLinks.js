@@ -14,7 +14,7 @@ export default function QuickLinks() {
       <div className="grid grid-cols-1 md:grid-cols-3 m-4">
         {links.map((link, index) => (
           <div key={link.title} className=' py-4'>
-            <div key={link.title} className={`flex flex-col md:gap-8 items-center ${index < 2 ? 'border-r-2 border-gray-300': null}`}>
+            <div key={link.title} className={`flex flex-col md:gap-8 items-center md:${index < 2 ? 'border-r-2 border-gray-300': null}`}>
             <div className="relative md:w-[440px] md:h-[280px]">
             <Image
               src={link.image}
@@ -26,8 +26,8 @@ export default function QuickLinks() {
 
           </div>
           <div className='flex flex-col md:px-14 md: gap-4'>
-          <h1 className='text-[#51a744] font-bangla text-5xl align-self:flex-start;'> {link.title}</h1>
-          <p className='text-[#6b6461] text:medium font-banglaStraight'>{link.description}</p>   
+          <h1 className='text-[#51a744] font-bangla text-4xl md:text-5xl align-self:flex-start;'> {link.title}</h1>
+          <p className='text-[#6b6461] mb-6 md:mb-0 text-base md:text:medium font-banglaStraight'>{link.description}</p>   
           </div>
           <Link
             key={link.title}

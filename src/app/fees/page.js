@@ -9,6 +9,7 @@ import Spinner from '@/components/Spinner';
 import Image from 'next/image';
 import Error from '@/components/Error';
 import Cookies from "js-cookie";
+import  MonthYearRangePicker from '@/components/homepage/TuitionDateRangePicker'
 
 const Fees = () => {
   const [fees, setFees] = useState([]);
@@ -22,11 +23,18 @@ const Fees = () => {
     paymentType: '',
     name: '',
     phone: '',
+    type: '',
+    academicYear: '',
+    department: '',
+
     selectedMonths: []
   });
   const [feesData, setFeesData] = useState([]);
   const [baseAmount, setBaseAmount] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
+
+  const academicYears = Array.from({ length: 11 }, (_, i) => `${2018 + i}-${2019 + i}`);
+  const departments = ['বিজ্ঞান', 'গৃহ অর্থনীতি', 'মানবিক'];
   
   // List of months
   const months = [
@@ -129,6 +137,30 @@ const Fees = () => {
   };
 
   useEffect(() => {
+    console.log(formData.selectedMonths.length)
+    console.log(formData)
+
+    //setting type
+    if (formData.paymentType) {
+      console.log('payment type')
+      try {
+        const fee = feesData.find(fee => {
+          return fee.subtype === formData.paymentType;  // Missing return statement
+        });
+        // Or use this shorter version:
+        // const fee = feesData.find(fee => fee.subtype === formData.paymentType);
+        
+        setFormData(prev => {
+          return {
+            ...prev,
+            type: fee.type
+          };
+        });  // This closing parenthesis was missing
+      } catch (error) {
+        console.log('?');
+      }
+    }
+    
     if(formData.paymentType && formData.degree){
       try{
         const fee = feesData.find(fee => 
@@ -137,6 +169,12 @@ const Fees = () => {
         );
         
         setBaseAmount(fee?.amount || 0);
+        
+    if(formData.selectedMonths){
+     
+
+      setBaseAmount(fee?.amount * formData.selectedMonths.length )
+    }
       } catch(error){
         setBaseAmount(0);
       }
@@ -154,7 +192,7 @@ const Fees = () => {
         setBaseAmount(0);
       }
     }
-  }, [formData.paymentType, formData.degree, formData.year, feesData]);
+  }, [formData.paymentType, formData.degree, formData.year, feesData, formData.selectedMonths]);
 
   // Calculate total amount based on selected months
   useEffect(() => {
@@ -181,8 +219,11 @@ const Fees = () => {
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
       minHeight: '100vh',
-      padding: '2rem',
-      position: 'relative'
+      padding: '1rem',
+      position: 'relative',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
     }}
   >
     {/* Dark overlay */}
@@ -193,18 +234,20 @@ const Fees = () => {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.3)', // This creates the dark transparent overlay
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
         zIndex: 1
       }}
     ></div>
-    <Card className="absolute md:left-[35%]  z-20 w-full max-w-md mx-auto my-4 font-banglaStraight">
+    
+    <Card className="relative z-20 w-full max-w-md mx-auto my-4 font-banglaStraight">
       <CardHeader>
-        <CardTitle className="text-xl  text-center">ফি পরিশোধ ফর্ম</CardTitle>
+        <CardTitle className="text-xl text-center">ফি পরিশোধ ফর্ম</CardTitle>
       </CardHeader>
+      
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="flex justify-between">
-            <div className="space-y-2">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="flex flex-col sm:flex-row sm:gap-4 sm:justify-between">
+            <div className="space-y-2 w-full sm:w-1/2 mb-4 sm:mb-0">
               <Label htmlFor="degree">ডিগ্রী</Label>
               <select
                 id="degree"
@@ -220,63 +263,93 @@ const Fees = () => {
                 ))}
               </select>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="year">বর্ষ</Label>
-              <select
-                id="year"
-                name="year"
-                className="w-full rounded-md border border-gray-300 p-2"
-                required
-                value={formData.year}
+  
+            <div className="space-y-2 w-full sm:w-1/2">
+              <Label htmlFor="academicYear">শিক্ষাবর্ষ</Label>
+              <select 
+                id="academicYear" 
+                name="academicYear" 
+                className="w-full rounded-md border border-gray-300 p-2" 
+                required 
+                value={formData.academicYear} 
                 onChange={handleInputChange}
               >
                 <option value="">বাছাই করুন</option>
-                <option value={1}>১ম বর্ষ</option>
-                <option value={2}>২য় বর্ষ</option>
-                <option value={3}>৩য় বর্ষ</option>
-                <option value={4}>৪র্থ বর্ষ</option>
+                {academicYears.map((year, index) => <option key={index} value={year}>{year}</option>)}
               </select>
             </div>
           </div>
-        
+          
+          <div className="space-y-2">
+            <Label htmlFor="year">বর্ষ</Label>
+            <select
+              id="year"
+              name="year"
+              className="w-full rounded-md border border-gray-300 p-2"
+              required
+              value={formData.year}
+              onChange={handleInputChange}
+            >
+              <option value="">বাছাই করুন</option>
+              <option value={1}>১ম বর্ষ</option>
+              <option value={2}>২য় বর্ষ</option>
+              <option value={3}>৩য় বর্ষ</option>
+              <option value={4}>৪র্থ বর্ষ</option>
+            </select>
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="department">বিভাগ</Label>
+            <select 
+              id="department" 
+              name="department" 
+              className="w-full rounded-md border border-gray-300 p-2" 
+              required 
+              value={formData.department} 
+              onChange={handleInputChange}
+            >
+              <option value="">বাছাই করুন</option>
+              {departments.map((dept, index) => <option key={index} value={dept}>{dept}</option>)}
+            </select>
+          </div>
+  
+          <div className="space-y-2">
+            <Label htmlFor="studentId">রোল নং</Label>
+            <Input
+              id="studentId"
+              name="studentId"
+              placeholder="রোল নং লিখুন"
+              required
+              className="w-full"
+              value={formData.studentId}
+              onChange={handleInputChange}
+            />
+          </div>
+          
           <div className="space-y-2">
             <Label htmlFor="name">নাম</Label>
             <Input
               id="name"
               name="name"
-              placeholder="নাম লিখুন "
+              placeholder="নাম লিখুন"
               required
               className="w-full"
               value={formData.name}
               onChange={handleInputChange}
             />
           </div>
-          <div className="flex justify-between">  
-            <div className="space-y-2">
-              <Label htmlFor="studentId">রোল নং</Label>
-              <Input
-                id="studentId"
-                name="studentId"
-                placeholder="রোল নং লিখুন "
-                required
-                className="w-full"
-                value={formData.studentId}
-                onChange={handleInputChange}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="phone">মোবাইল নং</Label>
-              <Input
-                id="phone"
-                name="phone"
-                placeholder="মোবাইল নং লিখুন "
-                required
-                className="w-full"
-                value={formData.phone}
-                onChange={handleInputChange}
-              />
-            </div>
+  
+          <div className="space-y-2">
+            <Label htmlFor="phone">মোবাইল নং</Label>
+            <Input
+              id="phone"
+              name="phone"
+              placeholder="মোবাইল নং লিখুন"
+              required
+              className="w-full"
+              value={formData.phone}
+              onChange={handleInputChange}
+            />
           </div>
           
           <div className="space-y-2">
@@ -296,30 +369,10 @@ const Fees = () => {
             </select>
           </div>
   
-          {/* Month selection appears only when payment type is tuition-fee */}
           {formData.paymentType === 'tuition' && (
-            <div className="space-y-2">
-              <Label>মাস নির্বাচন করুন</Label>
-              <div className="grid grid-cols-2 gap-2 mt-2">
-                {months.map((month) => (
-                  <div key={month.id} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`month-${month.id}`}
-                      checked={formData.selectedMonths.includes(month.id)}
-                      onCheckedChange={() => handleMonthChange(month.id)}
-                    />
-                    <label
-                      htmlFor={`month-${month.id}`}
-                      className="text-sm font-medium leading-none cursor-pointer"
-                    >
-                      {month.label}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <MonthYearRangePicker formData={formData} setFormData={setFormData} />
           )}
-
+  
           {(formData.paymentType && formData.paymentType !== 'tuition-fee') || 
           (formData.paymentType === 'tuition-fee' && formData.selectedMonths.length > 0) ? (
             <div className="mt-4 p-4 bg-gray-50 rounded-md">
@@ -335,7 +388,8 @@ const Fees = () => {
           ) : null}
         </form>
       </CardContent>
-      <CardFooter className='flex justify-end'>
+      
+      <CardFooter className="flex justify-end">
         {buttonLoading ? (
           <Button className="w-24 py-2 rounded-[20px]">
             <Image src="/spinner-white.svg" alt="Loading..." width={40} height={40} />
@@ -351,7 +405,7 @@ const Fees = () => {
         )}
       </CardFooter>
     </Card>
-    </div>
+  </div>
   );
 };
 

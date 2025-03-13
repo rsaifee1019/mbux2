@@ -50,7 +50,8 @@ let store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TUITION
   const amount = payment.amount;
   const name = payment.userType === 'student' && payment.student ? payment.student.name : payment.applicant ? payment.applicant.name : 'Unknown';
   const phone = payment.userType === 'student' && payment.student ? payment.student.phone : payment.applicant ? payment.applicant.phone : 'Unknown';
-
+console.log('name')
+console.log(name)
   try {
       const data = {
         store_id: store_id,
@@ -79,7 +80,7 @@ let store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TUITION
     const sslcz = new SSLCommerzPayment(
       store_id,
       store_passwd,
-      true
+      false
     );
 
     const apiResponse = await sslcz.init(data);

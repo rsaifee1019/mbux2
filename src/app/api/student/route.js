@@ -25,7 +25,7 @@ export async function POST(req) {
     const random = Math.floor(Math.random() * 1000000);
     const tran_id = `TXN${timestamp}${random}`;          
 
-    const {studentId, degree, year, paymentType, phone, name} = body
+    const {studentId, degree, year, paymentType, phone, name, type, selectedMonths} = body
 
 
     // create student
@@ -52,9 +52,12 @@ if(paymentType == 'test-exam'){
         // Corrected conditional logic
    
     });
+    console.log('months')
+    console.log(selectedMonths)
 
-    const payment = await Payment.create({amount: fees.amount, transactionId: tran_id, userType: 'student', studentId, paymentType: paymentType, fund: fees.type })
-
+    const payment = await Payment.create({amount: (fees.amount * (selectedMonths?.length || 1)), transactionId: tran_id, userType: 'student', studentId, paymentType: paymentType, fund: fees.type, months:selectedMonths })
+console.log('payment')
+console.log(payment)
 
     return NextResponse.json({tran_id}, {status: 200})
   } catch (error) {

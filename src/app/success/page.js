@@ -82,6 +82,7 @@ export default async function Success({ searchParams }) {
       paymentType={data.payment.paymentType}
       amount={data.payment.amount}
       date={data.payment.paymentDate}
+      months={data.payment.months}
     />
   );
 }

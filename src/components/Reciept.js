@@ -10,7 +10,8 @@ const Receipt = ({
   transactionId = "TRX987654321",
   paymentType = "Credit Card",
   amount = "5,000.00",
-  date = "October 23, 2024"
+  date = "October 23, 2024",
+  months =[]
 }) => {
   const [html2pdf, setHtml2pdf] = useState(null);
 
@@ -37,7 +38,7 @@ const Receipt = ({
     };
     html2pdf().set(opt).from(receipt).save();
   };
-
+  console.log(months)
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-2xl mx-auto">
@@ -77,6 +78,22 @@ const Receipt = ({
               <span className="text-gray-600">জামানতের উদ্দেশ্য:</span>
               <span className="font-medium text-gray-800">{paymentType}</span>
             </div>
+
+            {(months.length > 0) && (
+              <div className="flex justify-between py-2 border-b border-gray-100">
+                <span className="text-gray-600">Months</span>
+                <div className="flex flex-wrap justify-start gap-x-2 max-w-[50%] text-right ">
+                {months.map((month, index) => {
+                  const date = new Date(month);
+                  const formattedMonth = date.toLocaleDateString("bn-BD", { year: "numeric", month: "long" }); // Bangla format
+                  return <span key={index} className="font-medium text-gray-800">{formattedMonth} {(index < months.length -1) && ','}</span>;
+                })}
+                </div>
+              </div>
+            )}
+           
+           
+           
             {/* Amount */}
             <div className="mt-8 text-right">
               <span className="text-gray-600">জামানতের পরিমান</span>
