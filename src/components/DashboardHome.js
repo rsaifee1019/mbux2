@@ -49,7 +49,7 @@ const DashboardHome = () => {
             <li key={item.id} className="mb-4">
               <button
                 className={`w-full p-2 rounded-md text-left hover:bg-gray-700 ${
-                  activeSection === item.id ? 'bg-blue-500 text-white' : ''
+                  activeSection === item.id ? 'bg-accent text-white' : ''
                 }`}
                 onClick={() => setActiveSection(item.id)}
               >
