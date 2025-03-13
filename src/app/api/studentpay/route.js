@@ -83,7 +83,7 @@ console.log(name)
     const sslcz = new SSLCommerzPayment(
       store_id,
       store_passwd,
-      false
+      true
     );
 
     const apiResponse = await sslcz.init(data);
