@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import { SSLCommerzPayment } from '../lib/sslcommerz';
 import Payment from '@/models/Payment';
 import connectionToDatabase from '@/lib/mongodb';
+import Student from '@/models/Student';
 
 export async function POST(req) {
   await connectionToDatabase();
@@ -10,13 +11,13 @@ export async function POST(req) {
   const { tran_id } = body;
   
   // Log the transaction ID for debugging
-  // const store_id_test = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_TEST
-  // const store_passwd_test = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TEST
+  // const store_id = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_TEST
+  // const store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TEST
 let store_id = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_TUITION
 let store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TUITION
 
 
-  // Check if payment exists
+//   // Check if payment exists
   const payment = await Payment.findOne({ transactionId: tran_id });
   if(payment.paymentType == 'admission' || payment.fund == 'general'){
     store_id = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_ID_ADMISSION
@@ -48,9 +49,11 @@ let store_passwd = process.env.NEXT_PUBLIC_SSLCOMMERZ_STORE_PASSWORD_TUITION
 
   // Ensure payment has the expected structure
   const amount = payment.amount;
-  const name = payment.userType === 'student' && payment.student ? payment.student.name : payment.applicant ? payment.applicant.name : 'Unknown';
-  const phone = payment.userType === 'student' && payment.student ? payment.student.phone : payment.applicant ? payment.applicant.phone : 'Unknown';
-console.log('name')
+    console.log("Finding student with ID:", payment.studentId);
+    let student = await Student.findOne({ studentId: payment.studentId });
+    console.log("Student found:", student);
+  const name = student.name || 'N/A';
+  const phone = student.phone || 'N/A';
 console.log(name)
   try {
       const data = {
@@ -67,20 +70,20 @@ console.log(name)
       product_name: 'N/A',
       product_category: 'N/A',
       product_profile: 'non-physical-goods',
-      cus_name: 'N/L'
+      cus_name: name,
       cus_email: 'N/A',
       cus_add1: 'N/A',
       cus_city: 'N/A',
       cus_state: 'N/A',
       cus_postcode: 'N/A',
       cus_country: 'Bangladesh',
-      cus_phone: "?"
+      cus_phone: phone
     };
 
     const sslcz = new SSLCommerzPayment(
       store_id,
       store_passwd,
-      true
+      false
     );
 
     const apiResponse = await sslcz.init(data);
