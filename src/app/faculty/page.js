@@ -170,7 +170,7 @@ export default function Faculty() {
               <p className="text-[#585252] ">{teacher.designation || "No Designation"}</p>
               <p className="text-[#585252] ">{teacher.educationBackground || "No Education Background"}</p>
               <p className="text-[#585252] ">{teacher.mobileNo || "No Mobile Number"}</p>
-              <Button asChild className="bg-primary text-white">
+              <Button asChild className="mt-2">
                 <Link href={`/faculty/${teacher.id}`}>View Profile</Link>
               </Button>
             </CardContent>

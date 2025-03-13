@@ -12,64 +12,139 @@ export default async function Faculty({ params }) {
     // Convert the Mongoose document to a plain object
     const teacher = teacherDoc ? teacherDoc.toObject() : null;
 
-    // If teacher is not found, you might want to handle that case
+    // If teacher is not found, handle that case
     if (!teacher) {
-        return <div>Teacher not found</div>;
+        return (
+            <div className="container mx-auto px-4 py-8 flex flex-col items-center">
+                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                    <h1 className="text-xl font-semibold">Faculty Member Not Found</h1>
+                    <p>Sorry, we couldn't find the faculty member you're looking for.</p>
+                </div>
+                <Link href="/faculty" passHref>
+                    <Button className="mt-6">Return to Faculty List</Button>
+                </Link>
+            </div>
+        );
     }
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-6 text-[#a6192e]">Faculty Profile</h1>
-            <div className="flex flex-col md:flex-row bg-white shadow-lg rounded-lg p-6">
-                <div className="flex-shrink-0">
-                    <Image
-                        src={teacher.imageUrl || "/placeholder.svg"} // Use the image from the API or a placeholder
-                        alt={teacher.title || "No Title"}
-                        width={150}
-                        height={150}
-                        className="rounded-full border-4 border-[#a6192e] mb-4"
-                    />
-                </div>
-                <div className="md:ml-6">
-                    <h2 className="text-xl font-semibold">{teacher.title || "No Title"}</h2>
-                    <p className="text-gray-600">{teacher.designation || "No Designation"}</p>
-                    <p className="text-gray-600">Email: {teacher.email || "No Email"}</p>
-                    <p className="text-gray-600">Mobile No: {teacher.mobileNo || "No Mobile No"}</p>
+        <div className="container mx-auto px-4 py-8 max-w-6xl">
+            <div className="flex justify-between items-center mb-6">
+                <h1 className="text-3xl font-bold text-accent">Faculty Profile</h1>
+                <Link href="/faculty" passHref>
+                    <Button variant="outline" className="flex items-center gap-2">
+                        <span>←</span> Back to Faculty
+                    </Button>
+                </Link>
+            </div>
+
+            {/* Main Profile Card */}
+            <div className="bg-white shadow-lg rounded-lg overflow-hidden mb-8">
+                <div className="md:flex">
+                    <div className="md:w-1/3 bg-gray-50 flex justify-center p-6">
+                        <Image
+                            src={teacher.imageUrl || "/placeholder.svg"}
+                            alt={teacher.title || "Faculty Member"}
+                            width={250}
+                            height={300}
+                            className="rounded-md object-cover border-2 border-accent shadow-md"
+                        />
+                    </div>
+                    <div className="md:w-2/3 p-6">
+                        <div className="border-b border-gray-200 pb-4 mb-4">
+                            <h2 className="text-2xl font-bold text-gray-800">{teacher.title || "No Name Available"}</h2>
+                            <p className="text-lg font-medium text-accent">{teacher.designation || "No Designation"}</p>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <div className="flex items-center gap-2">
+                                    <span className="font-semibold text-gray-700">Email:</span>
+                                    <a href={`mailto:${teacher.email}`} className="text-blue-600 hover:underline">
+                                        {teacher.email || "No Email"}
+                                    </a>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <span className="font-semibold text-gray-700">Mobile:</span>
+                                    <a href={`tel:${teacher.mobileNo}`} className="text-blue-600 hover:underline">
+                                        {teacher.mobileNo || "No Mobile Number"}
+                                    </a>
+                                </div>
+                            </div>
+                            <div className="space-y-2">
+                                <div className="flex items-center gap-2">
+                                    <span className="font-semibold text-gray-700">Qualifications:</span>
+                                    <span>{teacher.educationQualifications || "No Information"}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <span className="font-semibold text-gray-700">Department:</span>
+                                    <span>{teacher.department || "No Department"}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-white shadow-lg rounded-lg p-4">
-                    <h3 className="text-lg font-semibold mb-2">Personal Information</h3>
-                    <p><strong>National ID:</strong> {teacher.nationalId || "No National ID"}</p>
-                    <p><strong>Gender:</strong> {teacher.gender || "No Gender"}</p>
-                    <p><strong>Religion:</strong> {teacher.religion || "No Religion"}</p>
-                    <p><strong>Blood Group:</strong> {teacher.bloodGroup || "No Blood Group"}</p>
-                    <p><strong>Marital Status:</strong> {teacher.maritalStatus || "No Marital Status"}</p>
+            {/* Information Section */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                {/* Education */}
+                <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+                    <div className="bg-accent bg-opacity-10 px-4 py-3 border-l-4 border-accent">
+                        <h3 className="text-lg font-semibold text-gray-800">Education Background</h3>
+                    </div>
+                    <div className="p-4 space-y-3">
+                        <p><span className="font-medium">Qualifications:</span> {teacher.educationQualifications || "No Information"}</p>
+                        <p><span className="font-medium">Background:</span> {teacher.educationBackground || "No Information"}</p>
+                    </div>
                 </div>
 
-                <div className="bg-white shadow-lg rounded-lg p-4">
-                    <h3 className="text-lg font-semibold mb-2">Education</h3>
-                    <p><strong>Qualifications:</strong> {teacher.educationQualifications || "No Education"}</p>
-                    <p><strong>Background:</strong> {teacher.educationBackground || "No Education Background"}</p>
+                {/* Personal Information */}
+                <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+                    <div className="bg-accent bg-opacity-10 px-4 py-3 border-l-4 border-accent">
+                        <h3 className="text-lg font-semibold text-gray-800">Personal Information</h3>
+                    </div>
+                    <div className="p-4">
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                            <p><span className="font-medium">Gender:</span> {teacher.gender || "No Information"}</p>
+                            <p><span className="font-medium">Blood Group:</span> {teacher.bloodGroup || "No Information"}</p>
+                            <p><span className="font-medium">Religion:</span> {teacher.religion || "No Information"}</p>
+                            <p><span className="font-medium">Marital Status:</span> {teacher.maritalStatus || "No Information"}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div className="mt-6 bg-white shadow-lg rounded-lg p-4">
-                <h3 className="text-lg font-semibold mb-2">Addresses</h3>
-                <p><strong>Present Address:</strong> {teacher.presentAddress || "No Present Address"}</p>
-                <p><strong>Permanent Address:</strong> {teacher.permanentAddress || "No Permanent Address"}</p>
-            </div>
+            {/* Address & Family Information */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Addresses */}
+                <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+                    <div className="bg-accent bg-opacity-10 px-4 py-3 border-l-4 border-accent">
+                        <h3 className="text-lg font-semibold text-gray-800">Address Information</h3>
+                    </div>
+                    <div className="p-4 space-y-3">
+                        <div>
+                            <p className="font-medium">Present Address:</p>
+                            <p className="text-gray-700 pl-4">{teacher.presentAddress || "No Information"}</p>
+                        </div>
+                        <div>
+                            <p className="font-medium">Permanent Address:</p>
+                            <p className="text-gray-700 pl-4">{teacher.permanentAddress || "No Information"}</p>
+                        </div>
+                    </div>
+                </div>
 
-            <div className="mt-6 bg-white shadow-lg rounded-lg p-4">
-                <h3 className="text-lg font-semibold mb-2">Family Information</h3>
-                <p><strong>Father's Name:</strong> {teacher.fathersName || "No Father's Name"}</p>
-                <p><strong>Mother's Name:</strong> {teacher.mothersName || "No Mother's Name"}</p>
+                {/* Family Information */}
+                <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+                    <div className="bg-accent bg-opacity-10 px-4 py-3 border-l-4 border-accent">
+                        <h3 className="text-lg font-semibold text-gray-800">Family Information</h3>
+                    </div>
+                    <div className="p-4 space-y-3">
+                        <p><span className="font-medium">Father's Name:</span> {teacher.fathersName || "No Information"}</p>
+                        <p><span className="font-medium">Mother's Name:</span> {teacher.mothersName || "No Information"}</p>
+                    </div>
+                </div>
             </div>
-
-            <Link href="/faculty" passHref>
-                <Button className="bg-[#e81727] hover:bg-[#c71522] text-white mt-6">Back to Faculty List</Button>
-            </Link>
         </div>
     );
-}   
+}
