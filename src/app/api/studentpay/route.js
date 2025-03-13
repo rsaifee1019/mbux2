@@ -67,20 +67,20 @@ console.log(name)
       product_name: 'N/A',
       product_category: 'N/A',
       product_profile: 'non-physical-goods',
-      cus_name: name,
+      cus_name: 'N/L'
       cus_email: 'N/A',
       cus_add1: 'N/A',
       cus_city: 'N/A',
       cus_state: 'N/A',
       cus_postcode: 'N/A',
       cus_country: 'Bangladesh',
-      cus_phone: phone
+      cus_phone: "?"
     };
 
     const sslcz = new SSLCommerzPayment(
       store_id,
       store_passwd,
-      false
+      true
     );
 
     const apiResponse = await sslcz.init(data);
