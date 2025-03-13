@@ -213,13 +213,14 @@ const Fees = () => {
 
   return (
     <div 
+    className='py-8 px-4'
     style={{ 
       backgroundImage: `url("/collegeFront.jpg")`, 
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
       minHeight: '100vh',
-      padding: '1rem',
+     
       position: 'relative',
       display: 'flex',
       alignItems: 'center',
@@ -239,9 +240,9 @@ const Fees = () => {
       }}
     ></div>
     
-    <Card className="relative z-20 w-full max-w-md mx-auto my-4 font-banglaStraight">
+    <Card className="relative shadow-xl md:shadow-none rounded-lg md:rounded-e-none z-20 w-full md:max-w-md  mx-auto md:my-4 font-banglaStraight">
       <CardHeader>
-        <CardTitle className="text-xl text-center">ফি পরিশোধ ফর্ম</CardTitle>
+        <CardTitle className="text-xl text-accent text-center">ফি পরিশোধ ফর্ম</CardTitle>
       </CardHeader>
       
       <CardContent>
