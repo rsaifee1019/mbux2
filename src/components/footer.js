@@ -19,6 +19,7 @@ export default async function Footer() {
         শিক্ষা রাজ্য, ১২৩৪৫</p>
         <p>ফোন: 01760067186</p>
         <p>ইমেইল: mbhec@yahoo.</p>
+        <p>Developed by <a className='text-blue-600' target='blank' href='https://saifeerahman.com'>Saifee Rahman</a></p>
       </div>
       <div>
         <h3 className="text-lg font-bold mb-4">দ্রুত লিঙ্ক</h3>
