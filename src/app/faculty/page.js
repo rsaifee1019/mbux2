@@ -62,7 +62,10 @@ export default function Faculty() {
     console.log('Sign in attempted with:', userId, password);
   };
 
-  {loading && <Spinner />}
+  {loading && (
+  <div className='h-[100vh] w-[95vw] bg-slate-600 flex justify-center items-center'>
+  <Spinner />
+  </div>)}
 
   return (
     <div className="container mx-auto px-4 pb-8">
@@ -148,7 +151,11 @@ export default function Faculty() {
       </div>    
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
-      {teachers.length === 0 && <Spinner />}
+      {teachers.length === 0 && (
+        <div className='h-[70vh] w-[95vw]  flex justify-center items-center'>
+  <Image src="/Spinner.svg" alt="Loading..." width={100} height={100} />
+  </div>
+      )}
       {teachers && teachers.map((teacher) => (
           <Card key={teacher.id} className='rounded-none'>
             <CardContent className="p-6 flex flex-col items-center">
