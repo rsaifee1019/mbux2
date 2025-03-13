@@ -34,7 +34,7 @@ const HomePage = async () => {
                     <section className="relative h-[60vh] md:h-[90vh] text-white">\
                     <div className="absolute top-0 z-20 bg-transparent/30  h-full w-full"> </div>
                         <Image
-                            src="/slider1.jpg"
+                            src="/slider2.jpg"
                             alt="University campus"
                             layout="fill"
                             objectFit="cover"
