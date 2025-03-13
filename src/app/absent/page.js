@@ -89,7 +89,7 @@ export default function AttendancePage() {
     <div className="container mx-auto py-6 space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>অনুপস্থিতি তালিকা</CardTitle>
+          <CardTitle className='md:text-3xl md:text-accent'>অনুপস্থিতি তালিকা</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4 md:grid-cols-[1fr,1fr,1fr,auto] items-end">
@@ -206,13 +206,15 @@ export default function AttendancePage() {
               
               ))}
             </div>
+            <div       className="w-fit mt-4 justify-self-end self-end mr-2" >
             <Button
               onClick={handleSubmit}
-              className="w-full mt-4"
+              className="w-fit mt-4 justify-self-end self-end"
               disabled={selectedStudents.length === 0}
             >
               জমা দিন
             </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
