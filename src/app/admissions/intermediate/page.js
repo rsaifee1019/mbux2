@@ -38,7 +38,7 @@ export default function IntermediateAdmissions() {
               <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center mb-4">
                 {department.icon}
               </div>
-              <CardTitle className="text-2xl mb-2">{department.title}</CardTitle>
+              <CardTitle className="text-2xl mb-2 text-accent">{department.title}</CardTitle>
               <CardDescription>{department.description}</CardDescription>
             </CardHeader>
             <CardContent className="flex-grow">

@@ -31,13 +31,13 @@ export default function Header() {
                                       </div>
           </Link>
           <Menu className='cursor-pointer text-primary-foreground md:hidden' onClick={() => setIsOpen(!isOpen)} />
-          <nav className="hidden md:flex gap-0 text-emerald-500 md:text-xl">
+          <nav className="hidden md:flex gap-0 text-accent md:text-xl">
           {
             links.map((link) => (
               <Link 
                 key={link.link} 
                 href={link.link} 
-                className="hover:border-b-4 px-4 hover:border-emerald-500 border-b-4 border-transparent"
+                className="hover:border-b-4 px-4 hover:border-accent border-b-4 border-transparent"
               >
                 {link.name}
               </Link>
