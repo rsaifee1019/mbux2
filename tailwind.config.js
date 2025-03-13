@@ -69,7 +69,9 @@ module.exports = {
   		
 		fontFamily: {
         bangla: ['BanglaFont', ...fontFamily.sans],
-		banglaStraight: ['BanglaStraight', ...fontFamily.sans]
+		banglaStraight: ['BanglaStraight', ...fontFamily.sans],
+		banglaStraight2: ['BanglaStraight2', ...fontFamily.sans],
+		banglacurvy: ['BanglaCurvy', ...fontFamily.sans],
       },
 
   	}

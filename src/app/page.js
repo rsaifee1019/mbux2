@@ -53,7 +53,7 @@ const HomePage = async () => {
                                 <h1 className="font-banglaStraight text-5xl md:text-7xl md:p-2  "
                                 style={{ fontWeight: 10 }} >মাদার বখ্শ গার্হস্থ্য অর্থনীতি কলেজ</h1>
                             </div>
-                            <p className=" text-lg md:text-3xl p-2  text-gray-100 md:mt-2 mb-8 md:mb-20">"প্রতিটি শিক্ষার্থী, প্রতিটি স্বপ্নকে সম্মান"</p>
+                            <p className=" text-lg md:text-3xl p-2  text-gray-100 md:mt-2 mb-8 md:mb-20 font-banglacurvy">"প্রতিটি শিক্ষার্থী, প্রতিটি স্বপ্নকে সম্মান"</p>
                             <div className="flex gap-4 ">
                             
                            
@@ -64,7 +64,7 @@ const HomePage = async () => {
                                         href='/admissions'
                                         className=" "
                                       >   
-                            <Button className='font-banglaStraight bg-[#007741] ring-lime-500 ring-1 md:ring-2 rounded-none text-white  h-fit md:h-10 py-0 px-2 md:px-8 md:py-4 text-xl md:text-2xl hover:bg-white hover:ring-lime-500 hover:ring-2 hover:text-emerald-950'>আবেদন করুন</Button>
+                            <Button className='font-banglaStraight2 bg-[#007741] ring-lime-500 ring-1 md:ring-2 rounded-none text-white  h-fit md:h-10 py-0 px-2 md:px-8 md:py-4 text-xl md:text-3xl hover:bg-white hover:ring-lime-500 hover:ring-2 hover:text-emerald-950'>আবেদন করুন</Button>
                           
                             </Link>
                             </div>

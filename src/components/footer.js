@@ -14,7 +14,9 @@ export default async function Footer() {
     <div className="grid md:grid-cols-4 gap-8">
       <div>
         <h3 className="text-lg font-bold mb-4">যোগাযোগ</h3>
-        <p>ঠিকানা: আপনার বিশ্ববিদ্যালয়ের ঠিকানা</p>
+        <p>ঠিকানা: ১২৩ শিক্ষা লেন,
+        জ্ঞান নগর,
+        শিক্ষা রাজ্য, ১২৩৪৫</p>
         <p>ফোন: 01760067186</p>
         <p>ইমেইল: mbhec@yahoo.</p>
       </div>
@@ -50,7 +52,7 @@ export default async function Footer() {
       </div>
     </div>
     <div className="mt-8 text-center">
-      <p>&copy; 2023 আপনার বিশ্ববিদ্যালয়। সর্বস্বত্ব সংরক্ষিত।</p>
+      <p>&copy; 2025 রাজশাহীতে একমাত্র গার্হস্থ্য অর্থনীতি কলেজ সর্বস্বত্ব সংরক্ষিত।</p>
     </div>
   </div>
 </footer> 
