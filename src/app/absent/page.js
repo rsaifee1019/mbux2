@@ -134,7 +134,7 @@ export default function AttendancePage() {
           <CardHeader>
             <CardTitle className="flex justify-between items-center">
               <span>সব ছাত্র</span>
-              <Badge variant="secondary">{searchResults.length}</Badge>
+              <Badge variant="secondary" className='bg-accent'>{searchResults.length}</Badge>
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -181,12 +181,12 @@ export default function AttendancePage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2 max-h-96 overflow-y-auto">
+            <div className="space-y-2 max-h-96 min-h-96 overflow-y-auto">
               {selectedStudents.map((student) => (
                 
                 <div
                   key={student._id}
-                  className="flex items-center justify-between p-2 rounded-md bg-accent"
+                  className="flex items-center justify-between p-2 rounded-md "
                 >
                 <div className="flex gap-2">
                 <Badge variant="outline">{student.studentId}</Badge>
